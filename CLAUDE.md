@@ -67,6 +67,8 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 - **Nada de criminal.**
 
 ## 7. Como trabalhar (obrigatório)
+- **QUALIDADE ACIMA DE VELOCIDADE.** O usuário prefere que o trabalho leve 2, 3, 4 horas e saia certo do que sair rápido e exigir mil correções. Nunca apressar entrega: revisar cada página, cada texto, cada breakpoint, antes de dizer que terminou.
+- Autonomia total: tomar decisões sozinho e trabalhar até o fim sem parar para pedir confirmação; criar coisas diferentes/novas quando agregarem.
 - **Jarvis:** o usuário quer que o "Jarvis" ajude em qualquer decisão. Se ele existir como skill, agente ou MCP na sessão, **consultá-lo antes de decidir**. Se não existir, avisar o usuário e usar os subagentes (`Plan` para arquitetura, `Explore` para pesquisa) como substitutos, sem fingir que o Jarvis foi consultado.
 - **Skills e MCPs sempre:** nunca fazer algo sem checar antes se há skill/MCP aplicável e usá-lo. Em especial:
   - `artifact-design` / `dataviz` e skills de design para decisões visuais; `code-review` e `simplify` ao terminar blocos de código; `security-review` antes de fechar; `run` para subir o app e ver funcionando; `claude-api` só se houver IA no projeto.

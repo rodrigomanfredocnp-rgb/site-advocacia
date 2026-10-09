@@ -1,0 +1,144 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useSyncExternalStore } from "react";
+
+/**
+ * Medição opcional (Google Analytics 4 e/ou Meta Pixel), ligada só quando os
+ * IDs são informados no build:
+ *   NEXT_PUBLIC_GA_ID=G-XXXXXXX
+ *   NEXT_PUBLIC_META_PIXEL_ID=000000000000000
+ * Sem IDs, nada é carregado e o aviso de cookies não aparece.
+ * Com IDs, os scripts só carregam depois que o visitante aceita (LGPD).
+ * Cliques nos botões de WhatsApp (atributo data-wa) viram o evento "whatsapp_click" / "Contact".
+ */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
+const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const CONSENT_KEY = "jc-consent";
+
+type Consent = "granted" | "denied" | null;
+
+declare global {
+  interface Window {
+    dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    fbq?: ((...args: unknown[]) => void) & { queue?: unknown[]; loaded?: boolean; version?: string; callMethod?: (...a: unknown[]) => void; push?: unknown };
+    _fbq?: unknown;
+  }
+}
+
+function readConsent(): Consent {
+  try {
+    const v = localStorage.getItem(CONSENT_KEY);
+    return v === "granted" || v === "denied" ? v : null;
+  } catch {
+    return null;
+  }
+}
+
+/* A escolha fica no localStorage; o componente lê via useSyncExternalStore. */
+const listeners = new Set<() => void>();
+let memoryConsent: Consent = null;
+
+function saveConsent(v: Exclude<Consent, null>) {
+  memoryConsent = v;
+  try {
+    localStorage.setItem(CONSENT_KEY, v);
+  } catch {
+    /* navegação privada: vale só nesta visita */
+  }
+  listeners.forEach((fn) => fn());
+}
+
+function subscribe(fn: () => void) {
+  listeners.add(fn);
+  return () => listeners.delete(fn);
+}
+
+const getConsent = () => readConsent() ?? memoryConsent;
+/* No HTML estático o aviso nunca aparece; ele só surge no navegador. */
+const getServerConsent = (): Consent => "denied";
+
+function loadScript(src: string) {
+  const s = document.createElement("script");
+  s.async = true;
+  s.src = src;
+  document.head.appendChild(s);
+}
+
+function startTracking() {
+  if (GA_ID && !window.gtag) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID, { anonymize_ip: true });
+    loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_ID)}`);
+  }
+  if (PIXEL_ID && !window.fbq) {
+    const fbq = function (...args: unknown[]) {
+      if (fbq.callMethod) fbq.callMethod(...args);
+      else fbq.queue!.push(args);
+    } as NonNullable<Window["fbq"]>;
+    fbq.queue = [];
+    fbq.loaded = true;
+    fbq.version = "2.0";
+    window.fbq = fbq;
+    window._fbq = fbq;
+    loadScript("https://connect.facebook.net/en_US/fbevents.js");
+    fbq("init", PIXEL_ID);
+    fbq("track", "PageView");
+  }
+}
+
+export function Analytics() {
+  const enabled = Boolean(GA_ID || PIXEL_ID);
+  const consent = useSyncExternalStore(subscribe, getConsent, getServerConsent);
+
+  useEffect(() => {
+    if (enabled && consent === "granted") startTracking();
+  }, [enabled, consent]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.("[data-wa]");
+      if (!link) return;
+      const source = link.getAttribute("data-wa");
+      window.gtag?.("event", "whatsapp_click", { source, page: location.pathname });
+      window.fbq?.("track", "Contact", { source, page: location.pathname });
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [enabled]);
+
+  if (!enabled || consent !== null) return null;
+
+  const choose = (v: Exclude<Consent, null>) => saveConsent(v);
+
+  return (
+    <div
+      role="region"
+      aria-label="Aviso de cookies"
+      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-[3px] border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5"
+    >
+      <p>
+        Usamos cookies de medição para entender como o site é usado e melhorar o atendimento.{" "}
+        <Link href="/politica-de-privacidade/" className="text-gold underline underline-offset-2">
+          Saiba mais
+        </Link>
+        .
+      </p>
+      <div className="mt-4 flex gap-3">
+        <button type="button" onClick={() => choose("granted")} className="rounded-[3px] bg-gold px-4 py-2 font-semibold text-ink hover:bg-gold-light">
+          Aceitar
+        </button>
+        <button type="button" onClick={() => choose("denied")} className="rounded-[3px] border border-ink-3 px-4 py-2 text-text-inverse hover:border-gold/60">
+          Recusar
+        </button>
+      </div>
+    </div>
+  );
+}
