@@ -1,0 +1,3 @@
+O Papel Timbrado em PDF e PNG estão com a Cor normal.
+
+O Papel Timbrado em Word, ao abrir o arquivo, você verá ele bem claro toda a imagem, o Word faz isso com a imagem para que você não se atrapalhe ao digitar seus textos, mas al salvar em PDF ou Imprimir, ele irá sair com a Cor normal, só irá ficar claro na hora mesmo da digitação.
