@@ -11,9 +11,11 @@ import { useEffect, useSyncExternalStore } from "react";
  * Sem IDs, nada é carregado e o aviso de cookies não aparece.
  * Com IDs, os scripts só carregam depois que o visitante aceita (LGPD).
  * Cliques nos botões de WhatsApp (atributo data-wa) viram o evento "whatsapp_click" / "Contact".
+ * A escolha pode ser revista a qualquer momento pelo link "Preferências de cookies" do rodapé.
  */
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const ENABLED = Boolean(GA_ID || PIXEL_ID);
 const CONSENT_KEY = "jc-consent";
 
 type Consent = "granted" | "denied" | null;
@@ -46,10 +48,11 @@ function readConsent(): Consent {
 const listeners = new Set<() => void>();
 let memoryConsent: Consent = null;
 
-function saveConsent(v: Exclude<Consent, null>) {
+function saveConsent(v: Consent) {
   memoryConsent = v;
   try {
-    localStorage.setItem(CONSENT_KEY, v);
+    if (v) localStorage.setItem(CONSENT_KEY, v);
+    else localStorage.removeItem(CONSENT_KEY);
   } catch {
     /* navegação privada: vale só nesta visita */
   }
@@ -58,10 +61,18 @@ function saveConsent(v: Exclude<Consent, null>) {
 
 function subscribe(fn: () => void) {
   listeners.add(fn);
-  return () => listeners.delete(fn);
+  // Mantém outras abas abertas em sincronia com a escolha.
+  const onStorage = (e: StorageEvent) => e.key === CONSENT_KEY && fn();
+  window.addEventListener("storage", onStorage);
+  return () => {
+    listeners.delete(fn);
+    window.removeEventListener("storage", onStorage);
+  };
 }
 
 const getConsent = () => readConsent() ?? memoryConsent;
+const isClient = () => true;
+const isServer = () => false;
 /* No HTML estático o aviso nunca aparece; ele só surge no navegador. */
 const getServerConsent = (): Consent => "denied";
 
@@ -100,7 +111,7 @@ function startTracking() {
 }
 
 export function Analytics() {
-  const enabled = Boolean(GA_ID || PIXEL_ID);
+  const enabled = ENABLED;
   const consent = useSyncExternalStore(subscribe, getConsent, getServerConsent);
 
   useEffect(() => {
@@ -122,13 +133,18 @@ export function Analytics() {
 
   if (!enabled || consent !== null) return null;
 
-  const choose = (v: Exclude<Consent, null>) => saveConsent(v);
+  const choose = (v: Exclude<Consent, null>) => {
+    // Recusar depois de ter aceitado: recarrega para descarregar os scripts de medição.
+    const wasTracking = Boolean(window.gtag || window.fbq);
+    saveConsent(v);
+    if (v === "denied" && wasTracking) location.reload();
+  };
 
   return (
     <div
       role="region"
       aria-label="Aviso de cookies"
-      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-xl rounded-[3px] border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5"
+      className="fixed inset-x-3 bottom-[calc(5.25rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-xl rounded-[3px] border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5 md:bottom-3"
     >
       <p>
         Usamos cookies de medição para entender como o site é usado e melhorar o atendimento.{" "}
@@ -154,5 +170,19 @@ export function Analytics() {
         </button>
       </div>
     </div>
+  );
+}
+
+/**
+ * Link do rodapé para rever a escolha de cookies (LGPD, art. 8º, § 5º).
+ * Só aparece quando há medição configurada e depois que o site carrega no navegador.
+ */
+export function CookiePreferences() {
+  const mounted = useSyncExternalStore(subscribe, isClient, isServer);
+  if (!ENABLED || !mounted) return null;
+  return (
+    <button type="button" onClick={() => saveConsent(null)} className="transition-colors hover:text-gold-light">
+      Preferências de cookies
+    </button>
   );
 }

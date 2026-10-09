@@ -1,13 +1,12 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-export type PhotoName = "jhonny-serio" | "jhonny-sorrindo" | "jhonny-lapela" | "jhonny-corpo-inteiro";
+export type PhotoName = "jhonny-serio" | "jhonny-sorrindo" | "jhonny-lapela";
 
 const SIZES: Record<PhotoName, { width: number; height: number }> = {
   "jhonny-serio": { width: 1335, height: 2000 },
   "jhonny-sorrindo": { width: 1335, height: 2000 },
   "jhonny-lapela": { width: 1335, height: 2000 },
-  "jhonny-corpo-inteiro": { width: 940, height: 1880 },
 };
 
 /**

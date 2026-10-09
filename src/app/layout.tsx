@@ -3,6 +3,7 @@ import { Cinzel, EB_Garamond, Figtree } from "next/font/google";
 import { BrandDefs } from "@/components/brand/Logo";
 import { Analytics } from "@/components/layout/Analytics";
 import { site } from "@/content/site";
+import { sharedOpenGraph } from "@/lib/metadata";
 import "./globals.css";
 
 const garamond = EB_Garamond({
@@ -33,17 +34,12 @@ export const metadata: Metadata = {
     template: "%s | Jhonny Cardoso Advogado",
   },
   description:
-    "Advocacia trabalhista e previdenciária em Campo Novo do Parecis/MT, com atendimento online para todo o Brasil. Rescisão, horas extras, gestante, acidente de trabalho, INSS e mais.",
+    "Advocacia trabalhista e previdenciária em Campo Novo do Parecis/MT, com atendimento presencial e pelo WhatsApp. Rescisão, horas extras, gestante, acidente de trabalho, INSS e mais.",
   applicationName: site.name,
   authors: [{ name: site.lawyer.fullName }],
   creator: site.lawyer.fullName,
   formatDetection: { telephone: false, email: false, address: false },
-  openGraph: {
-    type: "website",
-    locale: "pt_BR",
-    siteName: site.name,
-    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Jhonny Cardoso, Advogado, OAB/MT 33424" }],
-  },
+  openGraph: sharedOpenGraph,
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true },
 };

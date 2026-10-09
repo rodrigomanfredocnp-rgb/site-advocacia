@@ -13,17 +13,11 @@ import { IMAGE_WIDTHS } from "../src/lib/image-widths.mjs";
 const SRC = "identidade-visual/fotos-advogado";
 const OUT = "public/img";
 
-/** crop: recorte em pixels da imagem original (1335×2000). */
+/** crop (opcional): recorte em pixels da imagem original, ex. { left, top, width, height }. */
 const PHOTOS = [
   { file: "busto-serio-bracos-cruzados.jpg", name: "jhonny-serio" },
   { file: "busto-sorrindo-bracos-cruzados.jpg", name: "jhonny-sorrindo" },
   { file: "busto-sorrindo-mao-lapela.jpg", name: "jhonny-lapela" },
-  {
-    // Corpo inteiro sem os arranjos de flores das laterais.
-    file: "corpo-inteiro-serio-mao-lapela.jpg",
-    name: "jhonny-corpo-inteiro",
-    crop: { left: 230, top: 60, width: 940, height: 1880 },
-  },
 ];
 
 await mkdir(OUT, { recursive: true });

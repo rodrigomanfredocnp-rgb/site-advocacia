@@ -1,10 +1,10 @@
+import { site } from "@/content/site";
 import {
   FULL_LOGO_VIEWBOX,
   NAME_PATH,
   NAME_VIEWBOX,
   SUBLINE_PATH,
   SUBLINE_RULES_PATH,
-  SUBLINE_VIEWBOX,
   SYMBOL_PATHS,
   SYMBOL_VIEWBOX,
 } from "./paths";
@@ -63,20 +63,8 @@ export function LogoName({ tone = "gold", className }: Props) {
   );
 }
 
-/** "ADVOGADO | OAB/MT 33424" com os fios laterais. */
-export function LogoSubline({ tone = "gold", className }: Props) {
-  return (
-    <svg viewBox={SUBLINE_VIEWBOX} className={className} aria-hidden="true">
-      <g fill={fillFor(tone)} fillRule="evenodd">
-        <path d={SUBLINE_PATH} />
-        <path d={SUBLINE_RULES_PATH} />
-      </g>
-    </svg>
-  );
-}
-
 /** Logo completa (símbolo + nome + subtítulo), igual ao arquivo original. */
-export function LogoFull({ tone = "gold", className, title = "Jhonny Cardoso, Advogado, OAB/MT 33424" }: Props) {
+export function LogoFull({ tone = "gold", className, title = `Jhonny Cardoso, Advogado, ${site.lawyer.oab}` }: Props) {
   return (
     <svg viewBox={FULL_LOGO_VIEWBOX} className={className} role="img" aria-label={title}>
       <g fill={fillFor(tone)} fillRule="evenodd">
@@ -99,7 +87,7 @@ export function LogoLockup({ tone = "gold", className }: Props) {
       <span className="flex flex-col gap-[5px]">
         <LogoName tone={tone} className="h-[15px] w-auto sm:h-[17px]" />
         <span className="font-caps text-[0.58rem] leading-none tracking-[0.2em] text-gold/90 sm:text-[0.62rem]">
-          ADVOGADO · OAB/MT 33424
+          ADVOGADO · {site.lawyer.oab}
         </span>
       </span>
     </span>

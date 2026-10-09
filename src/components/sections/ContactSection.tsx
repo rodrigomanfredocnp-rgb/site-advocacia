@@ -28,7 +28,7 @@ export function ContactSection() {
       href: site.social.instagram,
       external: true,
     },
-    { icon: Clock, label: "Horário", content: site.hours },
+    ...(site.hours ? [{ icon: Clock, label: "Horário", content: site.hours }] : []),
   ];
 
   return (
@@ -40,7 +40,8 @@ export function ContactSection() {
             Vamos conversar sobre <em>o seu caso</em>
           </h2>
           <p className="mt-6 max-w-[46ch] text-text-muted">
-            {site.serviceArea}. O jeito mais rápido de falar com o advogado é pelo WhatsApp.
+            Escritório no centro de Campo Novo do Parecis/MT, com atendimento presencial e online. O jeito mais rápido de falar
+            com o advogado é pelo WhatsApp.
           </p>
           <WhatsAppButton source="contato" className="mt-9" />
         </div>

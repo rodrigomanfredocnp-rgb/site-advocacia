@@ -17,8 +17,3 @@ export function emphasis(text: string): ReactNode {
     return <Fragment key={i}>{part}</Fragment>;
   });
 }
-
-/** Remove a marcação para usos em texto puro (meta tags, JSON-LD, aria-label). */
-export function plain(text: string) {
-  return text.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1");
-}

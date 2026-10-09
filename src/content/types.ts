@@ -83,9 +83,6 @@ export type Landing = {
 
   myths: Myth[];
 
-  /** Dado ou destaque que merece um bloco próprio (opcional, sempre com fonte). */
-  highlight?: { value: string; label: string; text: string; source: string };
-
   faq: Faq[];
 
   related: string[];

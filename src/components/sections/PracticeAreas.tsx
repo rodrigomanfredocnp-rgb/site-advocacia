@@ -2,14 +2,14 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { TOPIC_ICONS } from "@/components/ui/icons";
-import { CATEGORY_LABEL, landingsByCategory } from "@/content/landings";
+import { landingGroups } from "@/content/landings";
 
 /**
  * Áreas de atuação no formato de sumário de código: cada tema é um parágrafo (§)
  * que leva à página própria do assunto.
  */
 export function PracticeAreas() {
-  const groups = (["trabalhista", "previdenciario"] as const).map((c) => ({ category: c, items: landingsByCategory(c) }));
+  const groups = landingGroups();
   // Numeração contínua (§ 1, § 2...) atravessando os dois grupos.
   const order = new Map(groups.flatMap((g) => g.items).map((l, i) => [l.slug, i + 1]));
 
@@ -35,7 +35,7 @@ export function PracticeAreas() {
               group.items.length > 0 && (
                 <div key={group.category}>
                   <h3 className="flex items-center gap-4 font-caps text-[0.78rem] tracking-[0.2em] text-gold-deep">
-                    {CATEGORY_LABEL[group.category].toUpperCase()}
+                    {group.label.toUpperCase()}
                     <span className="h-px flex-1 bg-paper-3" aria-hidden />
                   </h3>
                   <ul className="mt-2 grid lg:grid-cols-2 lg:gap-x-14">

@@ -48,8 +48,11 @@ export function getLanding(slug: string) {
   return landings.find((l) => l.slug === slug);
 }
 
-export function landingsByCategory(category: LandingCategory) {
-  return landings.filter((l) => l.category === category);
+/** Landings agrupadas por área, na ordem de CATEGORY_LABEL, sem grupos vazios. */
+export function landingGroups() {
+  return (Object.keys(CATEGORY_LABEL) as LandingCategory[])
+    .map((category) => ({ category, label: CATEGORY_LABEL[category], items: landings.filter((l) => l.category === category) }))
+    .filter((group) => group.items.length > 0);
 }
 
 /** Relacionados declarados na landing, ignorando slugs inexistentes. */

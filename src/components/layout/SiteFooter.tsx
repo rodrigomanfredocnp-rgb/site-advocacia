@@ -2,16 +2,12 @@ import Link from "next/link";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { LogoFull } from "@/components/brand/Logo";
 import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { CATEGORY_LABEL, landingsByCategory } from "@/content/landings";
+import { landingGroups } from "@/content/landings";
 import { fullAddress, site } from "@/content/site";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { CookiePreferences } from "./Analytics";
 
 export function SiteFooter() {
-  const columns = (["trabalhista", "previdenciario"] as const).map((category) => ({
-    title: CATEGORY_LABEL[category],
-    items: landingsByCategory(category),
-  }));
-
   return (
     <footer className="on-ink ink-texture text-text-inverse-muted">
       <div className="container-site grid gap-12 py-16 md:py-20 lg:grid-cols-[0.9fr_2.1fr]">
@@ -36,11 +32,11 @@ export function SiteFooter() {
         </div>
 
         <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-[1fr_0.9fr_1.25fr]">
-          {columns.map(
+          {landingGroups().map(
             (col) =>
               col.items.length > 0 && (
-                <nav key={col.title} aria-label={col.title}>
-                  <h2 className="font-caps text-[0.72rem] tracking-[0.18em] text-gold">{col.title.toUpperCase()}</h2>
+                <nav key={col.category} aria-label={col.label}>
+                  <h2 className="font-caps text-[0.72rem] tracking-[0.18em] text-gold">{col.label.toUpperCase()}</h2>
                   <ul className="mt-5 space-y-2.5 text-[0.95rem]">
                     {col.items.map((l) => (
                       <li key={l.slug}>
@@ -83,10 +79,12 @@ export function SiteFooter() {
                   {site.contact.email}
                 </a>
               </li>
-              <li className="flex gap-3">
-                <Clock className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
-                <span>{site.hours}</span>
-              </li>
+              {site.hours && (
+                <li className="flex gap-3">
+                  <Clock className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
+                  <span>{site.hours}</span>
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -106,7 +104,7 @@ export function SiteFooter() {
             <Link href="/termos-de-uso" className="transition-colors hover:text-gold-light">
               Termos de uso
             </Link>
-            <span>© {new Date().getFullYear()}</span>
+            <CookiePreferences />
           </div>
         </div>
       </div>

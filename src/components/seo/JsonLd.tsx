@@ -11,7 +11,7 @@ export function JsonLd({ data }: { data: object }) {
 export const attorneyId = `${site.url}/#advogado`;
 export const officeId = `${site.url}/#escritorio`;
 
-/** Pessoa (advogado) + escritório (LegalService). Usado em todas as páginas. */
+/** Pessoa (o advogado) + escritório (LegalService). Usado em todas as páginas. */
 export function organizationGraph() {
   const rating =
     site.reviews.googleRating && site.reviews.googleCount
@@ -27,10 +27,11 @@ export function organizationGraph() {
 
   return [
     {
-      "@type": "Attorney",
+      "@type": "Person",
       "@id": attorneyId,
       name: site.lawyer.fullName,
       alternateName: site.lawyer.displayName,
+      jobTitle: "Advogado",
       url: site.url,
       image: `${site.url}/img/jhonny-serio-828.webp`,
       telephone: `+${site.contact.whatsappNumber}`,

@@ -14,11 +14,17 @@ export function MobileMenu({ items, whatsappMessage }: Props) {
 
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const close = () => setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
+    // Ao girar o tablet para a largura do menu de desktop, fecha e destrava a rolagem.
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => desktop.matches && close();
     document.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onResize);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onResize);
       document.body.style.overflow = "";
     };
   }, [open]);

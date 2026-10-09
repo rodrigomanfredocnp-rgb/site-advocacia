@@ -12,10 +12,12 @@ import { LandingHero } from "@/components/sections/LandingHero";
 import { LawSection } from "@/components/sections/LawSection";
 import { MythsSection } from "@/components/sections/MythsSection";
 import { RelatedTopics } from "@/components/sections/RelatedTopics";
+import { Reviews } from "@/components/sections/Reviews";
 import { SituationsSection } from "@/components/sections/SituationsSection";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { JsonLd, landingGraph } from "@/components/seo/JsonLd";
 import { getLanding, landings, relatedLandings } from "@/content/landings";
+import { sharedOpenGraph } from "@/lib/metadata";
 
 export const dynamicParams = false;
 
@@ -31,7 +33,7 @@ export async function generateMetadata({ params }: PageProps<"/[slug]">): Promis
     title: landing.seo.title,
     description: landing.seo.description,
     alternates: { canonical: `/${landing.slug}/` },
-    openGraph: { title: landing.seo.title, description: landing.seo.description, url: `/${landing.slug}/` },
+    openGraph: { ...sharedOpenGraph, title: landing.seo.title, description: landing.seo.description, url: `/${landing.slug}/` },
   };
 }
 
@@ -53,6 +55,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
         <MythsSection landing={landing} />
         <HowItWorks whatsapp={landing.whatsapp} />
         <AboutLawyer variant="short" whatsapp={landing.whatsapp} />
+        <Reviews />
         <FaqSection items={landing.faq} />
         <RelatedTopics items={relatedLandings(landing)} />
         <FinalCta whatsapp={landing.whatsapp} />

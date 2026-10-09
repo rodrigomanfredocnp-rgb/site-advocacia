@@ -6,7 +6,6 @@
 export const site = {
   url: "https://jhonnycardoso.adv.br",
   name: "Jhonny Cardoso Advogado",
-  shortName: "Jhonny Cardoso",
 
   lawyer: {
     fullName: "Jhonny Henrique Guollo Cardoso",
@@ -15,11 +14,6 @@ export const site = {
     oab: "OAB/MT 33424",
     oabNumber: "33424",
     oabState: "MT",
-  },
-
-  practice: {
-    main: "Direito do Trabalho",
-    secondary: "Direito Previdenciário (INSS)",
   },
 
   contact: {
@@ -38,11 +32,11 @@ export const site = {
     mapsUrl: "https://maps.app.goo.gl/eydM8ZMPcAhectHW9",
   },
 
-  /** Horário exibido no rodapé e no contato. Ajustar se o escritório informar outro. */
-  hours: "Segunda a sexta, das 8h às 18h",
-
-  /** Como o atendimento acontece. Ajustar se o escritório não atender fora de MT. */
-  serviceArea: "Atendimento presencial em Campo Novo do Parecis/MT e online para todo o Brasil",
+  /**
+   * Horário de atendimento. Fica oculto enquanto for null.
+   * PENDENTE: confirmar com o escritório (ex.: "Segunda a sexta, das 8h às 18h").
+   */
+  hours: null as string | null,
 
   social: {
     instagram: "https://www.instagram.com/jhonnycardoso.adv",
@@ -51,8 +45,9 @@ export const site = {
   },
 
   /**
-   * Avaliações reais do Google. Enquanto estiver vazio, as seções de
-   * avaliação não aparecem. NUNCA preencher com dados inventados.
+   * Avaliações reais do Google. Enquanto `items` estiver vazio, a seção de
+   * avaliações não aparece. NUNCA preencher com dados inventados.
+   * Exemplo de item: { author: "Maria S.", text: "Texto copiado do Google." }
    */
   reviews: {
     googleRating: null as number | null,
