@@ -14,7 +14,6 @@ import { MythsSection } from "@/components/sections/MythsSection";
 import { RelatedTopics } from "@/components/sections/RelatedTopics";
 import { Reviews } from "@/components/sections/Reviews";
 import { SituationsSection } from "@/components/sections/SituationsSection";
-import { TrustStrip } from "@/components/sections/TrustStrip";
 import { JsonLd, landingGraph } from "@/components/seo/JsonLd";
 import { getLanding, landings, relatedLandings } from "@/content/landings";
 import { sharedOpenGraph } from "@/lib/metadata";
@@ -48,7 +47,6 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
       <SiteHeader variant="landing" whatsappMessage={landing.whatsapp} />
       <main id="conteudo" className="flex-1">
         <LandingHero landing={landing} />
-        <TrustStrip />
         <LawSection landing={landing} />
         <SituationsSection landing={landing} />
         <DocumentsMistakes landing={landing} />

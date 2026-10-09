@@ -1,60 +1,71 @@
-import { LogoSymbol } from "@/components/brand/Logo";
+import { HeartHandshake, MessageSquareText, Scale } from "lucide-react";
+import { LogoFull } from "@/components/brand/Logo";
 import { Portrait } from "@/components/ui/Portrait";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { lawyerBio, values } from "@/content/shared";
 import { site } from "@/content/site";
 
+const VALUE_ICONS = [HeartHandshake, MessageSquareText, Scale];
+
 /**
- * A faixa escura do advogado. Na home aparece completa; nas landings, mais curta,
- * só para dar rosto e credencial a quem vai atender.
+ * "Sobre o advogado". Na home mostra a marca num cartão preto (a foto já está no topo);
+ * nas landings mostra a foto, para dar rosto a quem vai atender.
  */
 export function AboutLawyer({ variant = "full", whatsapp }: { variant?: "full" | "short"; whatsapp?: string }) {
-  const bio = variant === "full" ? lawyerBio : lawyerBio.slice(0, 2);
+  const full = variant === "full";
+  const bio = full ? lawyerBio : lawyerBio.slice(0, 2);
+
   return (
-    <section
-      id="advogado"
-      aria-labelledby="advogado-titulo"
-      className="on-ink ink-texture relative overflow-hidden py-20 text-text-inverse md:py-28"
-    >
-      <LogoSymbol tone="current" className="pointer-events-none absolute -top-16 -right-24 h-[30rem] w-auto text-gold/[0.05]" />
+    <section id="sobre" aria-labelledby="sobre-titulo" className="bg-mist py-20 md:py-28">
+      <div className="container-site grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+        {full ? (
+          <div className="relative">
+            <div className="grid aspect-[4/3] place-items-center bg-ink px-10">
+              <LogoFull className="h-auto w-full max-w-[19rem]" />
+            </div>
+            <div className="absolute -bottom-8 left-6 bg-ink px-6 py-5 text-text-inverse shadow-[0_18px_40px_-22px_rgb(15_15_15/0.5)] ring-1 ring-ink-3">
+              <span className="block font-display text-[1.6rem] leading-none text-gold">{site.lawyer.oab}</span>
+              <span className="mt-1.5 block text-[0.85rem] text-text-inverse-muted">Inscrição na Ordem dos Advogados</span>
+            </div>
+          </div>
+        ) : (
+          <Portrait
+            photo="jhonny-sorrindo"
+            alt="Dr. Jhonny Cardoso sorrindo, de braços cruzados"
+            sizes="(min-width: 1024px) 34vw, (min-width: 640px) 55vw, 90vw"
+            className="mx-auto w-full max-w-[22rem] lg:max-w-[26rem]"
+          />
+        )}
 
-      <div className="container-site relative grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-        <Portrait
-          photo="jhonny-sorrindo"
-          alt="Dr. Jhonny Cardoso sorrindo, de braços cruzados"
-          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 55vw, 90vw"
-          className="mx-auto w-full max-w-[24rem] lg:max-w-none"
-        >
-          <figcaption className="mt-5 text-center font-caps text-[0.66rem] tracking-[0.2em] text-gold">
-            {site.lawyer.fullName.toUpperCase()} · {site.lawyer.oab}
-          </figcaption>
-        </Portrait>
-
-        <div>
-          <p className="eyebrow">Quem vai cuidar do seu caso</p>
-          <h2 id="advogado-titulo" className="em-gold mt-5 text-display-lg">
-            Conheça o <em>Dr. Jhonny Cardoso</em>
+        <div className={full ? "max-lg:pt-6" : ""}>
+          <p className="eyebrow">Sobre o advogado</p>
+          <h2 id="sobre-titulo" className="mt-5 text-display-lg">
+            Dr. Jhonny Cardoso
           </h2>
-          <div className="mt-8 space-y-5 text-[1.0625rem] text-text-inverse-muted">
+          <div className="mt-7 space-y-5 text-[1.0625rem] text-text-muted">
             {bio.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
           </div>
 
-          <ul className="mt-10 grid gap-px border border-ink-3 bg-ink-3 sm:grid-cols-2">
-            {values.map((v) => (
-              <li key={v.title} className="bg-ink-2 p-5">
-                <h3 className="font-caps text-[0.72rem] tracking-[0.16em] text-gold">{v.title.toUpperCase()}</h3>
-                <p className="mt-2 text-[0.94rem] text-text-inverse-muted">{v.text}</p>
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-10">
-            <WhatsAppButton source="advogado" message={whatsapp}>
+          {full ? (
+            <ul className="mt-12 grid gap-8 border-t border-line pt-10 sm:grid-cols-3">
+              {values.slice(0, 3).map((v, i) => {
+                const Icon = VALUE_ICONS[i];
+                return (
+                  <li key={v.title}>
+                    <Icon className="size-6 text-gold-text" strokeWidth={1.5} aria-hidden />
+                    <h3 className="mt-4 text-[1.2rem]">{v.title}</h3>
+                    <p className="mt-2 text-[0.94rem] text-text-muted">{v.text}</p>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <WhatsAppButton source="advogado" message={whatsapp} className="mt-10">
               Falar com o Dr. Jhonny
             </WhatsAppButton>
-          </div>
+          )}
         </div>
       </div>
     </section>

@@ -2,78 +2,52 @@
 
 /*
  * Design system — Jhonny Cardoso Advogado
- * Conceito: o papel timbrado do escritório levado à tela. Fundo de papel claro
- * (~70%), blocos em preto-tinta da logo (~30%: cabeçalho, faixa do advogado,
- * rodapé), dourado usado como na marca: fios finos, moldura dupla e capitais
- * romanas. Cantos retos, como a moldura do monograma.
+ * Conceito: editorial e limpo (referência: site da Patricia Gomes, preferido do cliente).
+ * Só as cores da marca: preto, branco e dourado. Muito espaço em branco, fios finos,
+ * títulos em capitais romanas (Marcellus, da mesma família de letras da logo), sem itálico.
  */
 @theme {
   /* Cores */
-  --color-ink: #100f0d; /* fundo exato da logo */
-  --color-ink-2: #1b1915; /* superfícies sobre o preto */
-  --color-ink-3: #2a2620; /* bordas sobre o preto */
-  --color-paper: #faf7f1; /* fundo principal */
-  --color-paper-2: #f1ebe0; /* seções alternadas */
-  --color-paper-3: #e7dece; /* fios e bordas no claro */
-  --color-text: #1c1a17;
-  --color-text-muted: #5b554b;
-  --color-text-inverse: #f3eee4;
-  --color-text-inverse-muted: #b5ac9e;
+  --color-white: #ffffff;
+  --color-mist: #f7f6f2; /* branco quente das seções alternadas */
+  --color-line: #e8e5de; /* fios e bordas no claro */
+  --color-ink: #0f0f0f; /* preto da marca */
+  --color-ink-2: #1a1a1a;
+  --color-ink-3: #2b2b2b;
+  --color-text: #141414;
+  --color-text-muted: #55524c;
+  --color-text-inverse: #f5f3ee;
+  --color-text-inverse-muted: #a8a49c;
   --color-gold: #c9a24b; /* dourado da marca: fios, ícones, texto sobre o preto */
-  --color-gold-light: #e8cc7a;
-  --color-gold-mid: #a08030; /* fim do degradê da logo: numerais grandes e marcadores sobre paper/paper-2 (≥3:1) */
-  --color-gold-deep: #7d5f1c; /* dourado legível sobre o papel (AA) */
-  --color-wine: #6b1a2a; /* a gravata: detalhe pontual */
-  --color-whatsapp: #1a7f45; /* verde do WhatsApp escurecido para AA com texto branco */
-  --color-whatsapp-hover: #146638;
+  --color-gold-light: #e2c47a;
+  --color-gold-text: #8a6a24; /* dourado legível sobre o branco (AA, 5:1) */
+  --color-gold-mid: #a08030; /* fim do degradê da logo: numerais grandes sobre branco/mist (≥3:1) */
 
   /* Tipografia */
-  --font-display: var(--font-garamond), "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
-  --font-caps: var(--font-cinzel), "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-display: var(--font-marcellus), "Marcellus", "Trajan Pro", Georgia, serif;
   --font-sans: var(--font-figtree), "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Escala tipográfica (display) */
-  --text-display-xl: clamp(2.6rem, 1.6rem + 4.2vw, 4.75rem);
-  --text-display-xl--line-height: 1.02;
-  --text-display-lg: clamp(2.1rem, 1.5rem + 2.6vw, 3.5rem);
-  --text-display-lg--line-height: 1.06;
-  --text-display-md: clamp(1.7rem, 1.35rem + 1.5vw, 2.5rem);
-  --text-display-md--line-height: 1.12;
-  --text-display-sm: clamp(1.35rem, 1.2rem + 0.6vw, 1.7rem);
-  --text-display-sm--line-height: 1.2;
-
-  --tracking-caps: 0.18em;
+  --text-display-xl: clamp(2.5rem, 1.55rem + 3.9vw, 4.5rem);
+  --text-display-xl--line-height: 1.06;
+  --text-display-lg: clamp(2rem, 1.45rem + 2.3vw, 3.25rem);
+  --text-display-lg--line-height: 1.1;
+  --text-display-md: clamp(1.6rem, 1.3rem + 1.3vw, 2.25rem);
+  --text-display-md--line-height: 1.18;
+  --text-display-sm: clamp(1.3rem, 1.18rem + 0.5vw, 1.55rem);
+  --text-display-sm--line-height: 1.25;
 
   --ease-elegant: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-marquee: marquee 48s linear infinite;
   --animate-rise: rise 0.9s var(--ease-elegant) both;
-  --animate-draw: draw 1.4s var(--ease-elegant) both;
 
-  @keyframes marquee {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
   @keyframes rise {
     from {
       opacity: 0.001;
-      transform: translateY(14px);
+      transform: translateY(12px);
     }
     to {
       opacity: 1;
       transform: none;
-    }
-  }
-  @keyframes draw {
-    from {
-      clip-path: inset(0 100% 0 0);
-    }
-    to {
-      clip-path: inset(0 0 0 0);
     }
   }
 }
@@ -85,11 +59,11 @@
     scroll-padding-top: 6rem;
   }
   body {
-    background: var(--color-paper);
+    background: var(--color-white);
     color: var(--color-text);
     font-family: var(--font-sans);
     font-size: 1.0625rem;
-    line-height: 1.65;
+    line-height: 1.7;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
@@ -97,10 +71,9 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 500;
+    font-weight: 400;
     text-wrap: balance;
     letter-spacing: -0.005em;
-    font-variant-numeric: lining-nums;
   }
   p {
     text-wrap: pretty;
@@ -113,17 +86,12 @@
     outline: 2px solid var(--color-gold);
     outline-offset: 3px;
   }
-  .nums-lining {
-    font-variant-numeric: lining-nums tabular-nums;
+  /* Palavra-chave do título: dourado, sem itálico. Marcação *...* nos dados. */
+  .accent em {
+    font-style: normal;
+    color: var(--color-gold-text);
   }
-  /* Itálico dourado dos títulos: a "palavra-chave" de cada frase. */
-  .em-gold em {
-    font-style: italic;
-    color: var(--color-gold-deep);
-  }
-  .on-ink .em-gold em,
-  .em-gold-light em {
-    font-style: italic;
+  .on-ink .accent em {
     color: var(--color-gold);
   }
   summary {
@@ -135,71 +103,78 @@
 }
 
 @layer components {
-  /* Container com respiro lateral mínimo de 20px em qualquer largura. */
   .container-site {
     width: 100%;
-    max-width: 76rem;
+    max-width: 75rem;
     margin-inline: auto;
     padding-inline: max(1.25rem, env(safe-area-inset-left, 0px));
   }
   .container-narrow {
     width: 100%;
-    max-width: 48rem;
+    max-width: 46rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
 
-  /* Rótulo em capitais romanas com fios, como "—— ADVOGADO ——" da logo. */
+  /* Rótulo em caixa alta, espaçado, em dourado. */
   .eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.85rem;
-    font-family: var(--font-caps);
+    font-family: var(--font-sans);
     font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: var(--tracking-caps);
+    font-weight: 600;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--color-gold-deep);
-  }
-  .eyebrow::before {
-    content: "";
-    width: 2.25rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, currentColor);
-  }
-  .eyebrow-center::after {
-    content: "";
-    width: 2.25rem;
-    height: 1px;
-    background: linear-gradient(90deg, currentColor, transparent);
+    color: var(--color-gold-text);
   }
   .on-ink .eyebrow {
     color: var(--color-gold);
   }
 
-  /* Moldura dupla da logo (fio externo + fio interno). */
-  .frame-double {
-    position: relative;
-    border: 1px solid var(--color-gold);
-    padding: 7px;
+  /* Botões */
+  .btn {
+    display: inline-flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    border-radius: 2px;
+    padding-inline: 1.6rem;
+    font-size: 0.98rem;
+    font-weight: 600;
+    transition:
+      background-color 0.3s var(--ease-elegant),
+      color 0.3s var(--ease-elegant),
+      border-color 0.3s var(--ease-elegant);
   }
-  .frame-double::before {
-    content: "";
-    position: absolute;
-    inset: 4px;
-    border: 1px solid color-mix(in oklab, var(--color-gold) 55%, transparent);
-    pointer-events: none;
-    z-index: 1;
+  .btn-primary {
+    background: var(--color-ink);
+    color: var(--color-white);
+  }
+  .btn-primary:hover {
+    background: var(--color-ink-3);
+  }
+  .btn-outline {
+    border: 1px solid color-mix(in oklab, var(--color-ink) 22%, transparent);
+    color: var(--color-ink);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-ink);
+  }
+  .btn-gold {
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+  .btn-gold:hover {
+    background: var(--color-gold-light);
   }
 
-  /* Fio dourado que se apaga nas pontas. */
-  .rule-gold {
+  /* Fio dourado curto, como o da logo. */
+  .gold-rule {
+    display: block;
+    width: 3rem;
     height: 1px;
-    border: 0;
-    background: linear-gradient(90deg, transparent, var(--color-gold) 20%, var(--color-gold) 80%, transparent);
+    background: var(--color-gold);
   }
 
-  /* Texto corrido das páginas legais. */
   .legal-prose {
     color: var(--color-text-muted);
   }
@@ -208,8 +183,8 @@
   }
   .legal-prose h2 {
     margin-top: 2.6rem;
-    font-size: 1.6rem;
-    line-height: 1.25;
+    font-size: 1.5rem;
+    line-height: 1.3;
     color: var(--color-text);
   }
   .legal-prose ul {
@@ -220,29 +195,13 @@
     margin-top: 0.5rem;
   }
   .legal-prose a {
-    color: var(--color-gold-deep);
+    color: var(--color-gold-text);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
   .legal-prose strong {
     color: var(--color-text);
     font-weight: 600;
-  }
-
-  /* Ouro em degradê, igual ao da marca, para textos curtos em destaque. */
-  .text-gold-gradient {
-    background: linear-gradient(180deg, #f6e08e 0%, #d6ad4c 45%, #a8812f 70%, #e9c867 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* Textura de damasco discreta para as faixas escuras (eco do fundo das fotos). */
-  .ink-texture {
-    background-color: var(--color-ink);
-    background-image:
-      radial-gradient(ellipse 60% 80% at 85% 20%, rgb(107 26 42 / 0.28), transparent 70%),
-      radial-gradient(ellipse 50% 60% at 10% 90%, rgb(201 162 75 / 0.08), transparent 70%);
   }
 }
 

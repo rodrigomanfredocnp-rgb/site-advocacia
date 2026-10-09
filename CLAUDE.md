@@ -32,20 +32,20 @@ Cobrir **o máximo possível de temas trabalhistas** (pesquisar e listar: verbas
 - Marca: monograma **J+C** entrelaçado, moldura retangular dupla, coluna jônica e tocha. Texto "JHONNY CARDOSO / ADVOGADO | OAB/MT 33424". Estilo clássico, sóbrio, premium.
 - **Proporção ~70% claro / 30% escuro.** Cabeçalho e rodapé **escuros**, uma faixa escura de destaque (seção "o advogado"), resto **claro**.
 
+**Direção visual atual (pedido do cliente):** limpa e editorial como o site da Patricia Gomes. **Só preto, branco e dourado** — **nunca verde** (nem no botão de WhatsApp: botões são pretos, ou dourados sobre o preto). **Sem itálico/cursiva.** Pouco ornamento: muito espaço em branco, fios finos, numeração 01/02/03 em dourado.
+
 Paleta (tokens em `src/app/globals.css`, contraste WCAG conferido):
 
-| Token                           | Cor                               | Uso                                                         |
-| ------------------------------- | --------------------------------- | ----------------------------------------------------------- |
-| `paper` / `paper-2` / `paper-3` | `#FAF7F1` / `#F1EBE0` / `#E7DECE` | fundo, seções alternadas, fios                              |
-| `ink` / `ink-2` / `ink-3`       | `#100F0D` …                       | header, footer, faixa do advogado (preto exato da logo)     |
-| `gold`                          | `#C9A24B`                         | dourado da marca: fios, ícones, texto **sobre o preto**     |
-| `gold-mid`                      | `#A08030`                         | numerais grandes/marcadores sobre o papel (≥ 3:1)           |
-| `gold-deep`                     | `#7D5F1C`                         | texto dourado **sobre o papel** (≥ 4.5:1)                   |
-| `text` / `text-muted`           | `#1C1A17` / `#5B554B`             | texto                                                       |
-| `whatsapp`                      | `#1A7F45`                         | CTA (o `#25D366` original falha contraste com texto branco) |
-| `wine`                          | `#6B1A2A`                         | detalhe pontual (gravata)                                   |
+| Token                     | Cor                               | Uso                                                     |
+| ------------------------- | --------------------------------- | ------------------------------------------------------- |
+| `white` / `mist` / `line` | `#FFFFFF` / `#F7F6F2` / `#E8E5DE` | fundo, seções alternadas, fios                          |
+| `ink` / `ink-2` / `ink-3` | `#0F0F0F` …                       | botões, faixa final, rodapé                             |
+| `gold`                    | `#C9A24B`                         | dourado da marca: fios, ícones, texto **sobre o preto** |
+| `gold-mid`                | `#A08030`                         | numerais grandes sobre o branco (≥ 3:1)                 |
+| `gold-text`               | `#8A6A24`                         | texto dourado **sobre o branco** (≥ 4.5:1)              |
+| `text` / `text-muted`     | `#141414` / `#55524C`             | texto                                                   |
 
-Tipografia: títulos **EB Garamond** (a Cormorant foi descartada: circunflexo solto em "você"); rótulos em capitais **Cinzel** (eco da logo); texto **Figtree**. Uma palavra-chave do título em _itálico dourado_ (marcação `*...*` nos dados). Assinaturas visuais: moldura dupla dourada (classe `frame-double`), numerais romanos, "§" nas citações de lei, monograma em marca d'água, cantos retos.
+Tipografia: títulos em **Marcellus** (capitais romanas, mesma família de letras da logo; peso único 400, sem itálico); texto em **Figtree**. Palavra-chave do título em dourado (marcação `*...*` nos dados, classe `accent`). Componentes de botão: classes `btn btn-primary` (preto), `btn btn-gold` (no preto), `btn btn-outline`. Fontes descartadas: Cormorant (circunflexo solto) e EB Garamond/itálicos (cliente não quer cursiva).
 
 ## 4. Dados reais de contato
 

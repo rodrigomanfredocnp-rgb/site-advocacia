@@ -10,7 +10,6 @@ import { HomeHero } from "@/components/sections/HomeHero";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { PracticeAreas } from "@/components/sections/PracticeAreas";
 import { Reviews } from "@/components/sections/Reviews";
-import { TopicsMarquee } from "@/components/sections/TopicsMarquee";
 import { JsonLd, faqGraph, organizationGraph } from "@/components/seo/JsonLd";
 import { generalFaq } from "@/content/shared";
 
@@ -25,13 +24,12 @@ export default function HomePage() {
       <SiteHeader variant="home" />
       <main id="conteudo" className="flex-1">
         <HomeHero />
-        <TopicsMarquee />
-        <PracticeAreas />
         <AboutLawyer variant="full" />
-        <Reviews />
-        <HowItWorks />
+        <PracticeAreas />
+        <HowItWorks tone="mist" />
         <Deadlines />
-        <FaqSection items={generalFaq} />
+        <Reviews />
+        <FaqSection items={generalFaq} tone="mist" />
         <ContactSection />
       </main>
       <SiteFooter />

@@ -32,30 +32,32 @@ export function ContactSection() {
   ];
 
   return (
-    <Section id="contato" tone="paper-2" labelledBy="contato-titulo">
-      <div className="container-site grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-20">
+    <Section id="contato" labelledBy="contato-titulo">
+      <div className="container-site grid gap-12 lg:grid-cols-2 lg:gap-20">
         <div>
           <p className="eyebrow">Contato</p>
-          <h2 id="contato-titulo" className="em-gold mt-5 text-display-lg">
-            Vamos conversar sobre <em>o seu caso</em>
+          <h2 id="contato-titulo" className="accent mt-5 text-display-lg">
+            Vamos conversar sobre <em>o seu caso.</em>
           </h2>
           <p className="mt-6 max-w-[46ch] text-text-muted">
-            Escritório no centro de Campo Novo do Parecis/MT, com atendimento presencial e online. O jeito mais rápido de falar
-            com o advogado é pelo WhatsApp.
+            O primeiro passo é uma conversa. Conte o que aconteceu com tranquilidade: o atendimento é sigiloso e feito pelo
+            próprio advogado, no escritório ou pelo WhatsApp.
           </p>
-          <WhatsAppButton source="contato" className="mt-9" />
+          <WhatsAppButton source="contato" className="mt-9">
+            Fale no WhatsApp
+          </WhatsAppButton>
         </div>
 
-        <ul className="divide-y divide-paper-3 border-y border-paper-3">
+        <ul className="divide-y divide-line border-y border-line">
           {rows.map(({ icon: Icon, label, content, href, external }) => {
             const body = (
               <>
-                <Icon className="mt-0.5 size-5 shrink-0 text-gold-deep" aria-hidden />
+                <Icon className="mt-0.5 size-5 shrink-0 text-gold-text" strokeWidth={1.5} aria-hidden />
                 <span className="flex-1">
-                  <span className="block font-caps text-[0.64rem] tracking-[0.18em] text-text-muted">{label.toUpperCase()}</span>
-                  <span className="mt-1 block break-words text-text">{content}</span>
+                  <span className="block text-[0.72rem] font-semibold tracking-[0.2em] text-text-muted uppercase">{label}</span>
+                  <span className="mt-1 block break-words">{content}</span>
                 </span>
-                {href && external && <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-gold-deep" aria-hidden />}
+                {href && external && <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-text-muted" aria-hidden />}
               </>
             );
             return (
@@ -64,7 +66,7 @@ export function ContactSection() {
                   <a
                     href={href}
                     {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                    className="flex gap-4 py-5 transition-colors hover:bg-paper/70"
+                    className="flex gap-4 py-5 transition-colors hover:text-gold-text"
                   >
                     {body}
                   </a>

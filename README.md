@@ -78,6 +78,8 @@ npm run format     # formata o código
 
 ## Regras de conteúdo
 
+Identidade: só preto, branco e dourado (sem verde), títulos em Marcellus, sem itálico.
+
 O site segue o Código de Ética da OAB e o Provimento 205/2021: nenhum texto promete resultado, informa valores ou se compara a
 outros advogados, e nenhum dado é inventado. As citações de lei foram conferidas no texto oficial do Planalto. Detalhes em
 `CLAUDE.md`.

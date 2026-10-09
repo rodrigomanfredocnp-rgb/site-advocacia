@@ -1,23 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Cinzel, EB_Garamond, Figtree } from "next/font/google";
+import { Figtree, Marcellus } from "next/font/google";
 import { BrandDefs } from "@/components/brand/Logo";
 import { Analytics } from "@/components/layout/Analytics";
 import { site } from "@/content/site";
 import { sharedOpenGraph } from "@/lib/metadata";
 import "./globals.css";
 
-const garamond = EB_Garamond({
+const marcellus = Marcellus({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-garamond",
-  display: "swap",
-});
-
-const cinzel = Cinzel({
-  subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-cinzel",
+  weight: "400",
+  variable: "--font-marcellus",
   display: "swap",
 });
 
@@ -45,7 +37,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#100f0d",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -53,12 +45,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${garamond.variable} ${cinzel.variable} ${figtree.variable}`}>
+    <html lang="pt-BR" className={`${marcellus.variable} ${figtree.variable}`}>
       <body className="flex min-h-dvh flex-col">
         <BrandDefs />
         <a
           href="#conteudo"
-          className="sr-only z-[100] rounded bg-ink px-4 py-3 text-text-inverse focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-[100] rounded-sm bg-ink px-4 py-3 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Pular para o conteúdo
         </a>

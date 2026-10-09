@@ -1,10 +1,10 @@
-import { ColumnGlyph } from "@/components/ui/icons";
+import { LogoSymbol } from "@/components/brand/Logo";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { emphasis } from "@/lib/emphasis";
 
-/** Fechamento de página: um único convite, dentro da moldura dupla. */
+/** Fechamento de página em faixa preta com o monograma: um único convite. */
 export function FinalCta({
-  title = "Seu caso merece *uma análise cuidadosa*.",
+  title = "Seu caso merece *uma análise cuidadosa.*",
   text = "Conte o que aconteceu. O Dr. Jhonny analisa a sua situação e explica, com clareza, quais caminhos existem.",
   whatsapp,
 }: {
@@ -13,18 +13,16 @@ export function FinalCta({
   whatsapp?: string;
 }) {
   return (
-    <section aria-labelledby="cta-final" className="bg-paper py-20 md:py-28">
-      <div className="container-site">
-        <div className="frame-double mx-auto max-w-4xl bg-paper">
-          <div className="relative z-[2] flex flex-col items-center px-6 py-14 text-center md:px-16 md:py-20">
-            <ColumnGlyph className="h-12 w-auto text-gold" />
-            <h2 id="cta-final" className="em-gold mt-6 max-w-[20ch] text-display-lg">
-              {emphasis(title)}
-            </h2>
-            <p className="mt-5 max-w-[52ch] text-text-muted">{text}</p>
-            <WhatsAppButton source="cta-final" message={whatsapp} className="mt-9" />
-          </div>
-        </div>
+    <section aria-labelledby="cta-final" className="on-ink bg-ink py-20 text-text-inverse md:py-24">
+      <div className="container-narrow flex flex-col items-center text-center">
+        <LogoSymbol className="h-14 w-auto" />
+        <h2 id="cta-final" className="accent mt-8 max-w-[22ch] text-display-lg">
+          {emphasis(title)}
+        </h2>
+        <p className="mt-5 max-w-[50ch] text-text-inverse-muted">{text}</p>
+        <WhatsAppButton source="cta-final" message={whatsapp} variant="gold" className="mt-10">
+          Falar com o advogado
+        </WhatsAppButton>
       </div>
     </section>
   );

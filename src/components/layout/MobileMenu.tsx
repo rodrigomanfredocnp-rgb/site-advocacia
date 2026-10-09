@@ -37,7 +37,7 @@ export function MobileMenu({ items, whatsappMessage }: Props) {
         aria-expanded={open}
         aria-controls="menu-mobile"
         aria-label={open ? "Fechar menu" : "Abrir menu"}
-        className="grid size-11 place-items-center rounded-[3px] border border-ink-3 text-gold transition-colors hover:border-gold/60"
+        className="grid size-11 place-items-center rounded-sm border border-line text-ink transition-colors hover:border-ink"
       >
         {open ? <X className="size-5" /> : <Menu className="size-5" />}
       </button>
@@ -45,7 +45,7 @@ export function MobileMenu({ items, whatsappMessage }: Props) {
       <div
         id="menu-mobile"
         hidden={!open}
-        className="fixed inset-x-0 top-[4.75rem] bottom-0 z-50 overflow-y-auto border-t border-ink-3 bg-ink"
+        className="fixed inset-x-0 top-20 bottom-0 z-50 overflow-y-auto border-t border-line bg-white"
       >
         <nav aria-label="Menu" className="container-site flex flex-col py-6">
           {items.map((item) => (
@@ -53,13 +53,13 @@ export function MobileMenu({ items, whatsappMessage }: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="border-b border-ink-3 py-4 font-display text-2xl text-text-inverse transition-colors hover:text-gold-light"
+              className="border-b border-line py-4 font-display text-2xl text-ink transition-colors hover:text-gold-text"
             >
               {item.label}
             </a>
           ))}
           <WhatsAppButton source="menu-mobile" message={whatsappMessage} className="mt-8 w-full">
-            Conversar no WhatsApp
+            Fale no WhatsApp
           </WhatsAppButton>
         </nav>
       </div>

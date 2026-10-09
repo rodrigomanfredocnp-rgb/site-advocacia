@@ -9,7 +9,7 @@ import { CookiePreferences } from "./Analytics";
 
 export function SiteFooter() {
   return (
-    <footer className="on-ink ink-texture text-text-inverse-muted">
+    <footer className="on-ink bg-ink text-text-inverse-muted">
       <div className="container-site grid gap-12 py-16 md:py-20 lg:grid-cols-[0.9fr_2.1fr]">
         <div className="flex flex-col items-start gap-6">
           <Link href="/" aria-label="Página inicial">
@@ -36,7 +36,7 @@ export function SiteFooter() {
             (col) =>
               col.items.length > 0 && (
                 <nav key={col.category} aria-label={col.label}>
-                  <h2 className="font-caps text-[0.72rem] tracking-[0.18em] text-gold">{col.label.toUpperCase()}</h2>
+                  <h2 className="eyebrow">{col.label.toUpperCase()}</h2>
                   <ul className="mt-5 space-y-2.5 text-[0.95rem]">
                     {col.items.map((l) => (
                       <li key={l.slug}>
@@ -51,7 +51,7 @@ export function SiteFooter() {
           )}
 
           <div className="sm:col-span-2 xl:col-span-1">
-            <h2 className="font-caps text-[0.72rem] tracking-[0.18em] text-gold">ESCRITÓRIO</h2>
+            <h2 className="eyebrow">ESCRITÓRIO</h2>
             <ul className="mt-5 space-y-4 text-[0.95rem]">
               <li className="flex gap-3">
                 <MapPin className="mt-1 size-4 shrink-0 text-gold" aria-hidden />

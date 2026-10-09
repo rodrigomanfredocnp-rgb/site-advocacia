@@ -67,20 +67,3 @@ export function FacebookIcon({ className }: SvgProps) {
     </svg>
   );
 }
-
-/** Coluna jônica estilizada, tirada do monograma, usada como separador. */
-export function ColumnGlyph({ className }: SvgProps) {
-  return (
-    <svg viewBox="0 0 24 40" className={className} aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.1">
-      <path d="M4 6.5h16M5.5 9.5c0-1.6 1.2-2.4 2.6-2.4M18.5 9.5c0-1.6-1.2-2.4-2.6-2.4" />
-      <circle cx="5.6" cy="10" r="1.6" />
-      <circle cx="18.4" cy="10" r="1.6" />
-      <path d="M8 10.5v23M10.7 10.5v23M13.3 10.5v23M16 10.5v23M6 34h12M5 37h14" />
-      <path
-        d="M12 1.2c1.2 1.3 1.6 2.3 1.2 3.1-.3.6-.9.9-1.2.9s-.9-.3-1.2-.9c-.4-.8 0-1.8 1.2-3.1Z"
-        fill="currentColor"
-        stroke="none"
-      />
-    </svg>
-  );
-}

@@ -1,73 +1,53 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { Section } from "@/components/ui/Section";
-import { TOPIC_ICONS } from "@/components/ui/icons";
+import { Section, SectionHeader } from "@/components/ui/Section";
 import { landingGroups } from "@/content/landings";
 
-/**
- * Áreas de atuação no formato de sumário de código: cada tema é um parágrafo (§)
- * que leva à página própria do assunto.
- */
+/** Áreas de atuação em lista numerada com fios finos; cada linha leva à página do tema. */
 export function PracticeAreas() {
   const groups = landingGroups();
-  // Numeração contínua (§ 1, § 2...) atravessando os dois grupos.
-  const order = new Map(groups.flatMap((g) => g.items).map((l, i) => [l.slug, i + 1]));
+  const order = new Map(groups.flatMap((g) => g.items).map((l, i) => [l.slug, String(i + 1).padStart(2, "0")]));
 
   return (
     <Section id="atuacao" labelledBy="atuacao-titulo">
       <div className="container-site">
-        <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr] lg:items-end">
-          <div>
-            <p className="eyebrow">Sumário</p>
-            <h2 id="atuacao-titulo" className="em-gold mt-5 max-w-[18ch] text-display-lg">
-              Áreas de <em>atuação</em>
-            </h2>
-          </div>
-          <p className="max-w-[46ch] text-text-muted lg:justify-self-end">
-            Escolha o assunto mais próximo da sua situação. Cada página explica, em linguagem simples, o que a lei garante e como
-            buscar os seus direitos.
-          </p>
-        </div>
+        <SectionHeader
+          id="atuacao-titulo"
+          eyebrow="Áreas de atuação"
+          title="Caminhos claros para *cada situação*."
+          intro="Escolha o assunto mais próximo do seu caso. Cada página explica, em linguagem simples, o que a lei garante e como buscar os seus direitos."
+        />
 
-        <div className="mt-14 grid gap-14">
-          {groups.map(
-            (group) =>
-              group.items.length > 0 && (
-                <div key={group.category}>
-                  <h3 className="flex items-center gap-4 font-caps text-[0.78rem] tracking-[0.2em] text-gold-deep">
-                    {group.label.toUpperCase()}
-                    <span className="h-px flex-1 bg-paper-3" aria-hidden />
-                  </h3>
-                  <ul className="mt-2 grid lg:grid-cols-2 lg:gap-x-14">
-                    {group.items.map((l) => {
-                      const Icon = TOPIC_ICONS[l.icon];
-                      return (
-                        <li key={l.slug} className="border-b border-paper-3">
-                          <Link href={`/${l.slug}`} className="group grid grid-cols-[2.5rem_1fr_auto] items-start gap-x-4 py-6">
-                            <span className="pt-1 font-caps text-[0.75rem] tracking-[0.1em] text-gold-deep" aria-hidden>
-                              § {order.get(l.slug)}
-                            </span>
-                            <span>
-                              <span className="flex items-center gap-3">
-                                <Icon className="size-5 shrink-0 text-gold-deep" strokeWidth={1.5} aria-hidden />
-                                <span className="font-display text-[1.45rem] leading-tight font-semibold text-text transition-colors group-hover:text-gold-deep">
-                                  {l.topic}
-                                </span>
-                              </span>
-                              <span className="mt-1.5 block text-[0.95rem] text-text-muted">{l.summary}</span>
-                            </span>
-                            <ArrowRight
-                              className="mt-1.5 size-5 text-gold-deep transition-transform duration-300 group-hover:translate-x-1"
-                              aria-hidden
-                            />
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ),
-          )}
+        <div className="mt-16 grid gap-16">
+          {groups.map((group) => (
+            <div key={group.category}>
+              <h3 className="eyebrow">{group.label}</h3>
+              <ul className="mt-4 border-t border-line">
+                {group.items.map((l) => (
+                  <li key={l.slug} className="border-b border-line">
+                    <Link
+                      href={`/${l.slug}`}
+                      className="group grid grid-cols-[3rem_1fr_auto] items-baseline gap-x-4 py-7 md:grid-cols-[5rem_1.1fr_1.4fr_auto] md:gap-x-8"
+                    >
+                      <span className="font-display text-[1.6rem] leading-none text-gold-mid md:text-[2.2rem]" aria-hidden>
+                        {order.get(l.slug)}
+                      </span>
+                      <span className="font-display text-[1.35rem] leading-snug transition-colors group-hover:text-gold-text md:text-[1.5rem]">
+                        {l.topic}
+                      </span>
+                      <span className="col-start-2 row-start-2 mt-2 text-[0.95rem] text-text-muted md:col-start-3 md:row-start-1 md:mt-0">
+                        {l.summary}
+                      </span>
+                      <ArrowRight
+                        className="col-start-3 row-start-1 size-5 text-text-muted transition-[transform,color] duration-300 group-hover:translate-x-1 group-hover:text-gold-text md:col-start-4"
+                        aria-hidden
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </Section>

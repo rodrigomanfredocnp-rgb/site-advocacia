@@ -1,45 +1,40 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
-import { TOPIC_ICONS } from "@/components/ui/icons";
 import type { Landing } from "@/content/types";
 
 export function RelatedTopics({ items }: { items: Landing[] }) {
   if (items.length === 0) return null;
   return (
-    <Section tone="paper-2" labelledBy="relacionados" className="!py-16 md:!py-20">
+    <Section tone="mist" labelledBy="relacionados" className="!py-16 md:!py-20">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-4">
-          <h2 id="relacionados" className="em-gold text-display-md">
-            Outros assuntos que <em>podem ajudar</em>
+          <h2 id="relacionados" className="text-display-md">
+            Outros assuntos que podem ajudar
           </h2>
           <Link
             href="/#atuacao"
-            className="inline-flex items-center gap-2 font-caps text-[0.7rem] tracking-[0.16em] text-gold-deep hover:text-text"
+            className="inline-flex items-center gap-2 text-[0.92rem] font-semibold text-gold-text hover:text-ink"
           >
-            VER TODAS AS ÁREAS <ArrowRight className="size-3.5" aria-hidden />
+            Ver todas as áreas <ArrowRight className="size-4" aria-hidden />
           </Link>
         </div>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((l) => {
-            const Icon = TOPIC_ICONS[l.icon];
-            return (
-              <li key={l.slug}>
-                <Link
-                  href={`/${l.slug}`}
-                  className="group flex h-full flex-col gap-3 border border-paper-3 bg-paper p-6 transition-colors duration-300 hover:border-gold"
-                >
-                  <Icon className="size-6 text-gold-deep" strokeWidth={1.5} aria-hidden />
-                  <h3 className="font-display text-[1.3rem] leading-tight font-semibold">{l.topic}</h3>
-                  <p className="text-[0.92rem] text-text-muted">{l.summary}</p>
-                  <ArrowRight
-                    className="mt-auto size-4 text-gold-deep transition-transform duration-300 group-hover:translate-x-1"
-                    aria-hidden
-                  />
-                </Link>
-              </li>
-            );
-          })}
+        <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((l) => (
+            <li key={l.slug}>
+              <Link
+                href={`/${l.slug}`}
+                className="group flex h-full flex-col gap-3 border border-transparent bg-white p-7 transition-colors duration-300 hover:border-gold"
+              >
+                <h3 className="text-[1.25rem] leading-snug">{l.topic}</h3>
+                <p className="text-[0.92rem] text-text-muted">{l.summary}</p>
+                <ArrowRight
+                  className="mt-auto size-4 text-gold-text transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden
+                />
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </Section>

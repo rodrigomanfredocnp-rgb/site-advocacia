@@ -17,7 +17,7 @@ export function LegalPage({
   return (
     <>
       <SiteHeader variant="home" />
-      <main id="conteudo" className="flex-1 bg-paper py-16 md:py-24">
+      <main id="conteudo" className="flex-1 bg-white py-16 md:py-24">
         <article className="container-narrow">
           <p className="eyebrow">{eyebrow}</p>
           <h1 className="mt-5 text-display-lg">{title}</h1>
