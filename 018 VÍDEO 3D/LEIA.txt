@@ -1,0 +1,1 @@
+O Vídeo 3D não tem como mudar a cor do fundo para a mesma cor da Logo, ele é com fundo Padrão Preto.
