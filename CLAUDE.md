@@ -15,33 +15,37 @@ Estrutura de URLs (domínio: `jhonnycardoso.adv.br`):
 
 Cobrir **o máximo possível de temas trabalhistas** (pesquisar e listar: verbas rescisórias, horas extras, vínculo sem carteira, assédio moral/sexual, acidente de trabalho, doença ocupacional, justa causa, rescisão indireta, gestante demitida, estabilidade, FGTS, adicional de insalubridade/periculosidade, desvio de função, equiparação salarial, banco de horas, aposentadoria/INSS/auxílio-doença/BPC etc.). Nunca criminal.
 
-## 2. Stack
+## 2. Stack e arquitetura (implementado)
 
-- **Node.js 22** + **Next.js (última versão estável)**, App Router, **TypeScript**, **Tailwind CSS**.
-- Conteúdo de cada landing em arquivo de dados (um por assunto) alimentando **um template reutilizável**. Criar landing nova = adicionar dados, sem mexer em componente.
-- Usar `next/image` para otimizar fotos. SEO por página (title, description, Open Graph, JSON-LD `Attorney`/`LegalService`/`FAQPage`), sitemap e robots.
-- Performance e mobile-first (a maioria do tráfego virá de celular/anúncios).
+- **Node.js 22** + **Next.js 16.4** (App Router), **TypeScript**, **Tailwind 4**, **export estático** (`output: "export"` → pasta `out/`, hospeda em qualquer lugar).
+- ⚠️ Next 16 tem mudanças incompatíveis: ler `node_modules/next/dist/docs/` antes de usar APIs (ver `AGENTS.md`). `params` é Promise; tipos `PageProps<"/rota">`/`LayoutProps`.
+- Conteúdo: `src/content/site.ts` (dados do escritório), `src/content/landings/<slug>.ts` (uma por tema, tipo em `src/content/types.ts`), `src/content/shared.ts` (bio, passos, FAQ da home). Template único em `src/app/[slug]/page.tsx`.
+- Imagens: `npm run images` gera WebP em `public/img/`; o loader `src/lib/image-loader.ts` liga o `next/image` a esses arquivos. Logo vetorial em `src/components/brand/paths.ts` (extraída do PDF). `npm run brand-assets` gera favicon, ícones e `public/og.jpg`.
+- SEO: metadata por página, Open Graph comum em `src/lib/metadata.ts` (espalhar em toda página que definir `openGraph`), JSON-LD `Person` + `LegalService` + `FAQPage` + `BreadcrumbList`, sitemap e robots.
+- Medição opcional: `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_META_PIXEL_ID`; scripts só carregam após consentimento; preferência revogável no rodapé.
+- Qualidade: `npm run check` (Prettier + ESLint + tsc) deve passar antes de todo commit.
 
 ## 3. Identidade visual (fonte da verdade: arquivos neste repositório)
 
-- Logos e originais: `assets/logo/` e as pastas numeradas na raiz (`01 LOGOMARCA NORMAL`, `015 FAVICON SITE`, `04 ARTES REDES SOCIAIS`, `05 MARCA D_ÁGUA`, etc.). `.cdr` não abre aqui; usar PNG/PDF/WebP.
-- Fotos dele: `assets/fotos/` (5 retratos, fundo preto-vinho de damasco, terno preto, gravata vermelha, óculos).
+- Todos os originais ficam em `identidade-visual/` (pastas numeradas do designer, `logo-exportada/`, `fotos-advogado/`). `.cdr` não abre aqui; usar PNG/PDF/WebP.
+- Fotos dele: `identidade-visual/fotos-advogado/` (5 retratos, fundo preto-vinho de damasco, terno preto, gravata vermelha, óculos). No site: `jhonny-serio` (hero da home), `jhonny-lapela` (hero das landings), `jhonny-sorrindo` (faixa do advogado).
 - Marca: monograma **J+C** entrelaçado, moldura retangular dupla, coluna jônica e tocha. Texto "JHONNY CARDOSO / ADVOGADO | OAB/MT 33424". Estilo clássico, sóbrio, premium.
 - **Proporção ~70% claro / 30% escuro.** Cabeçalho e rodapé **escuros**, uma faixa escura de destaque (seção "o advogado"), resto **claro**.
 
-Paleta:
+Paleta (tokens em `src/app/globals.css`, contraste WCAG conferido):
 
-| Uso                            | Cor                                                       |
-| ------------------------------ | --------------------------------------------------------- |
-| Fundo principal                | `#FAF7F2`                                                 |
-| Seções alternadas              | `#F2ECE1`                                                 |
-| Escuro (header, footer, faixa) | `#0B0B0B`                                                 |
-| Dourado (acento)               | `#C9A24B`; degradê `#F0D060 → #A08030` para logo/detalhes |
-| Texto                          | `#1A1A1A` / `#5A5A5A`                                     |
-| CTA WhatsApp                   | `#25D366`                                                 |
-| Detalhe pontual (gravata)      | `#6B1A2A`                                                 |
+| Token                           | Cor                               | Uso                                                         |
+| ------------------------------- | --------------------------------- | ----------------------------------------------------------- |
+| `paper` / `paper-2` / `paper-3` | `#FAF7F1` / `#F1EBE0` / `#E7DECE` | fundo, seções alternadas, fios                              |
+| `ink` / `ink-2` / `ink-3`       | `#100F0D` …                       | header, footer, faixa do advogado (preto exato da logo)     |
+| `gold`                          | `#C9A24B`                         | dourado da marca: fios, ícones, texto **sobre o preto**     |
+| `gold-mid`                      | `#A08030`                         | numerais grandes/marcadores sobre o papel (≥ 3:1)           |
+| `gold-deep`                     | `#7D5F1C`                         | texto dourado **sobre o papel** (≥ 4.5:1)                   |
+| `text` / `text-muted`           | `#1C1A17` / `#5B554B`             | texto                                                       |
+| `whatsapp`                      | `#1A7F45`                         | CTA (o `#25D366` original falha contraste com texto branco) |
+| `wine`                          | `#6B1A2A`                         | detalhe pontual (gravata)                                   |
 
-Tipografia: títulos **Cormorant Garamond** ou **Playfair Display** (uma palavra em itálico dourado); texto **Inter**. Logo clara sobre fundo claro, logo branca/dourada sobre fundo escuro. Favicon gerado a partir do vetor (o `FAV.png` é pequeno). Marca d'água do símbolo JC bem clara no fundo de seções, como no papel timbrado.
+Tipografia: títulos **EB Garamond** (a Cormorant foi descartada: circunflexo solto em "você"); rótulos em capitais **Cinzel** (eco da logo); texto **Figtree**. Uma palavra-chave do título em _itálico dourado_ (marcação `*...*` nos dados). Assinaturas visuais: moldura dupla dourada (classe `frame-double`), numerais romanos, "§" nas citações de lei, monograma em marca d'água, cantos retos.
 
 ## 4. Dados reais de contato
 
@@ -71,8 +75,17 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 - Linguagem cautelosa: "pode existir direito", "cada caso é analisado individualmente", "a análise inicial não gera compromisso".
 - **Nunca inventar** avaliações do Google, depoimentos, números de clientes atendidos, anos de experiência ou casos ganhos. Usar apenas dados fornecidos pelo usuário; o que faltar fica como campo a preencher e é avisado ao usuário.
 - Citar leis/súmulas só quando verificadas (CLT, súmulas do TST, temas do STF, Lei 8.213/91 etc.).
-- Rodapé com: nome, OAB/MT 33424, endereço, aviso "este site é meramente informativo, conforme o Código de Ética da OAB", links de política de privacidade e termos de uso (criar as páginas) e aviso de cookies/LGPD.
-- **Nada de criminal.**
+- Rodapé com: nome, OAB/MT 33424, endereço, aviso "este site é meramente informativo, conforme o Código de Ética da OAB", links de política de privacidade e termos de uso e preferências de cookies (LGPD).
+- **Nada de criminal.** Não usar a palavra "especialista" (exige título de especialização). Não prometer consulta "gratuita".
+- Leis conferidas no texto oficial do Planalto (CLT, CF/ADCT, Leis 8.213, 8.742, 5.889, 8.036, LC 150). Ao alterar uma citação, conferir de novo.
+
+### Pendências (dados que só o cliente tem)
+
+- **Horário de atendimento**: `site.hours` está `null` (oculto). Preencher quando o escritório informar.
+- **Avaliações do Google**: `site.reviews` vazio (seção oculta). Preencher só com avaliações reais.
+- **Atendimento fora de MT**: o site diz "presencial e online"; não afirma "todo o Brasil" até o cliente confirmar.
+- **Temas**: confirmar se ele atende todos os 16 (em especial INSS, aposentadoria e BPC).
+- **IDs de medição** (GA4/Meta Pixel) e **hospedagem/domínio** para publicar.
 
 ## 7. Como trabalhar (obrigatório)
 
@@ -93,12 +106,8 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 - Não commitar segredos. Não commitar `.next`, `node_modules`.
 - Os arquivos de identidade visual pesados (`.cdr`, `.mp4`) ficam no repositório como fonte; o site usa só versões otimizadas copiadas para `public/`.
 
-## 9. Ordem de execução sugerida
+## 9. Estado atual
 
-1. Scaffold Next.js 22/TS/Tailwind, tokens de cor e fontes, layout (header/footer escuros).
-2. Copiar e otimizar logos/fotos para `public/`; favicon; OG image.
-3. Home institucional (`/`).
-4. Template de landing + dados da 1ª landing (gestante) para validar com o usuário.
-5. Demais landings trabalhistas a partir da lista de temas.
-6. Páginas legais, sitemap, robots, JSON-LD, analytics (se o usuário fornecer IDs).
-7. Revisão (code-review, security-review), testes visuais desktop/mobile, build limpo.
+Concluído: home, 16 landings, páginas legais, 404, SEO, favicon/OG, medição opcional com consentimento, auditoria (axe WCAG AA sem violações, sem estouro horizontal em 360px), code-review e security-review aplicados.
+
+Prévia privada publicada como Artifact: https://claude.ai/artifact/5iPXRvjz2tpYPVd2Jnc3h3 (gerada a partir de `out/` por um script de conversão para caminhos relativos; não faz parte do repositório).
