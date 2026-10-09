@@ -76,7 +76,11 @@ export function ColumnGlyph({ className }: SvgProps) {
       <circle cx="5.6" cy="10" r="1.6" />
       <circle cx="18.4" cy="10" r="1.6" />
       <path d="M8 10.5v23M10.7 10.5v23M13.3 10.5v23M16 10.5v23M6 34h12M5 37h14" />
-      <path d="M12 1.2c1.2 1.3 1.6 2.3 1.2 3.1-.3.6-.9.9-1.2.9s-.9-.3-1.2-.9c-.4-.8 0-1.8 1.2-3.1Z" fill="currentColor" stroke="none" />
+      <path
+        d="M12 1.2c1.2 1.3 1.6 2.3 1.2 3.1-.3.6-.9.9-1.2.9s-.9-.3-1.2-.9c-.4-.8 0-1.8 1.2-3.1Z"
+        fill="currentColor"
+        stroke="none"
+      />
     </svg>
   );
 }

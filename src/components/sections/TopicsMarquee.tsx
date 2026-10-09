@@ -26,7 +26,7 @@ export function TopicsMarquee() {
       aria-label="Temas atendidos"
       className="group overflow-hidden border-y border-[#a8812f] bg-[linear-gradient(180deg,#e9cc77_0%,#d4ad53_50%,#c39a43_100%)] py-4"
     >
-      <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:flex-wrap motion-reduce:animate-none">
+      <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused] motion-reduce:w-auto motion-reduce:animate-none motion-reduce:flex-wrap">
         {row(false)}
         <div className="flex motion-reduce:hidden">{row(true)}</div>
       </div>

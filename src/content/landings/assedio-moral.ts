@@ -16,8 +16,7 @@ export const assedioMoral: Landing = {
     eyebrow: "Assédio moral e sexual",
     question: "Está sendo humilhado no trabalho?",
     answer: "Ninguém é obrigado a *aceitar abuso* para manter o emprego.",
-    lead:
-      "Gritos, apelidos, exposição em grupo, metas impossíveis com ameaças, isolamento ou investidas de cunho sexual. A lei protege a sua honra, a sua saúde e a sua intimidade no ambiente de trabalho.",
+    lead: "Gritos, apelidos, exposição em grupo, metas impossíveis com ameaças, isolamento ou investidas de cunho sexual. A lei protege a sua honra, a sua saúde e a sua intimidade no ambiente de trabalho.",
     legalBadge: "CF, art. 5º, X · CLT, arts. 223-C e 483",
   },
   law: {

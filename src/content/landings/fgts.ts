@@ -16,8 +16,7 @@ export const fgts: Landing = {
     eyebrow: "Fundo de Garantia",
     question: "Seu FGTS está com depósitos faltando?",
     answer: "Esse dinheiro *é seu*, e a empresa é obrigada a depositar.",
-    lead:
-      "Todo mês, a empresa deve depositar 8% da sua remuneração na conta do FGTS. Meses em branco, valores menores que o devido ou a multa de 40% não paga na demissão podem ser cobrados.",
+    lead: "Todo mês, a empresa deve depositar 8% da sua remuneração na conta do FGTS. Meses em branco, valores menores que o devido ou a multa de 40% não paga na demissão podem ser cobrados.",
     legalBadge: "Lei 8.036/90, arts. 15 e 18",
   },
   law: {

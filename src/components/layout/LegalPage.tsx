@@ -3,7 +3,17 @@ import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
 /** Estrutura das páginas institucionais de texto (privacidade, termos). */
-export function LegalPage({ eyebrow, title, updated, children }: { eyebrow: string; title: string; updated: string; children: ReactNode }) {
+export function LegalPage({
+  eyebrow,
+  title,
+  updated,
+  children,
+}: {
+  eyebrow: string;
+  title: string;
+  updated: string;
+  children: ReactNode;
+}) {
   return (
     <>
       <SiteHeader variant="home" />

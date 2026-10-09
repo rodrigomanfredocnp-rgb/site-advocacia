@@ -16,8 +16,7 @@ export const inss: Landing = {
     eyebrow: "Benefícios por incapacidade",
     question: "O INSS negou ou cortou o seu benefício?",
     answer: "A decisão da perícia *não é a palavra final*.",
-    lead:
-      "Auxílio por incapacidade temporária (o antigo auxílio-doença) negado, alta dada antes da recuperação, benefício cortado ou aposentadoria por incapacidade recusada. Existem caminhos para rever a decisão, e eles têm prazo.",
+    lead: "Auxílio por incapacidade temporária (o antigo auxílio-doença) negado, alta dada antes da recuperação, benefício cortado ou aposentadoria por incapacidade recusada. Existem caminhos para rever a decisão, e eles têm prazo.",
     legalBadge: "Lei 8.213/91, arts. 42, 59 e 60",
   },
   law: {
@@ -27,7 +26,10 @@ export const inss: Landing = {
       "A carência, em regra, é de 12 contribuições (art. 25, I). Ela é dispensada em casos de acidente de qualquer natureza, doença profissional ou do trabalho e doenças graves previstas em lista oficial (art. 26, II). Quando a incapacidade é permanente, o benefício pode ser a aposentadoria por incapacidade permanente (art. 42).",
     ],
     pillars: [
-      { title: "Qualidade de segurado", text: "Estar contribuindo, ou dentro do período de graça, na data em que a incapacidade começou." },
+      {
+        title: "Qualidade de segurado",
+        text: "Estar contribuindo, ou dentro do período de graça, na data em que a incapacidade começou.",
+      },
       { title: "Carência", text: "Em regra, 12 contribuições, com dispensa em acidentes e doenças graves." },
       { title: "Incapacidade", text: "Comprovada por documentos médicos e pela perícia, administrativa ou judicial." },
     ],

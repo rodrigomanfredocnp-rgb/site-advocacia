@@ -3,7 +3,9 @@ import { site } from "@/content/site";
 
 /** Serializa JSON-LD escapando "<" para evitar injeção de HTML (guia oficial do Next). */
 export function JsonLd({ data }: { data: object }) {
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />
+  );
 }
 
 export const attorneyId = `${site.url}/#advogado`;
@@ -60,7 +62,10 @@ export function organizationGraph() {
         addressCountry: "BR",
       },
       hasMap: site.address.mapsUrl,
-      areaServed: [{ "@type": "City", name: "Campo Novo do Parecis" }, { "@type": "Country", name: "Brasil" }],
+      areaServed: [
+        { "@type": "City", name: "Campo Novo do Parecis" },
+        { "@type": "Country", name: "Brasil" },
+      ],
       employee: { "@id": attorneyId },
       sameAs: [site.social.instagram, site.social.facebook],
       ...rating,

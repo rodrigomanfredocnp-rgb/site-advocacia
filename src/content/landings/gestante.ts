@@ -16,8 +16,7 @@ export const gestante: Landing = {
     eyebrow: "Direitos da gestante",
     question: "Você foi demitida grávida?",
     answer: "A lei pode *garantir o seu emprego* ou a indenização do período.",
-    lead:
-      "A estabilidade da gestante vale desde a confirmação da gravidez até cinco meses após o parto. Ela pode existir mesmo quando a empresa não sabia, quando você só descobriu a gestação depois da demissão ou quando estava em contrato de experiência.",
+    lead: "A estabilidade da gestante vale desde a confirmação da gravidez até cinco meses após o parto. Ela pode existir mesmo quando a empresa não sabia, quando você só descobriu a gestação depois da demissão ou quando estava em contrato de experiência.",
     legalBadge: "ADCT, art. 10, II, “b” · Súmula 244 do TST",
   },
   law: {

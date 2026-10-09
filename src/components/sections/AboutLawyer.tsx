@@ -11,7 +11,11 @@ import { site } from "@/content/site";
 export function AboutLawyer({ variant = "full", whatsapp }: { variant?: "full" | "short"; whatsapp?: string }) {
   const bio = variant === "full" ? lawyerBio : lawyerBio.slice(0, 2);
   return (
-    <section id="advogado" aria-labelledby="advogado-titulo" className="on-ink ink-texture relative overflow-hidden py-20 text-text-inverse md:py-28">
+    <section
+      id="advogado"
+      aria-labelledby="advogado-titulo"
+      className="on-ink ink-texture relative overflow-hidden py-20 text-text-inverse md:py-28"
+    >
       <LogoSymbol tone="current" className="pointer-events-none absolute -top-16 -right-24 h-[30rem] w-auto text-gold/[0.05]" />
 
       <div className="container-site relative grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">

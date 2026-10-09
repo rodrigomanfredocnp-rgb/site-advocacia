@@ -7,7 +7,10 @@ import { site } from "@/content/site";
 export function HomeHero() {
   return (
     <section aria-labelledby="titulo" className="relative overflow-hidden bg-paper">
-      <LogoSymbol tone="current" className="pointer-events-none absolute -bottom-28 -left-24 h-[38rem] w-auto text-gold/[0.05] max-lg:hidden" />
+      <LogoSymbol
+        tone="current"
+        className="pointer-events-none absolute -bottom-28 -left-24 h-[38rem] w-auto text-gold/[0.05] max-lg:hidden"
+      />
 
       <div className="container-site relative grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 lg:pt-20 lg:pb-28">
         <div className="flex flex-col items-start">

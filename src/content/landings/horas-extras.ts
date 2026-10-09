@@ -16,8 +16,7 @@ export const horasExtras: Landing = {
     eyebrow: "Jornada de trabalho",
     question: "Trabalhou além do horário e não recebeu?",
     answer: "Cada hora extra vale *pelo menos 50% a mais*.",
-    lead:
-      "Chegar antes, sair depois, almoçar em 20 minutos, trabalhar no sábado ou de madrugada. Tudo isso tem regra e tem valor, e o que não foi pago pode ser cobrado dos últimos cinco anos.",
+    lead: "Chegar antes, sair depois, almoçar em 20 minutos, trabalhar no sábado ou de madrugada. Tudo isso tem regra e tem valor, e o que não foi pago pode ser cobrado dos últimos cinco anos.",
     legalBadge: "CF, art. 7º, XIII e XVI · CLT, arts. 59, 71 e 73",
   },
   law: {

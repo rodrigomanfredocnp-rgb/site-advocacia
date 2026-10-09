@@ -59,7 +59,12 @@ export function SiteFooter() {
             <ul className="mt-5 space-y-4 text-[0.95rem]">
               <li className="flex gap-3">
                 <MapPin className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
-                <a href={site.address.mapsUrl} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-light">
+                <a
+                  href={site.address.mapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-gold-light"
+                >
                   {fullAddress}
                 </a>
               </li>
@@ -71,7 +76,10 @@ export function SiteFooter() {
               </li>
               <li className="flex gap-3">
                 <Mail className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
-                <a href={`mailto:${site.contact.email}`} className="[overflow-wrap:anywhere] transition-colors hover:text-gold-light">
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="[overflow-wrap:anywhere] transition-colors hover:text-gold-light"
+                >
                   {site.contact.email}
                 </a>
               </li>

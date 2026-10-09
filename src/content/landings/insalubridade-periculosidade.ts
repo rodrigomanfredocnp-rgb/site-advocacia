@@ -16,8 +16,7 @@ export const insalubridadePericulosidade: Landing = {
     eyebrow: "Adicionais de risco",
     question: "Seu trabalho põe a sua saúde em risco?",
     answer: "A lei manda *pagar a mais* por isso.",
-    lead:
-      "Calor intenso na lavoura, barulho de máquinas, contato com agrotóxicos, poeira, produtos químicos, combustíveis, eletricidade e trabalho de moto. Quem trabalha exposto a esses agentes pode ter direito a um adicional no salário.",
+    lead: "Calor intenso na lavoura, barulho de máquinas, contato com agrotóxicos, poeira, produtos químicos, combustíveis, eletricidade e trabalho de moto. Quem trabalha exposto a esses agentes pode ter direito a um adicional no salário.",
     legalBadge: "CLT, arts. 192, 193 e 195",
   },
   law: {

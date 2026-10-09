@@ -27,7 +27,9 @@ export function MythsSection({ landing }: { landing: Landing }) {
                   <span className="font-caps text-[0.62rem] tracking-[0.18em] text-gold-deep md:hidden">VERDADE · </span>
                   <span className="text-text">{m.fact}</span>
                   {m.source && (
-                    <span className="mt-2 block font-caps text-[0.62rem] tracking-[0.16em] text-gold-deep">§ {m.source.toUpperCase()}</span>
+                    <span className="mt-2 block font-caps text-[0.62rem] tracking-[0.16em] text-gold-deep">
+                      § {m.source.toUpperCase()}
+                    </span>
                   )}
                 </dd>
               </div>

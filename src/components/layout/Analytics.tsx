@@ -22,7 +22,13 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
-    fbq?: ((...args: unknown[]) => void) & { queue?: unknown[]; loaded?: boolean; version?: string; callMethod?: (...a: unknown[]) => void; push?: unknown };
+    fbq?: ((...args: unknown[]) => void) & {
+      queue?: unknown[];
+      loaded?: boolean;
+      version?: string;
+      callMethod?: (...a: unknown[]) => void;
+      push?: unknown;
+    };
     _fbq?: unknown;
   }
 }
@@ -132,10 +138,18 @@ export function Analytics() {
         .
       </p>
       <div className="mt-4 flex gap-3">
-        <button type="button" onClick={() => choose("granted")} className="rounded-[3px] bg-gold px-4 py-2 font-semibold text-ink hover:bg-gold-light">
+        <button
+          type="button"
+          onClick={() => choose("granted")}
+          className="rounded-[3px] bg-gold px-4 py-2 font-semibold text-ink hover:bg-gold-light"
+        >
           Aceitar
         </button>
-        <button type="button" onClick={() => choose("denied")} className="rounded-[3px] border border-ink-3 px-4 py-2 text-text-inverse hover:border-gold/60">
+        <button
+          type="button"
+          onClick={() => choose("denied")}
+          className="rounded-[3px] border border-ink-3 px-4 py-2 text-text-inverse hover:border-gold/60"
+        >
           Recusar
         </button>
       </div>

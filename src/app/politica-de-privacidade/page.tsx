@@ -38,7 +38,10 @@ export default function PrivacyPage() {
 
       <h2>3. Para que os dados são usados</h2>
       <ul>
-        <li>Responder ao seu contato e analisar a sua situação jurídica (procedimentos preliminares a um contrato, art. 7º, V, da LGPD).</li>
+        <li>
+          Responder ao seu contato e analisar a sua situação jurídica (procedimentos preliminares a um contrato, art. 7º, V, da
+          LGPD).
+        </li>
         <li>Prestar os serviços advocatícios contratados e cumprir obrigações legais e regulatórias (art. 7º, II, V e VI).</li>
         <li>Medir o uso do site para melhorá-lo, somente com o seu consentimento (art. 7º, I).</li>
       </ul>
@@ -52,8 +55,8 @@ export default function PrivacyPage() {
       <h2>5. Compartilhamento</h2>
       <p>
         Os dados não são vendidos nem cedidos. Podem ser compartilhados apenas com o Poder Judiciário e órgãos públicos quando
-        necessário à defesa dos seus interesses, e com fornecedores de tecnologia que viabilizam a comunicação (como o WhatsApp) e,
-        se você aceitar, a medição do site (Google Analytics e Meta).
+        necessário à defesa dos seus interesses, e com fornecedores de tecnologia que viabilizam a comunicação (como o WhatsApp)
+        e, se você aceitar, a medição do site (Google Analytics e Meta).
       </p>
 
       <h2>6. Cookies</h2>
@@ -64,14 +67,14 @@ export default function PrivacyPage() {
 
       <h2>7. Por quanto tempo os dados são guardados</h2>
       <p>
-        Pelo tempo necessário para atender ao seu contato e, havendo contratação, pelo prazo exigido para a prestação dos serviços,
-        o cumprimento de obrigações legais e o exercício de direitos em processos.
+        Pelo tempo necessário para atender ao seu contato e, havendo contratação, pelo prazo exigido para a prestação dos
+        serviços, o cumprimento de obrigações legais e o exercício de direitos em processos.
       </p>
 
       <h2>8. Seus direitos</h2>
       <p>
-        Você pode pedir a confirmação do tratamento, o acesso, a correção, a anonimização, a portabilidade ou a eliminação dos seus
-        dados, além de informações sobre o compartilhamento e a revogação do consentimento (art. 18 da LGPD), pelo e-mail{" "}
+        Você pode pedir a confirmação do tratamento, o acesso, a correção, a anonimização, a portabilidade ou a eliminação dos
+        seus dados, além de informações sobre o compartilhamento e a revogação do consentimento (art. 18 da LGPD), pelo e-mail{" "}
         <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Você também pode reclamar à Autoridade Nacional de
         Proteção de Dados (ANPD).
       </p>

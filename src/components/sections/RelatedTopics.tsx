@@ -13,7 +13,10 @@ export function RelatedTopics({ items }: { items: Landing[] }) {
           <h2 id="relacionados" className="em-gold text-display-md">
             Outros assuntos que <em>podem ajudar</em>
           </h2>
-          <Link href="/#atuacao" className="inline-flex items-center gap-2 font-caps text-[0.7rem] tracking-[0.16em] text-gold-deep hover:text-text">
+          <Link
+            href="/#atuacao"
+            className="inline-flex items-center gap-2 font-caps text-[0.7rem] tracking-[0.16em] text-gold-deep hover:text-text"
+          >
             VER TODAS AS ÁREAS <ArrowRight className="size-3.5" aria-hidden />
           </Link>
         </div>

@@ -23,7 +23,7 @@ export function HowItWorks({ whatsapp, id = "como-funciona" }: { whatsapp?: stri
         <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-0">
           {steps.map((step, i) => (
             <li key={step.title} className="relative md:border-l md:border-paper-3 md:px-8 md:first:border-l-0 md:first:pl-0">
-              <span className="font-caps text-[2.4rem] leading-none text-gold" aria-hidden>
+              <span className="font-caps text-[2.4rem] leading-none text-gold-mid" aria-hidden>
                 {toRoman(i + 1)}
               </span>
               <h3 className="mt-5 font-display text-display-sm">{step.title}</h3>

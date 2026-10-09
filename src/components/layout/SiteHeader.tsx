@@ -47,7 +47,10 @@ export function SiteHeader({ variant = "home", whatsappMessage }: Props) {
           </>
         ) : (
           <div className="flex items-center gap-6">
-            <Link href="/#advogado" className="hidden text-[0.92rem] text-text-inverse-muted transition-colors hover:text-gold-light md:block">
+            <Link
+              href="/#advogado"
+              className="hidden text-[0.92rem] text-text-inverse-muted transition-colors hover:text-gold-light md:block"
+            >
               Conheça o advogado
             </Link>
             <WhatsAppButton source="header" size="md" message={whatsappMessage} className="max-sm:px-3.5">

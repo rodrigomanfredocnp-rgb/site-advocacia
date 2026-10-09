@@ -16,8 +16,7 @@ export const acidenteDeTrabalho: Landing = {
     eyebrow: "Acidente de trabalho",
     question: "Sofreu um acidente no trabalho?",
     answer: "A lei garante *estabilidade, benefício e indenização*, conforme o caso.",
-    lead:
-      "Quedas, cortes, máquinas, acidentes com veículos da empresa ou no caminho entre casa e trabalho. Depois do acidente, existem direitos com o INSS e com o empregador, e alguns têm prazo curto.",
+    lead: "Quedas, cortes, máquinas, acidentes com veículos da empresa ou no caminho entre casa e trabalho. Depois do acidente, existem direitos com o INSS e com o empregador, e alguns têm prazo curto.",
     legalBadge: "Lei 8.213/91, arts. 19, 21, 86 e 118",
   },
   law: {

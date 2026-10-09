@@ -5,7 +5,8 @@ export const aposentadoria: Landing = {
   category: "previdenciario",
   icon: "hourglass",
   topic: "Aposentadoria",
-  summary: "Quer saber quando e como se aposentar, ou acha que o INSS calculou errado? Tempo rural e especial podem fazer diferença.",
+  summary:
+    "Quer saber quando e como se aposentar, ou acha que o INSS calculou errado? Tempo rural e especial podem fazer diferença.",
   seo: {
     title: "Aposentadoria pelo INSS: planejamento, tempo rural e revisão",
     description:
@@ -16,8 +17,7 @@ export const aposentadoria: Landing = {
     eyebrow: "Aposentadoria",
     question: "Quer se aposentar, mas não sabe por onde começar?",
     answer: "Um planejamento pode *antecipar ou melhorar* o seu benefício.",
-    lead:
-      "Depois da Reforma da Previdência de 2019, as regras ficaram mais complexas, com várias regras de transição. Tempo rural, tempo em atividade insalubre e períodos sem registro podem mudar a data e o valor da sua aposentadoria.",
+    lead: "Depois da Reforma da Previdência de 2019, as regras ficaram mais complexas, com várias regras de transição. Tempo rural, tempo em atividade insalubre e períodos sem registro podem mudar a data e o valor da sua aposentadoria.",
     legalBadge: "CF, art. 201, § 7º · EC 103/2019 · Lei 8.213/91",
   },
   law: {

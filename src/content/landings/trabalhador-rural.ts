@@ -5,7 +5,8 @@ export const trabalhadorRural: Landing = {
   category: "trabalhista",
   icon: "wheat",
   topic: "Trabalhador rural",
-  summary: "Operador de máquina, tratorista, safrista ou trabalhador de fazenda? O trabalho no campo tem regras e direitos próprios.",
+  summary:
+    "Operador de máquina, tratorista, safrista ou trabalhador de fazenda? O trabalho no campo tem regras e direitos próprios.",
   seo: {
     title: "Direitos do trabalhador rural: safra, horas extras e adicional",
     description:
@@ -16,8 +17,7 @@ export const trabalhadorRural: Landing = {
     eyebrow: "Trabalho rural",
     question: "Trabalha na safra ou na fazenda?",
     answer: "O trabalho no campo tem *direitos próprios*, e muitos ficam sem pagar.",
-    lead:
-      "Jornadas longas no plantio e na colheita, trabalho de madrugada, contrato de safra, aplicação de defensivos, alojamento e transporte. A Lei do Trabalho Rural e a Constituição garantem ao trabalhador do campo os mesmos direitos do trabalhador urbano, e alguns a mais.",
+    lead: "Jornadas longas no plantio e na colheita, trabalho de madrugada, contrato de safra, aplicação de defensivos, alojamento e transporte. A Lei do Trabalho Rural e a Constituição garantem ao trabalhador do campo os mesmos direitos do trabalhador urbano, e alguns a mais.",
     legalBadge: "Lei 5.889/73 · CF, art. 7º · NR-31",
   },
   law: {

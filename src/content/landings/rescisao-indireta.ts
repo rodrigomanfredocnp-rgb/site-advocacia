@@ -16,8 +16,7 @@ export const rescisaoIndireta: Landing = {
     eyebrow: "Rescisão indireta",
     question: "Quer sair, mas a culpa é da empresa?",
     answer: "Você pode sair *recebendo tudo*, como se tivesse sido demitido.",
-    lead:
-      "Salário atrasado, FGTS sem depósito, desvio de função, humilhações ou risco à sua saúde. Quando a falta é do empregador, pedir demissão é o pior caminho. A lei prevê a rescisão indireta, a “justa causa da empresa”.",
+    lead: "Salário atrasado, FGTS sem depósito, desvio de função, humilhações ou risco à sua saúde. Quando a falta é do empregador, pedir demissão é o pior caminho. A lei prevê a rescisão indireta, a “justa causa da empresa”.",
     legalBadge: "CLT, art. 483",
   },
   law: {
@@ -27,7 +26,10 @@ export const rescisaoIndireta: Landing = {
       "Nos casos de descumprimento do contrato, como atraso de salário ou falta de depósitos do FGTS, o trabalhador pode pedir a rescisão na Justiça e escolher se continua trabalhando até a decisão final (art. 483, § 3º).",
     ],
     pillars: [
-      { title: "Falta grave", text: "A empresa descumpre o contrato ou a lei de forma séria, ou trata o empregado de forma abusiva." },
+      {
+        title: "Falta grave",
+        text: "A empresa descumpre o contrato ou a lei de forma séria, ou trata o empregado de forma abusiva.",
+      },
       { title: "Ação judicial", text: "O pedido é feito na Justiça do Trabalho, com as provas da falta do empregador." },
       { title: "Verbas completas", text: "Reconhecida a rescisão indireta, são pagas as verbas da dispensa sem justa causa." },
     ],

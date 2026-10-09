@@ -5,7 +5,8 @@ export const bpcLoas: Landing = {
   category: "previdenciario",
   icon: "hand-heart",
   topic: "BPC/LOAS",
-  summary: "Idoso com 65 anos ou mais, ou pessoa com deficiência, em família de baixa renda? Pode ter direito a um salário mínimo por mês.",
+  summary:
+    "Idoso com 65 anos ou mais, ou pessoa com deficiência, em família de baixa renda? Pode ter direito a um salário mínimo por mês.",
   seo: {
     title: "BPC/LOAS: quem tem direito e o que fazer se foi negado",
     description:
@@ -16,8 +17,7 @@ export const bpcLoas: Landing = {
     eyebrow: "Benefício assistencial",
     question: "Precisa de ajuda e nunca contribuiu para o INSS?",
     answer: "O BPC garante *um salário mínimo por mês* a quem tem direito.",
-    lead:
-      "O Benefício de Prestação Continuada é pago ao idoso com 65 anos ou mais e à pessoa com deficiência que não têm como se manter, nem de ter o sustento garantido pela família. Não exige contribuição ao INSS.",
+    lead: "O Benefício de Prestação Continuada é pago ao idoso com 65 anos ou mais e à pessoa com deficiência que não têm como se manter, nem de ter o sustento garantido pela família. Não exige contribuição ao INSS.",
     legalBadge: "Lei 8.742/93 (LOAS), art. 20",
   },
   law: {
@@ -28,7 +28,10 @@ export const bpcLoas: Landing = {
     ],
     pillars: [
       { title: "Quem", text: "Idoso com 65 anos ou mais, ou pessoa com deficiência de longo prazo (2 anos ou mais)." },
-      { title: "Renda", text: "Família de baixa renda, analisada pela renda por pessoa e pela situação real de vulnerabilidade." },
+      {
+        title: "Renda",
+        text: "Família de baixa renda, analisada pela renda por pessoa e pela situação real de vulnerabilidade.",
+      },
       { title: "Cadastro", text: "Inscrição atualizada no CadÚnico e CPF de todos da família." },
     ],
   },

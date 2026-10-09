@@ -37,11 +37,17 @@ function iconSvg(size, padding) {
 </svg>`;
 }
 
-await sharp(Buffer.from(iconSvg(512, 64))).png().toFile("src/app/icon.png");
-await sharp(Buffer.from(iconSvg(180, 22))).png().toFile("src/app/apple-icon.png");
+await sharp(Buffer.from(iconSvg(512, 64)))
+  .png()
+  .toFile("src/app/icon.png");
+await sharp(Buffer.from(iconSvg(180, 22)))
+  .png()
+  .toFile("src/app/apple-icon.png");
 
 // favicon.ico com PNG embutido de 32×32 (formato aceito por todos os navegadores atuais).
-const png32 = await sharp(Buffer.from(iconSvg(32, 3))).png().toBuffer();
+const png32 = await sharp(Buffer.from(iconSvg(32, 3)))
+  .png()
+  .toBuffer();
 const header = Buffer.alloc(22);
 header.writeUInt16LE(0, 0);
 header.writeUInt16LE(1, 2);

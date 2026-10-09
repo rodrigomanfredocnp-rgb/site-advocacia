@@ -16,7 +16,14 @@ type Props = {
  * Botão principal de conversão. Abre o WhatsApp com a mensagem já preenchida.
  * O atributo data-wa é lido por <Analytics /> para registrar o clique.
  */
-export function WhatsAppButton({ message, source, children = "Conversar com o advogado", size = "lg", className = "", note }: Props) {
+export function WhatsAppButton({
+  message,
+  source,
+  children = "Conversar com o advogado",
+  size = "lg",
+  className = "",
+  note,
+}: Props) {
   const sizing = size === "lg" ? "min-h-14 px-7 text-[1.0625rem]" : "min-h-12 px-5 text-[0.95rem]";
   const button = (
     <a

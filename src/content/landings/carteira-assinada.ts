@@ -16,8 +16,7 @@ export const carteiraAssinada: Landing = {
     eyebrow: "Reconhecimento de vínculo",
     question: "Trabalhou sem carteira assinada?",
     answer: "Você pode ter *todos os direitos* de um empregado registrado.",
-    lead:
-      "Se havia horário, chefe dando ordens, salário e trabalho frequente, existia uma relação de emprego, mesmo sem papel assinado. A Justiça pode reconhecer o vínculo e mandar pagar o que ficou para trás.",
+    lead: "Se havia horário, chefe dando ordens, salário e trabalho frequente, existia uma relação de emprego, mesmo sem papel assinado. A Justiça pode reconhecer o vínculo e mandar pagar o que ficou para trás.",
     legalBadge: "CLT, arts. 2º, 3º e 9º",
   },
   law: {
@@ -29,7 +28,10 @@ export const carteiraAssinada: Landing = {
     pillars: [
       { title: "Pessoalidade", text: "Era você quem tinha que trabalhar. Não podia mandar outra pessoa no seu lugar." },
       { title: "Subordinação", text: "Havia alguém que dava ordens, definia horários e cobrava resultados." },
-      { title: "Salário e frequência", text: "Você recebia pelo trabalho e trabalhava de forma contínua, não só de vez em quando." },
+      {
+        title: "Salário e frequência",
+        text: "Você recebia pelo trabalho e trabalhava de forma contínua, não só de vez em quando.",
+      },
     ],
   },
   summaryBox:

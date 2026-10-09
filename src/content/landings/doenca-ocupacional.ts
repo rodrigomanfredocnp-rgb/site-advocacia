@@ -16,8 +16,7 @@ export const doencaOcupacional: Landing = {
     eyebrow: "Doença ocupacional",
     question: "O trabalho te deixou doente?",
     answer: "Doença do trabalho tem *os mesmos direitos* de um acidente.",
-    lead:
-      "Dores na coluna, tendinite, LER/DORT, perda auditiva, problemas respiratórios, ansiedade, depressão e burnout. Quando o trabalho causa ou piora a doença, a lei garante estabilidade e pode gerar indenização.",
+    lead: "Dores na coluna, tendinite, LER/DORT, perda auditiva, problemas respiratórios, ansiedade, depressão e burnout. Quando o trabalho causa ou piora a doença, a lei garante estabilidade e pode gerar indenização.",
     legalBadge: "Lei 8.213/91, arts. 20, 21 e 21-A",
   },
   law: {

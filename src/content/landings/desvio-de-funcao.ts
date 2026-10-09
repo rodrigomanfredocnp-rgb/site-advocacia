@@ -16,8 +16,7 @@ export const desvioDeFuncao: Landing = {
     eyebrow: "Desvio de função e equiparação",
     question: "Faz o trabalho de um cargo e recebe por outro?",
     answer: "A diferença de salário *pode ser cobrada*.",
-    lead:
-      "Contratado como auxiliar e trabalhando como operador, registrado como serviços gerais e fazendo a função de motorista, ou ganhando menos que o colega ao lado pelo mesmo trabalho. Nesses casos, a lei garante o pagamento da diferença.",
+    lead: "Contratado como auxiliar e trabalhando como operador, registrado como serviços gerais e fazendo a função de motorista, ou ganhando menos que o colega ao lado pelo mesmo trabalho. Nesses casos, a lei garante o pagamento da diferença.",
     legalBadge: "CLT, art. 461 · OJ 125 da SDI-1 do TST",
   },
   law: {

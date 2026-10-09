@@ -16,8 +16,7 @@ export const verbasRescisorias: Landing = {
     eyebrow: "Verbas rescisórias",
     question: "Sua rescisão atrasou ou veio errada?",
     answer: "A empresa tem *10 dias* para pagar tudo o que você tem direito.",
-    lead:
-      "Saldo de salário, aviso prévio, férias com um terço, 13º proporcional, FGTS e a multa de 40%. Quando o pagamento atrasa ou vem a menor, a lei prevê multa a favor do trabalhador.",
+    lead: "Saldo de salário, aviso prévio, férias com um terço, 13º proporcional, FGTS e a multa de 40%. Quando o pagamento atrasa ou vem a menor, a lei prevê multa a favor do trabalhador.",
     legalBadge: "CLT, art. 477, §§ 6º e 8º · art. 467",
   },
   law: {

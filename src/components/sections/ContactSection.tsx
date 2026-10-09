@@ -21,7 +21,13 @@ export function ContactSection() {
     },
     { icon: Phone, label: "Telefone e WhatsApp", content: site.contact.whatsappDisplay, href: site.contact.phoneHref },
     { icon: Mail, label: "E-mail", content: site.contact.email, href: `mailto:${site.contact.email}` },
-    { icon: InstagramIcon, label: "Instagram", content: site.social.instagramHandle, href: site.social.instagram, external: true },
+    {
+      icon: InstagramIcon,
+      label: "Instagram",
+      content: site.social.instagramHandle,
+      href: site.social.instagram,
+      external: true,
+    },
     { icon: Clock, label: "Horário", content: site.hours },
   ];
 
@@ -33,7 +39,9 @@ export function ContactSection() {
           <h2 id="contato-titulo" className="em-gold mt-5 text-display-lg">
             Vamos conversar sobre <em>o seu caso</em>
           </h2>
-          <p className="mt-6 max-w-[46ch] text-text-muted">{site.serviceArea}. O jeito mais rápido de falar com o advogado é pelo WhatsApp.</p>
+          <p className="mt-6 max-w-[46ch] text-text-muted">
+            {site.serviceArea}. O jeito mais rápido de falar com o advogado é pelo WhatsApp.
+          </p>
           <WhatsAppButton source="contato" className="mt-9" />
         </div>
 

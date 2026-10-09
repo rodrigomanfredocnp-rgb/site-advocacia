@@ -32,9 +32,11 @@ export function LawSection({ landing }: { landing: Landing }) {
             <li key={pillar.title} className="relative pb-10 last:pb-0">
               <span
                 aria-hidden
-                className="absolute top-1.5 -left-[calc(2rem+5px)] size-2.5 rotate-45 border border-gold bg-paper md:-left-[calc(2.5rem+5px)]"
+                className="absolute top-1.5 -left-[calc(2rem+5px)] size-2.5 rotate-45 border border-gold-mid bg-paper md:-left-[calc(2.5rem+5px)]"
               />
-              <p className="font-display text-[2.6rem] leading-none text-gold italic" aria-hidden>{toRoman(i + 1)}</p>
+              <p className="font-display text-[2.6rem] leading-none text-gold-mid italic" aria-hidden>
+                {toRoman(i + 1)}
+              </p>
               <h3 className="mt-3 font-caps text-[0.82rem] tracking-[0.16em] text-text">{pillar.title.toUpperCase()}</h3>
               <p className="mt-2.5 max-w-[42ch] text-text-muted">{pillar.text}</p>
             </li>

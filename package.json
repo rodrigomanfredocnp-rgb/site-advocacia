@@ -9,7 +9,9 @@
     "lint": "eslint",
     "images": "node scripts/optimize-images.mjs",
     "brand-assets": "node scripts/generate-brand-assets.mjs",
-    "preview": "npx serve out -l 3000"
+    "preview": "npx serve out -l 3000",
+    "format": "prettier --write .",
+    "check": "prettier --check . && eslint && tsc --noEmit"
   },
   "dependencies": {
     "lucide-react": "^1.54.0",
@@ -24,6 +26,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "prettier": "^3.9.9",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5"

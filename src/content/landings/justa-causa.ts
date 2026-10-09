@@ -16,8 +16,7 @@ export const justaCausa: Landing = {
     eyebrow: "Reversão de justa causa",
     question: "Foi demitido por justa causa?",
     answer: "A empresa *precisa provar* o motivo, e a decisão pode ser revertida.",
-    lead:
-      "A justa causa é a punição mais grave da relação de trabalho e tira quase todas as verbas da rescisão. Por isso, a lei exige motivo grave, previsto em lei, e prova firme. Quando isso falta, a Justiça pode transformar a dispensa em sem justa causa.",
+    lead: "A justa causa é a punição mais grave da relação de trabalho e tira quase todas as verbas da rescisão. Por isso, a lei exige motivo grave, previsto em lei, e prova firme. Quando isso falta, a Justiça pode transformar a dispensa em sem justa causa.",
     legalBadge: "CLT, arts. 482 e 818, II",
   },
   law: {

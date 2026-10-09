@@ -21,6 +21,7 @@
   --color-text-inverse-muted: #b5ac9e;
   --color-gold: #c9a24b; /* dourado da marca: fios, ícones, texto sobre o preto */
   --color-gold-light: #e8cc7a;
+  --color-gold-mid: #a08030; /* fim do degradê da logo: numerais grandes e marcadores sobre paper/paper-2 (≥3:1) */
   --color-gold-deep: #7d5f1c; /* dourado legível sobre o papel (AA) */
   --color-wine: #6b1a2a; /* a gravata: detalhe pontual */
   --color-whatsapp: #1a7f45; /* verde do WhatsApp escurecido para AA com texto branco */

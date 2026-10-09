@@ -11,7 +11,10 @@ export function LandingHero({ landing }: { landing: Landing }) {
   return (
     <section aria-labelledby="titulo" className="relative overflow-hidden bg-paper">
       {/* Monograma em marca d'água, como no papel timbrado do escritório. */}
-      <LogoSymbol tone="current" className="pointer-events-none absolute -bottom-24 -left-28 h-[34rem] w-auto text-gold/[0.05] max-lg:hidden" />
+      <LogoSymbol
+        tone="current"
+        className="pointer-events-none absolute -bottom-24 -left-28 h-[34rem] w-auto text-gold/[0.05] max-lg:hidden"
+      />
 
       <div className="container-site relative grid items-center gap-12 pt-12 pb-16 md:pt-16 lg:grid-cols-[1.12fr_0.88fr] lg:gap-16 lg:pt-20 lg:pb-24">
         <div className="flex flex-col items-start">

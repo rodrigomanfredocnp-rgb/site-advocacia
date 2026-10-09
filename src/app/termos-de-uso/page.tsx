@@ -21,9 +21,9 @@ export default function TermsPage() {
 
       <h2>2. O conteúdo não substitui uma consulta</h2>
       <p>
-        As informações publicadas são gerais e podem não se aplicar ao seu caso. Cada situação depende de fatos, documentos, datas e
-        da interpretação dos tribunais, que pode mudar com o tempo. Nenhum texto deste site constitui parecer jurídico nem promessa
-        de resultado.
+        As informações publicadas são gerais e podem não se aplicar ao seu caso. Cada situação depende de fatos, documentos, datas
+        e da interpretação dos tribunais, que pode mudar com o tempo. Nenhum texto deste site constitui parecer jurídico nem
+        promessa de resultado.
       </p>
 
       <h2>3. Contato não cria relação de cliente</h2>
@@ -40,8 +40,8 @@ export default function TermsPage() {
 
       <h2>5. Links externos</h2>
       <p>
-        O site contém links para serviços de terceiros, como WhatsApp, Google Maps e redes sociais, que têm as suas próprias regras
-        de uso e de privacidade.
+        O site contém links para serviços de terceiros, como WhatsApp, Google Maps e redes sociais, que têm as suas próprias
+        regras de uso e de privacidade.
       </p>
 
       <h2>6. Privacidade</h2>
