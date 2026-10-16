@@ -1,112 +1,138 @@
 import Link from "next/link";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { LogoFull } from "@/components/brand/Logo";
-import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { FacebookIcon, InstagramIcon } from "@/components/ui/icons";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { landingGroups } from "@/content/landings";
 import { fullAddress, site } from "@/content/site";
-import { whatsappUrl } from "@/lib/whatsapp";
+import { headline } from "@/lib/emphasis";
 import { CookiePreferences } from "./Analytics";
 
-export function SiteFooter() {
+type Props = {
+  /** Chamada final, específica de cada página. */
+  title?: string;
+  text?: string;
+  whatsappMessage?: string;
+};
+
+/**
+ * Rodapé escuro e limpo, que abre com a chamada final para o WhatsApp.
+ * Fica em cada página (não no layout) para a chamada poder falar do assunto da página.
+ */
+export function SiteFooter({
+  title = "Conte o que aconteceu.",
+  text = "O advogado explica o caminho. A primeira conversa é pelo WhatsApp, sigilosa e sem compromisso.",
+  whatsappMessage,
+}: Props) {
   return (
-    <footer className="on-ink bg-ink text-text-inverse-muted">
-      <div className="container-site grid gap-12 py-16 md:py-20 lg:grid-cols-[0.9fr_2.1fr]">
-        <div className="flex flex-col items-start gap-6">
-          <Link href="/" aria-label="Página inicial">
-            <LogoFull className="h-auto w-56" />
-          </Link>
-          <p className="max-w-xs text-[0.95rem] leading-relaxed">
-            Advocacia trabalhista e previdenciária com atendimento direto, linguagem clara e sigilo em cada etapa.
-          </p>
-          <div className="flex gap-3">
-            <SocialLink href={site.social.instagram} label="Instagram">
-              <InstagramIcon className="size-[18px]" />
-            </SocialLink>
-            <SocialLink href={site.social.facebook} label="Facebook">
-              <FacebookIcon className="size-[18px]" />
-            </SocialLink>
-            <SocialLink href={whatsappUrl()} label="WhatsApp">
-              <WhatsAppIcon className="size-[18px]" />
-            </SocialLink>
+    <footer className="bg-glow on-ink text-text-inverse-muted">
+      <div className="container-site pt-20 pb-12 md:pt-28">
+        <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+          <h2 data-reveal className="max-w-[18ch] text-display-lg text-text-inverse">
+            {headline(title)}
+          </h2>
+          <div data-reveal style={{ "--i": 1 } as React.CSSProperties} className="flex flex-col items-start gap-6 lg:items-end">
+            <p className="max-w-[40ch] text-[1.1rem] lg:text-right">{text}</p>
+            <WhatsAppButton source="rodape" variant="gold" message={whatsappMessage}>
+              Conversar no WhatsApp
+            </WhatsAppButton>
           </div>
         </div>
 
-        <div className="grid gap-10 sm:grid-cols-2 xl:grid-cols-[1fr_0.9fr_1.25fr]">
-          {landingGroups().map(
-            (col) =>
-              col.items.length > 0 && (
-                <nav key={col.category} aria-label={col.label}>
-                  <h2 className="eyebrow">{col.label.toUpperCase()}</h2>
-                  <ul className="mt-5 space-y-2.5 text-[0.95rem]">
-                    {col.items.map((l) => (
-                      <li key={l.slug}>
-                        <Link href={`/${l.slug}`} className="transition-colors hover:text-gold-light">
-                          {l.topic}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              ),
-          )}
+        <span data-reveal="line" className="hairline mt-16 md:mt-20" />
 
-          <div className="sm:col-span-2 xl:col-span-1">
-            <h2 className="eyebrow">ESCRITÓRIO</h2>
-            <ul className="mt-5 space-y-4 text-[0.95rem]">
-              <li className="flex gap-3">
-                <MapPin className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
+        <div className="grid gap-12 pt-14 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_0.9fr]">
+          <div className="flex flex-col items-start gap-6">
+            <Link href="/" aria-label="Página inicial">
+              <LogoFull className="h-auto w-52" />
+            </Link>
+            <ul className="space-y-3.5 text-[1rem]">
+              <li>
                 <a
                   href={site.address.mapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-gold-light"
+                  className="flex gap-3 transition-colors hover:text-gold-light"
                 >
+                  <MapPin className="mt-1 size-[18px] shrink-0 text-gold" aria-hidden />
                   {fullAddress}
                 </a>
               </li>
-              <li className="flex gap-3">
-                <Phone className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
-                <a href={site.contact.phoneHref} className="transition-colors hover:text-gold-light">
+              <li>
+                <a href={site.contact.phoneHref} className="flex gap-3 tabular-nums transition-colors hover:text-gold-light">
+                  <Phone className="mt-1 size-[18px] shrink-0 text-gold" aria-hidden />
                   {site.contact.whatsappDisplay}
                 </a>
               </li>
-              <li className="flex gap-3">
-                <Mail className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
+              <li>
                 <a
                   href={`mailto:${site.contact.email}`}
-                  className="[overflow-wrap:anywhere] transition-colors hover:text-gold-light"
+                  className="flex gap-3 [overflow-wrap:anywhere] transition-colors hover:text-gold-light"
                 >
+                  <Mail className="mt-1 size-[18px] shrink-0 text-gold" aria-hidden />
                   {site.contact.email}
                 </a>
               </li>
-              {site.hours && (
-                <li className="flex gap-3">
-                  <Clock className="mt-1 size-4 shrink-0 text-gold" aria-hidden />
-                  <span>{site.hours}</span>
-                </li>
-              )}
             </ul>
+            <div className="flex gap-3">
+              <SocialLink href={site.social.instagram} label="Instagram">
+                <InstagramIcon className="size-5" />
+              </SocialLink>
+              <SocialLink href={site.social.facebook} label="Facebook">
+                <FacebookIcon className="size-5" />
+              </SocialLink>
+            </div>
           </div>
+
+          {landingGroups().map((group) => (
+            <nav key={group.category} aria-label={group.label}>
+              <h2 className="font-display text-[1.3rem] text-text-inverse">{group.label}</h2>
+              <ul className="mt-5 space-y-2.5 text-[1rem]">
+                {group.items.map((l) => (
+                  <li key={l.slug}>
+                    <Link href={`/${l.slug}`} className="transition-colors hover:text-gold-light">
+                      {l.topic}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+
+          <nav aria-label="O escritório">
+            <h2 className="font-display text-[1.3rem] text-text-inverse">O escritório</h2>
+            <ul className="mt-5 space-y-2.5 text-[1rem]">
+              <li>
+                <Link href="/sobre" className="transition-colors hover:text-gold-light">
+                  Sobre o advogado
+                </Link>
+              </li>
+              <li>
+                <Link href="/contato" className="transition-colors hover:text-gold-light">
+                  Contato
+                </Link>
+              </li>
+              <li>
+                <Link href="/politica-de-privacidade" className="transition-colors hover:text-gold-light">
+                  Política de privacidade
+                </Link>
+              </li>
+              <li>
+                <Link href="/termos-de-uso" className="transition-colors hover:text-gold-light">
+                  Termos de uso
+                </Link>
+              </li>
+              <CookiePreferences listItem />
+            </ul>
+          </nav>
         </div>
       </div>
 
-      <div className="border-t border-ink-3">
-        <div className="container-site flex flex-col gap-4 py-7 text-[0.8rem] leading-relaxed md:flex-row md:items-center md:justify-between">
-          <p>
-            {site.lawyer.fullName} · {site.lawyer.oab}
-            <br />
-            Conteúdo meramente informativo, em conformidade com o Código de Ética e Disciplina da OAB e o Provimento 205/2021.
-          </p>
-          <div className="flex shrink-0 flex-wrap gap-x-6 gap-y-2">
-            <Link href="/politica-de-privacidade" className="transition-colors hover:text-gold-light">
-              Política de privacidade
-            </Link>
-            <Link href="/termos-de-uso" className="transition-colors hover:text-gold-light">
-              Termos de uso
-            </Link>
-            <CookiePreferences />
-          </div>
-        </div>
+      <div className="border-t border-white/10">
+        <p className="container-site py-7 text-[0.9rem] leading-relaxed">
+          {site.lawyer.fullName} · Advogado · {site.lawyer.oab}. Este site é meramente informativo, conforme o Código de Ética e
+          Disciplina da OAB e o Provimento 205/2021, e não substitui a análise individual de cada caso.
+        </p>
       </div>
     </footer>
   );
@@ -119,7 +145,7 @@ function SocialLink({ href, label, children }: { href: string; label: string; ch
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="grid size-10 place-items-center rounded-full border border-ink-3 text-gold transition-colors hover:border-gold hover:text-gold-light"
+      className="grid size-12 place-items-center rounded-full border border-white/15 text-gold transition-colors hover:border-gold hover:text-gold-light"
     >
       {children}
     </a>

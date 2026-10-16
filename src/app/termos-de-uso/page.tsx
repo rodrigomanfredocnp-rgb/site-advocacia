@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalPage eyebrow="Condições" title="Termos de uso" updated="outubro de 2026">
+    <LegalPage title="Termos de uso" updated="outubro de 2026">
       <h2>1. Finalidade do site</h2>
       <p>
         Este site apresenta a atuação profissional de {site.lawyer.fullName}, advogado inscrito na {site.lawyer.oab}, e reúne

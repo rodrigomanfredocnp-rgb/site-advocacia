@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Figtree, Marcellus } from "next/font/google";
 import { BrandDefs } from "@/components/brand/Logo";
 import { Analytics } from "@/components/layout/Analytics";
+import { RevealObserver } from "@/components/layout/RevealObserver";
 import { site } from "@/content/site";
 import { sharedOpenGraph } from "@/lib/metadata";
 import "./globals.css";
@@ -22,11 +23,11 @@ const figtree = Figtree({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Jhonny Cardoso Advogado | Direito do Trabalho em Campo Novo do Parecis/MT",
+    default: "Jhonny Cardoso Advogado | Direito do Trabalho e INSS em Campo Novo do Parecis/MT",
     template: "%s | Jhonny Cardoso Advogado",
   },
   description:
-    "Advocacia trabalhista e previdenciária em Campo Novo do Parecis/MT, com atendimento presencial e pelo WhatsApp. Rescisão, horas extras, gestante, acidente de trabalho, INSS e mais.",
+    "Advogado trabalhista e previdenciário em Campo Novo do Parecis/MT. Demissão, horas extras, gestante, acidente de trabalho, INSS e aposentadoria. Converse pelo WhatsApp.",
   applicationName: site.name,
   authors: [{ name: site.lawyer.fullName }],
   creator: site.lawyer.fullName,
@@ -37,24 +38,31 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#0e0d0b",
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
 };
 
+/* Marca o <html> com .js antes da pintura: só então as animações de rolagem escondem o conteúdo. */
+const JS_FLAG = "document.documentElement.classList.add('js')";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${marcellus.variable} ${figtree.variable}`}>
+    <html lang="pt-BR" className={`${marcellus.variable} ${figtree.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: JS_FLAG }} />
+      </head>
       <body className="flex min-h-dvh flex-col">
         <BrandDefs />
         <a
           href="#conteudo"
-          className="sr-only z-[100] rounded-sm bg-ink px-4 py-3 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+          className="sr-only z-[100] rounded-full bg-ink px-5 py-3 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
         >
           Pular para o conteúdo
         </a>
         {children}
+        <RevealObserver />
         <Analytics />
       </body>
     </html>

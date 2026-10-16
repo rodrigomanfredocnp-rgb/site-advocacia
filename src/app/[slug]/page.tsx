@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { AboutLawyer } from "@/components/sections/AboutLawyer";
-import { DocumentsMistakes } from "@/components/sections/DocumentsMistakes";
-import { FaqSection } from "@/components/sections/FaqSection";
-import { FinalCta } from "@/components/sections/FinalCta";
-import { HowItWorks } from "@/components/sections/HowItWorks";
-import { LandingHero } from "@/components/sections/LandingHero";
-import { LawSection } from "@/components/sections/LawSection";
-import { MythsSection } from "@/components/sections/MythsSection";
-import { RelatedTopics } from "@/components/sections/RelatedTopics";
-import { Reviews } from "@/components/sections/Reviews";
-import { SituationsSection } from "@/components/sections/SituationsSection";
 import { JsonLd, landingGraph } from "@/components/seo/JsonLd";
+import { FaqList } from "@/components/sections/FaqList";
+import { TopicHeroPhoto } from "@/components/sections/HeroPhotos";
+import { LawNote } from "@/components/sections/LawNote";
+import { LawyerIntro } from "@/components/sections/LawyerIntro";
+import { PageHero } from "@/components/sections/PageHero";
+import { Reviews } from "@/components/sections/Reviews";
+import { Situations } from "@/components/sections/Situations";
+import { Steps } from "@/components/sections/Steps";
+import { TopicCard } from "@/components/sections/TopicCards";
+import { Section, SectionTitle } from "@/components/ui/Section";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { getLanding, landings, relatedLandings } from "@/content/landings";
 import { sharedOpenGraph } from "@/lib/metadata";
 
@@ -36,29 +37,66 @@ export async function generateMetadata({ params }: PageProps<"/[slug]">): Promis
   };
 }
 
+/**
+ * Landing de um assunto. Ordem pensada para quem tem pressa e pouca intimidade com a internet:
+ * a pergunta e o botão logo no topo, as situações como botões de WhatsApp, a lei em poucas linhas,
+ * como funciona, quem atende, dúvidas e outros assuntos.
+ */
 export default async function LandingPage({ params }: PageProps<"/[slug]">) {
   const { slug } = await params;
   const landing = getLanding(slug);
   if (!landing) notFound();
+  const related = relatedLandings(landing);
 
   return (
     <>
       <JsonLd data={landingGraph(landing)} />
-      <SiteHeader variant="landing" whatsappMessage={landing.whatsapp} />
-      <main id="conteudo" className="flex-1">
-        <LandingHero landing={landing} />
-        <LawSection landing={landing} />
-        <SituationsSection landing={landing} />
-        <DocumentsMistakes landing={landing} />
-        <MythsSection landing={landing} />
-        <HowItWorks whatsapp={landing.whatsapp} />
-        <AboutLawyer variant="short" whatsapp={landing.whatsapp} />
-        <Reviews />
-        <FaqSection items={landing.faq} />
-        <RelatedTopics items={relatedLandings(landing)} />
-        <FinalCta whatsapp={landing.whatsapp} />
-      </main>
-      <SiteFooter />
+      <SiteHeader whatsappMessage={landing.whatsapp} />
+      <ViewTransition enter="page" exit="page" default="none">
+        <div className="flex flex-1 flex-col">
+          <main id="conteudo" className="flex-1">
+            <PageHero
+              title={landing.hero.title}
+              lead={landing.hero.lead}
+              actions={
+                <>
+                  <WhatsAppButton source="topo" variant="gold" message={landing.whatsapp}>
+                    Conversar no WhatsApp
+                  </WhatsAppButton>
+                  <a href="#seu-caso" className="btn btn-plain btn-outline-light">
+                    Ver as situações
+                  </a>
+                </>
+              }
+              note="Atendimento sigiloso, feito pelo próprio advogado."
+              aside={<TopicHeroPhoto landing={landing} />}
+            />
+            <Situations items={landing.situations} />
+            <LawNote law={landing.law} />
+            <Steps />
+            <LawyerIntro />
+            <Reviews />
+            <FaqList items={landing.faq} />
+            {related.length > 0 && (
+              <Section labelledBy="outros-titulo" className="pb-20 md:pb-28">
+                <SectionTitle id="outros-titulo" title="Outros assuntos." />
+                <ul className="mt-12 grid gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+                  {related.map((l, i) => (
+                    <li key={l.slug}>
+                      <TopicCard landing={l} index={i} />
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            )}
+          </main>
+          <SiteFooter
+            title="Vamos conversar sobre o seu caso."
+            text="Conte o que aconteceu pelo WhatsApp. O próprio advogado responde, com sigilo e sem compromisso."
+            whatsappMessage={landing.whatsapp}
+          />
+        </div>
+      </ViewTransition>
       <MobileCtaBar message={landing.whatsapp} />
     </>
   );

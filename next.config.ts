@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     loaderFile: "./src/lib/image-loader.ts",
     deviceSizes: IMAGE_WIDTHS.filter((w) => w >= 640),
     imageSizes: IMAGE_WIDTHS.filter((w) => w < 640),
-    qualities: [78],
+    qualities: [76],
   },
   turbopack: {
     rules: {

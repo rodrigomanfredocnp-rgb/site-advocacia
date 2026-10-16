@@ -19,8 +19,9 @@ Cobrir **o máximo possível de temas trabalhistas** (pesquisar e listar: verbas
 
 - **Node.js 22** + **Next.js 16.4** (App Router), **TypeScript**, **Tailwind 4**, **export estático** (`output: "export"` → pasta `out/`, hospeda em qualquer lugar).
 - ⚠️ Next 16 tem mudanças incompatíveis: ler `node_modules/next/dist/docs/` antes de usar APIs (ver `AGENTS.md`). `params` é Promise; tipos `PageProps<"/rota">`/`LayoutProps`.
-- Conteúdo: `src/content/site.ts` (dados do escritório), `src/content/landings/<slug>.ts` (uma por tema, tipo em `src/content/types.ts`), `src/content/shared.ts` (bio, passos, FAQ da home). Template único em `src/app/[slug]/page.tsx`.
-- Imagens: `npm run images` gera WebP em `public/img/`; o loader `src/lib/image-loader.ts` liga o `next/image` a esses arquivos. Logo vetorial em `src/components/brand/paths.ts` (extraída do PDF). `npm run brand-assets` gera favicon, ícones e `public/og.jpg`.
+- Conteúdo: `src/content/site.ts` (dados do escritório), `src/content/landings/<slug>.ts` (uma por tema, tipo em `src/content/types.ts`, **textos curtos**), `src/content/shared.ts` (passos, diferenciais, bio, FAQ geral). Template único em `src/app/[slug]/page.tsx`. Páginas: `/`, `/<tema>` (16), `/sobre`, `/contato`, `/politica-de-privacidade`, `/termos-de-uso`, 404.
+- Cada página monta o próprio `SiteHeader` (com a mensagem de WhatsApp do tema) e o próprio `SiteFooter` (que abre com a chamada final). O layout só tem fontes, `RevealObserver` e `Analytics`.
+- Imagens: `npm run images` gera WebP em `public/img/` a partir de `identidade-visual/fotos-advogado/` (`jhonny-*`) e `identidade-visual/banco-de-imagens/<slug>.jpg` (`tema-<slug>`, Unsplash, licença livre, créditos em `CREDITOS.md`). O loader `src/lib/image-loader.ts` liga o `next/image` a esses arquivos (componente `Photo`). Tema novo precisa de foto com o nome do slug. Logo vetorial em `src/components/brand/paths.ts`. `npm run brand-assets` gera favicon, ícones e `public/og.jpg`.
 - SEO: metadata por página, Open Graph comum em `src/lib/metadata.ts` (espalhar em toda página que definir `openGraph`), JSON-LD `Person` + `LegalService` + `FAQPage` + `BreadcrumbList`, sitemap e robots.
 - Medição opcional: `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_META_PIXEL_ID`; scripts só carregam após consentimento; preferência revogável no rodapé.
 - Qualidade: `npm run check` (Prettier + ESLint + tsc) deve passar antes de todo commit.
@@ -30,22 +31,29 @@ Cobrir **o máximo possível de temas trabalhistas** (pesquisar e listar: verbas
 - Todos os originais ficam em `identidade-visual/` (pastas numeradas do designer, `logo-exportada/`, `fotos-advogado/`). `.cdr` não abre aqui; usar PNG/PDF/WebP.
 - Fotos dele: `identidade-visual/fotos-advogado/` (5 retratos, fundo preto-vinho de damasco, terno preto, gravata vermelha, óculos). No site: `jhonny-serio` (hero da home), `jhonny-lapela` (hero das landings), `jhonny-sorrindo` (faixa do advogado).
 - Marca: monograma **J+C** entrelaçado, moldura retangular dupla, coluna jônica e tocha. Texto "JHONNY CARDOSO / ADVOGADO | OAB/MT 33424". Estilo clássico, sóbrio, premium.
-- **Proporção ~70% claro / 30% escuro.** Cabeçalho e rodapé **escuros**, uma faixa escura de destaque (seção "o advogado"), resto **claro**.
+- **Proporção ~70% claro / 30% escuro.** Topo de toda página, cabeçalho e rodapé **escuros**; o resto claro.
 
-**Direção visual atual (pedido do cliente):** limpa e editorial como o site da Patricia Gomes. **Só preto, branco e dourado** — **nunca verde** (nem no botão de WhatsApp: botões são pretos, ou dourados sobre o preto). **Sem itálico/cursiva.** Pouco ornamento: muito espaço em branco, fios finos, numeração 01/02/03 em dourado.
+**Direção visual atual (v3, escolha do cliente: imk.ca misturado ao que já existia).** Público com muitas pessoas de **50 a 70 anos**: tudo tem que ser óbvio ("até um bebê entenderia").
 
-Paleta (tokens em `src/app/globals.css`, contraste WCAG conferido):
+- **Simples e limpo:** fundo cinza-claro quente com painéis brancos (como o imk.ca), poucos blocos por página, **textos curtos**, letra grande (corpo 18px), botões grandes e arredondados com o ícone do WhatsApp num círculo.
+- **Nunca mini-título/rótulo em cima de título** (o "eyebrow" foi abolido). Título direto, com ponto/interrogação final em dourado (`headline()`).
+- **Nada de site de rolagem presa** (pin/scrub). Animações leves: título entra palavra por palavra, foto do topo abre de baixo para cima, blocos sobem ao aparecer (uma vez), fios se desenham, hover com zoom suave e seta, transição entre páginas (View Transitions do React 19.3/Next 16: a foto do card "voa" até o topo da landing). Respeita `prefers-reduced-motion`; sem JavaScript tudo fica visível (classe `.js`).
+- **Só preto, branco e dourado** (+ um toque do vinho das fotos no brilho do fundo escuro). **Nunca verde.** **Sem itálico/cursiva.**
+- Fotos: retratos do advogado na home/sobre/selo; **banco de imagens por tema** nas landings e nos cards.
 
-| Token                     | Cor                               | Uso                                                     |
-| ------------------------- | --------------------------------- | ------------------------------------------------------- |
-| `white` / `mist` / `line` | `#FFFFFF` / `#F7F6F2` / `#E8E5DE` | fundo, seções alternadas, fios                          |
-| `ink` / `ink-2` / `ink-3` | `#0F0F0F` …                       | botões, faixa final, rodapé                             |
-| `gold`                    | `#C9A24B`                         | dourado da marca: fios, ícones, texto **sobre o preto** |
-| `gold-mid`                | `#A08030`                         | numerais grandes sobre o branco (≥ 3:1)                 |
-| `gold-text`               | `#8A6A24`                         | texto dourado **sobre o branco** (≥ 4.5:1)              |
-| `text` / `text-muted`     | `#141414` / `#55524C`             | texto                                                   |
+Paleta (tokens em `src/app/globals.css`, contraste WCAG conferido com axe):
 
-Tipografia: títulos em **Marcellus** (capitais romanas, mesma família de letras da logo; peso único 400, sem itálico); texto em **Figtree**. Palavra-chave do título em dourado (marcação `*...*` nos dados, classe `accent`). Componentes de botão: classes `btn btn-primary` (preto), `btn btn-gold` (no preto), `btn btn-outline`. Fontes descartadas: Cormorant (circunflexo solto) e EB Garamond/itálicos (cliente não quer cursiva).
+| Token                     | Cor                               | Uso                                                |
+| ------------------------- | --------------------------------- | -------------------------------------------------- |
+| `mist` / `white` / `line` | `#F3F1EC` / `#FFFFFF` / `#E2DDD3` | fundo da página, painéis, fios                     |
+| `champagne`               | `#F4ECDB`                         | círculos de ícone                                  |
+| `ink` / `ink-2` / `ink-3` | `#0E0D0B` …                       | topo, cabeçalho, rodapé, botões                    |
+| `gold`                    | `#C9A24B`                         | dourado da marca: botões e texto **sobre o preto** |
+| `gold-mid`                | `#A08030`                         | numerais grandes sobre o claro                     |
+| `gold-text`               | `#87671F`                         | texto dourado **sobre o claro** (≥ 4.5:1)          |
+| `text` / `text-muted`     | `#141311` / `#524E47`             | texto                                              |
+
+Tipografia: títulos em **Marcellus** (capitais romanas, mesma família da logo; sem itálico); texto em **Figtree**. Botões: `btn btn-primary` (preto), `btn btn-gold` (no escuro), `btn-plain btn-outline` / `btn-outline-light` (secundários). Fontes descartadas: Cormorant e EB Garamond (itálicos).
 
 ## 4. Dados reais de contato
 
@@ -108,6 +116,8 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 
 ## 9. Estado atual
 
-Concluído: home, 16 landings, páginas legais, 404, SEO, favicon/OG, medição opcional com consentimento, auditoria (axe WCAG AA sem violações, sem estouro horizontal em 360px), code-review e security-review aplicados.
+Concluído (v3): home, 16 landings com foto por tema, `/sobre`, `/contato`, páginas legais, 404, SEO, favicon/OG, medição opcional com consentimento, auditoria (axe WCAG AA sem violações, sem estouro horizontal em 360px), code-review e security-review aplicados.
+
+Histórico de direção: v1 escura → v2 editorial clara (Patricia Gomes) → **v3 imk.ca + público mais velho** (atual). Painel de referências premiadas (CSS Design Awards; Awwwards bloqueado pela rede do ambiente): https://claude.ai/artifact/W6hWq4kJ69jgbdhBMQk4JX
 
 Prévia privada publicada como Artifact: https://claude.ai/artifact/5iPXRvjz2tpYPVd2Jnc3h3 (gerada a partir de `out/` por um script de conversão para caminhos relativos; não faz parte do repositório).

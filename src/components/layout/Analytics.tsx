@@ -144,7 +144,7 @@ export function Analytics() {
     <div
       role="region"
       aria-label="Aviso de cookies"
-      className="fixed inset-x-3 bottom-[calc(5.25rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-xl rounded-sm border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5 md:bottom-3"
+      className="fixed inset-x-3 bottom-[calc(5.75rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-xl border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5 md:bottom-3"
     >
       <p>
         Usamos cookies de medição para entender como o site é usado e melhorar o atendimento.{" "}
@@ -157,14 +157,14 @@ export function Analytics() {
         <button
           type="button"
           onClick={() => choose("granted")}
-          className="rounded-sm bg-gold px-4 py-2 font-semibold text-ink hover:bg-gold-light"
+          className="min-h-11 rounded-full bg-gold px-5 font-semibold text-ink hover:bg-gold-light"
         >
           Aceitar
         </button>
         <button
           type="button"
           onClick={() => choose("denied")}
-          className="rounded-sm border border-ink-3 px-4 py-2 text-text-inverse hover:border-gold/60"
+          className="min-h-11 rounded-full border border-ink-3 px-5 text-text-inverse hover:border-gold/60"
         >
           Recusar
         </button>
@@ -177,12 +177,13 @@ export function Analytics() {
  * Link do rodapé para rever a escolha de cookies (LGPD, art. 8º, § 5º).
  * Só aparece quando há medição configurada e depois que o site carrega no navegador.
  */
-export function CookiePreferences() {
+export function CookiePreferences({ listItem = false }: { listItem?: boolean }) {
   const mounted = useSyncExternalStore(subscribe, isClient, isServer);
   if (!ENABLED || !mounted) return null;
-  return (
+  const button = (
     <button type="button" onClick={() => saveConsent(null)} className="transition-colors hover:text-gold-light">
       Preferências de cookies
     </button>
   );
+  return listItem ? <li>{button}</li> : button;
 }

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalPage eyebrow="LGPD" title="Política de privacidade" updated="outubro de 2026">
+    <LegalPage title="Política de privacidade" updated="outubro de 2026">
       <p>
         Esta política explica como {site.lawyer.fullName}, advogado inscrito na {site.lawyer.oab} (“escritório”), trata os dados
         pessoais de quem visita este site ou entra em contato, em conformidade com a Lei Geral de Proteção de Dados (Lei

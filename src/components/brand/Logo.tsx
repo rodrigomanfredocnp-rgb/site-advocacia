@@ -79,19 +79,14 @@ export function LogoFull({ tone = "gold", className, title = `Jhonny Cardoso, Ad
   );
 }
 
-/**
- * Assinatura horizontal para o cabeçalho: símbolo dourado, nome e OAB.
- * `onLight` deixa o nome em preto (cabeçalho branco); no fundo escuro, tudo dourado.
- */
-export function LogoLockup({ onLight = false, className }: { onLight?: boolean; className?: string }) {
+/** Assinatura horizontal do cabeçalho (fundo escuro): símbolo, nome e OAB em dourado. */
+export function LogoLockup({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-3 ${className ?? ""}`}>
-      <LogoSymbol className="h-11 w-auto shrink-0 sm:h-12" />
+    <span className={`inline-flex items-center gap-2.5 sm:gap-3 ${className ?? ""}`}>
+      <LogoSymbol className="h-10 w-auto shrink-0 sm:h-12" />
       <span className="flex flex-col gap-[6px]">
-        <LogoName tone={onLight ? "current" : "gold"} className={`h-[15px] w-auto sm:h-[17px] ${onLight ? "text-ink" : ""}`} />
-        <span
-          className={`text-[0.6rem] leading-none font-semibold tracking-[0.22em] sm:text-[0.64rem] ${onLight ? "text-gold-text" : "text-gold"}`}
-        >
+        <LogoName className="h-[13px] w-auto sm:h-[17px]" />
+        <span className="text-[0.54rem] leading-none font-semibold tracking-[0.2em] text-gold sm:text-[0.64rem]">
           ADVOGADO · {site.lawyer.oab}
         </span>
       </span>

@@ -5,33 +5,42 @@
 // IMAGE_WIDTHS. O loader em src/lib/image-loader.ts aponta o next/image para
 // esses arquivos, o que permite usar <Image> no export estático.
 
-import { mkdir } from "node:fs/promises";
+import { mkdir, readdir } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { IMAGE_WIDTHS } from "../src/lib/image-widths.mjs";
 
-const SRC = "identidade-visual/fotos-advogado";
 const OUT = "public/img";
 
-/** crop (opcional): recorte em pixels da imagem original, ex. { left, top, width, height }. */
-const PHOTOS = [
-  { file: "busto-serio-bracos-cruzados.jpg", name: "jhonny-serio" },
-  { file: "busto-sorrindo-bracos-cruzados.jpg", name: "jhonny-sorrindo" },
-  { file: "busto-sorrindo-mao-lapela.jpg", name: "jhonny-lapela" },
+/** Fotos do advogado (originais do ensaio). */
+const LAWYER = [
+  { file: "identidade-visual/fotos-advogado/busto-serio-bracos-cruzados.jpg", name: "jhonny-serio" },
+  { file: "identidade-visual/fotos-advogado/busto-sorrindo-bracos-cruzados.jpg", name: "jhonny-sorrindo" },
+  { file: "identidade-visual/fotos-advogado/busto-sorrindo-mao-lapela.jpg", name: "jhonny-lapela" },
 ];
+
+/**
+ * Banco de imagens (Unsplash, licença livre): uma foto por tema, com o mesmo nome do slug da landing.
+ * Créditos em identidade-visual/banco-de-imagens/CREDITOS.md.
+ */
+const STOCK_DIR = "identidade-visual/banco-de-imagens";
+const STOCK = (await readdir(STOCK_DIR))
+  .filter((f) => f.endsWith(".jpg"))
+  .map((f) => ({ file: path.join(STOCK_DIR, f), name: `tema-${f.replace(/\.jpg$/, "")}`, stock: true }));
 
 await mkdir(OUT, { recursive: true });
 
-for (const photo of PHOTOS) {
-  const input = sharp(path.join(SRC, photo.file)).rotate();
-  const base = photo.crop ? input.extract(photo.crop) : input;
-  const buffer = await base.toBuffer();
+for (const photo of [...LAWYER, ...STOCK]) {
+  let image = sharp(photo.file).rotate();
+  // Tom único para o banco de imagens: cores um pouco mais contidas, para conviver com a paleta da marca.
+  if (photo.stock) image = image.modulate({ saturation: 0.88 });
+  const buffer = await image.toBuffer();
   const { width: originalWidth } = await sharp(buffer).metadata();
 
   for (const width of IMAGE_WIDTHS) {
     await sharp(buffer)
       .resize({ width: Math.min(width, originalWidth), withoutEnlargement: true })
-      .webp({ quality: 78, effort: 6 })
+      .webp({ quality: 76, effort: 6 })
       .toFile(path.join(OUT, `${photo.name}-${width}.webp`));
   }
   console.log(`✓ ${photo.name}`);

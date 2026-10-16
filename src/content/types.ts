@@ -1,50 +1,36 @@
 /**
  * Modelo de dados de uma landing page.
  *
- * Convenção de ênfase: trechos entre *asteriscos* viram <em> (itálico dourado)
- * e trechos entre **dois asteriscos** viram <strong>. Ver src/lib/emphasis.tsx.
+ * Os textos são curtos de propósito: o público inclui muitas pessoas mais velhas,
+ * então cada bloco diz uma coisa só, com frases simples e sem juridiquês.
+ *
+ * Ênfase: trechos entre *asteriscos* ficam em dourado (sem itálico) e entre
+ * **dois asteriscos** viram <strong>. Ver src/lib/emphasis.tsx.
  */
 
 export type LandingCategory = "trabalhista" | "previdenciario";
 
-export type IconName =
-  | "baby"
-  | "receipt"
-  | "clock"
-  | "id-card"
-  | "shield-alert"
-  | "hard-hat"
-  | "stethoscope"
-  | "gavel"
-  | "door-open"
-  | "flame"
-  | "piggy-bank"
-  | "shuffle"
-  | "wheat"
-  | "landmark"
-  | "hourglass"
-  | "hand-heart";
+export type Faq = { q: string; a: string };
 
 export type Situation = {
+  /** Frase curta, na voz de quem procura ajuda ("Fui demitida grávida"). */
   title: string;
-  text: string;
   /** Mensagem do WhatsApp específica desta situação. */
   whatsapp: string;
 };
 
-export type Myth = { myth: string; fact: string; source?: string };
-
-export type Faq = { q: string; a: string };
-
 export type Landing = {
   slug: string;
   category: LandingCategory;
-  icon: IconName;
 
-  /** Nome curto do tema (menus, cards, marquee). */
+  /** Nome curto do tema (menus, cards, rodapé). */
   topic: string;
-  /** Uma frase para os cards da home e dos relacionados. */
+  /** Uma frase curta para os cards (até ~80 caracteres). */
   summary: string;
+  /** Descrição da foto do tema (texto alternativo). A foto é public/img/tema-<slug>. */
+  photoAlt: string;
+  /** Ponto de foco da foto no recorte, em CSS object-position (ex.: "50% 40%"). */
+  photoFocus?: string;
 
   seo: { title: string; description: string };
 
@@ -52,38 +38,26 @@ export type Landing = {
   whatsapp: string;
 
   hero: {
-    eyebrow: string;
-    /** Pergunta de dor (linha 1 do H1). */
-    question: string;
-    /** Resposta (linha 2 do H1, com *ênfase*). */
-    answer: string;
+    /** Pergunta de dor, curta. Vira o H1. */
+    title: string;
+    /** Uma ou duas frases simples (até ~170 caracteres). */
     lead: string;
-    /** Base legal curta exibida no selo sobre a foto. */
-    legalBadge: string;
   };
 
+  /** "Qual é o seu caso?": cada item abre o WhatsApp já com o assunto. De 4 a 6 itens. */
+  situations: Situation[];
+
+  /** "O que diz a lei": explicação curta, com a fonte conferida. */
   law: {
-    title: string;
-    paragraphs: string[];
-    /** Três ideias centrais, em ordem lógica. */
-    pillars: { title: string; text: string }[];
+    /** No máximo três frases. */
+    text: string;
+    /** Base legal citada (conferida no texto oficial). */
+    source: string;
   };
 
-  situations: {
-    title: string;
-    intro: string;
-    items: Situation[];
-  };
-
-  /** Bloco "Em síntese" logo após o título das situações. */
-  summaryBox?: string;
-
-  documents: string[];
-  mistakes: string[];
-
-  myths: Myth[];
-
+  /** De 3 a 4 perguntas. */
   faq: Faq[];
 
+  /** Três slugs de temas relacionados. */
   related: string[];
 };
