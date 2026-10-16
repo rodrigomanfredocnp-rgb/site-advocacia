@@ -19,7 +19,7 @@ type Props = {
 export function WhatsAppButton({
   message,
   source,
-  children = "Conversar no WhatsApp",
+  children = "Informações pelo WhatsApp",
   variant = "primary",
   className = "",
 }: Props) {

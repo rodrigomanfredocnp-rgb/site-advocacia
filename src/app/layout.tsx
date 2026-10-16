@@ -23,11 +23,11 @@ const figtree = Figtree({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Jhonny Cardoso Advogado | Direito do Trabalho e INSS em Campo Novo do Parecis/MT",
+    default: "Jhonny Cardoso Advogado | Cível, Trabalhista e Previdenciário",
     template: "%s | Jhonny Cardoso Advogado",
   },
   description:
-    "Advogado trabalhista e previdenciário em Campo Novo do Parecis/MT. Demissão, horas extras, gestante, acidente de trabalho, INSS e aposentadoria. Converse pelo WhatsApp.",
+    "Advocacia cível, trabalhista e previdenciária. Atendimento presencial em Campo Novo do Parecis/MT e online em todo o Brasil.",
   applicationName: site.name,
   authors: [{ name: site.lawyer.fullName }],
   creator: site.lawyer.fullName,

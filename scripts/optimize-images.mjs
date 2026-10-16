@@ -12,11 +12,16 @@ import { IMAGE_WIDTHS } from "../src/lib/image-widths.mjs";
 
 const OUT = "public/img";
 
-/** Fotos do advogado (originais do ensaio). */
+/** Fotos do advogado (originais do ensaio). `crop` recorta em pixels da imagem original. */
 const LAWYER = [
   { file: "identidade-visual/fotos-advogado/busto-serio-bracos-cruzados.jpg", name: "jhonny-serio" },
   { file: "identidade-visual/fotos-advogado/busto-sorrindo-bracos-cruzados.jpg", name: "jhonny-sorrindo" },
-  { file: "identidade-visual/fotos-advogado/busto-sorrindo-mao-lapela.jpg", name: "jhonny-lapela" },
+  // Em pé (página Sobre), sem as plantas da borda.
+  {
+    file: "identidade-visual/fotos-advogado/corpo-inteiro-serio-mao-lapela.jpg",
+    name: "jhonny-corpo",
+    crop: { left: 300, top: 0, width: 1000, height: 1333 },
+  },
 ];
 
 /**
@@ -32,6 +37,7 @@ await mkdir(OUT, { recursive: true });
 
 for (const photo of [...LAWYER, ...STOCK]) {
   let image = sharp(photo.file).rotate();
+  if (photo.crop) image = image.extract(photo.crop);
   // Tom único para o banco de imagens: cores um pouco mais contidas, para conviver com a paleta da marca.
   if (photo.stock) image = image.modulate({ saturation: 0.88 });
   const buffer = await image.toBuffer();

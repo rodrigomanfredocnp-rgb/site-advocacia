@@ -1,19 +1,24 @@
 /**
  * Dados do escritório. Fonte única para todo o site.
- * Origem: identidade-visual/021 CARTÃO DIGITAL/DADOS.txt, papel timbrado e
- * assinatura de e-mail. A OAB correta é 33424 (confirmada pelo cliente).
+ * Origem: identidade-visual/021 CARTÃO DIGITAL/DADOS.txt, papel timbrado, assinatura de e-mail
+ * e a revisão do titular (16/10/2026), que informa a OAB no formato "OAB/MT 33.424/O".
  */
+
+/**
+ * Ponto do mapa. O endereço geocodificado pelo Google caía na calçada, sobre as salas da frente;
+ * a pedido do titular, o ponto foi movido para dentro do prédio do hotel, onde fica o escritório.
+ * PENDENTE: o titular confirmar no celular que o ponto ficou certo.
+ */
+const MAP_POINT = "-13.6625583,-57.8870621";
+
 export const site = {
   url: "https://jhonnycardoso.adv.br",
   name: "Jhonny Cardoso Advogado",
 
   lawyer: {
     fullName: "Jhonny Henrique Guollo Cardoso",
-    displayName: "Dr. Jhonny Cardoso",
-    firstName: "Jhonny",
-    oab: "OAB/MT 33424",
-    oabNumber: "33424",
-    oabState: "MT",
+    shortName: "Jhonny Cardoso",
+    oab: "OAB/MT 33.424/O",
   },
 
   contact: {
@@ -29,12 +34,13 @@ export const site = {
     city: "Campo Novo do Parecis",
     state: "MT",
     zip: "78360-000",
-    mapsUrl: "https://maps.app.goo.gl/eydM8ZMPcAhectHW9",
+    mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_POINT)}`,
+    directionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(MAP_POINT)}`,
   },
 
   /**
-   * Horário de atendimento. Fica oculto enquanto for null.
-   * PENDENTE: confirmar com o escritório (ex.: "Segunda a sexta, das 8h às 18h").
+   * Horário de atendimento. Fica oculto enquanto for null; no lugar, o site diz
+   * "Consulte a disponibilidade de agendamento". PENDENTE: confirmar com o escritório.
    */
   hours: null as string | null,
 
@@ -42,18 +48,6 @@ export const site = {
     instagram: "https://www.instagram.com/jhonnycardoso.adv",
     instagramHandle: "@jhonnycardoso.adv",
     facebook: "https://www.facebook.com/profile.php?id=61566370640678",
-  },
-
-  /**
-   * Avaliações reais do Google. Enquanto `items` estiver vazio, a seção de
-   * avaliações não aparece. NUNCA preencher com dados inventados.
-   * Exemplo de item: { author: "Maria S.", text: "Texto copiado do Google." }
-   */
-  reviews: {
-    googleRating: null as number | null,
-    googleCount: null as number | null,
-    googleUrl: null as string | null,
-    items: [] as { author: string; text: string }[],
   },
 } as const;
 

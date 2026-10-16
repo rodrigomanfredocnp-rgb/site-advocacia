@@ -1,9 +1,9 @@
 import type { CSSProperties, ReactNode } from "react";
-import { AnimatedHeadline, plain } from "@/lib/emphasis";
+import { headline } from "@/lib/emphasis";
 
 /**
- * Topo escuro de todas as páginas (o cabeçalho transparente fica por cima).
- * O título entra palavra por palavra; texto e botões vêm logo depois; a foto abre de baixo para cima.
+ * Topo escuro das páginas (o cabeçalho transparente fica por cima).
+ * O título é texto real e aparece na hora (sem animar letras); o resto entra rápido, em sequência.
  */
 export function PageHero({
   title,
@@ -24,32 +24,28 @@ export function PageHero({
   size?: "lg" | "sm";
 }) {
   return (
-    <section aria-labelledby="titulo" className="bg-glow on-ink overflow-hidden text-text-inverse">
+    <section aria-labelledby="titulo" className="bg-glow on-ink text-text-inverse" data-hero>
       <div
-        className={`container-site grid items-center gap-12 pt-[calc(4.75rem+2.75rem)] lg:pt-[calc(5.5rem+4rem)] ${
-          aside ? "lg:grid-cols-[1.08fr_0.92fr] lg:gap-16" : ""
-        } ${size === "lg" ? "pb-16 lg:pb-24" : "pb-14 lg:pb-20"}`}
+        className={`container-site grid items-center gap-10 pt-[calc(4.75rem+2.5rem)] lg:pt-[calc(5.5rem+3.5rem)] ${
+          aside ? "lg:grid-cols-[1.1fr_0.9fr] lg:gap-16" : ""
+        } ${size === "lg" ? "pb-14 lg:pb-20" : "pb-12 lg:pb-16"}`}
       >
-        <div className="flex flex-col items-start">
-          <h1
-            id="titulo"
-            aria-label={plain(title)}
-            className={`accent max-w-[16ch] ${size === "lg" ? "text-display-xl" : "text-display-lg"}`}
-          >
-            <AnimatedHeadline text={title} />
+        <div className="flex min-w-0 flex-col items-start">
+          <h1 id="titulo" className={`accent max-w-[18ch] ${size === "lg" ? "text-display-xl" : "text-display-lg"}`}>
+            {headline(title)}
           </h1>
           {lead && (
-            <div style={{ "--d": 0 } as CSSProperties} className="load-in mt-7 max-w-[44ch] text-lead text-text-inverse-muted">
+            <div style={{ "--d": 0 } as CSSProperties} className="load-in mt-6 max-w-[48ch] text-lead text-text-inverse-muted">
               {lead}
             </div>
           )}
           {actions && (
-            <div style={{ "--d": 1 } as CSSProperties} className="load-in mt-10 flex flex-wrap items-center gap-4">
+            <div style={{ "--d": 1 } as CSSProperties} className="load-in mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
               {actions}
             </div>
           )}
           {note && (
-            <div style={{ "--d": 2 } as CSSProperties} className="load-in mt-8 text-[1rem] text-text-inverse-muted">
+            <div style={{ "--d": 2 } as CSSProperties} className="load-in mt-7 text-[1rem] text-text-inverse-muted">
               {note}
             </div>
           )}

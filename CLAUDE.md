@@ -5,41 +5,53 @@ Idioma de trabalho e de todo o conteúdo do site: **português do Brasil**.
 
 ## 1. O projeto
 
-Conjunto de **landing pages** para o advogado **Jhonny Henrique Guollo Cardoso**, **OAB/MT 33424** (usar sempre 33424; o papel timbrado antigo diz 33.428, está errado).
-Área de atuação: **Direito do Trabalho** (inclui INSS/previdenciário quando fizer sentido para o trabalhador). **Nunca criminal.**
+Site institucional + páginas por área e por assunto do advogado **Jhonny Henrique Guollo Cardoso**, **OAB/MT 33.424/O** (formato informado pelo titular na revisão de 16/10/2026; o papel timbrado antigo diz 33.428, está errado). Escritório em Campo Novo do Parecis/MT, **atendimento presencial e online em todo o Brasil**, com atuação nacional especialmente trabalhista e previdenciária. **Mais de três anos de atuação** (não inferir ano de início).
+
+**Revisão do titular (16/10/2026) — fonte da verdade do conteúdo.** Documento "Revisão completa do site" + 3 áudios. Decisões:
+
+- **Direito Cível em primeiro plano** (é o motor do escritório). Depois Trabalhista e Previdenciário (áreas principais, atuação nacional).
+- Complementares: **Família e Sucessões**, **Aposentadoria de servidores públicos**, **Trânsito**, **Criminal** (discreto, com habeas corpus quando cabível; sem sirenes, algemas, plantão 24h ou promessa de liberdade). **Dívidas e agronegócio** só **em parceria**. **Para advogados e escritórios** (apoio local; única menção permitida ao Procon).
+- **Nunca** apresentar Direito do Consumidor como área.
+- Previdenciário com mais foco (áudio): auxílio-doença, pensão por morte, aposentadorias, aposentadoria por incapacidade permanente, BPC em destaque como benefício assistencial.
+- **Acidente de trabalho saiu** (o titular não atua nesse nicho; não usar a expressão). Também saíram assédio, justa causa e desvio de função (não constam da revisão).
+- Cada assunto continua com página própria (para tráfego pago por benefício/assunto).
 
 Estrutura de URLs (domínio: `jhonnycardoso.adv.br`):
 
-- `/` — **site principal**: quem é ele, o que faz, área de atuação, links para as landings, contato.
-- `/<assunto>` — **landings direcionadas**, uma por dor/assunto (ex.: `/gestante`, `/inss`, `/horas-extras`). Cada uma fala um pouco do advogado e **foca na dor do cliente**, com um único objetivo: **clique no WhatsApp**.
-
-Cobrir **o máximo possível de temas trabalhistas** (pesquisar e listar: verbas rescisórias, horas extras, vínculo sem carteira, assédio moral/sexual, acidente de trabalho, doença ocupacional, justa causa, rescisão indireta, gestante demitida, estabilidade, FGTS, adicional de insalubridade/periculosidade, desvio de função, equiparação salarial, banco de horas, aposentadoria/INSS/auxílio-doença/BPC etc.). Nunca criminal.
+- `/` home institucional; `/areas-de-atuacao`, `/sobre`, `/atendimento`, `/contato`, `/politica-de-privacidade`, `/termos-de-uso`.
+- Áreas: `/direito-civel`, `/direito-do-trabalho` (caminhos Trabalhadores | Empresas → `/trabalhista-para-empresas`), `/direito-previdenciario`, `/familia-e-sucessoes`, `/aposentadoria-de-servidores`, `/transito`, `/criminal`, `/dividas-e-agronegocio`, `/apoio-a-escritorios`.
+- Assuntos trabalhistas: `/verbas-rescisorias`, `/horas-extras`, `/carteira-assinada`, `/fgts`, `/gestante`, `/rescisao-indireta`, `/doenca-ocupacional`, `/insalubridade-periculosidade`, `/trabalhador-rural`.
+- Assuntos previdenciários: `/bpc-loas`, `/auxilio-doenca`, `/aposentadoria-por-invalidez`, `/pensao-por-morte`, `/aposentadoria`, `/inss` (benefício negado ou cortado).
 
 ## 2. Stack e arquitetura (implementado)
 
 - **Node.js 22** + **Next.js 16.4** (App Router), **TypeScript**, **Tailwind 4**, **export estático** (`output: "export"` → pasta `out/`, hospeda em qualquer lugar).
 - ⚠️ Next 16 tem mudanças incompatíveis: ler `node_modules/next/dist/docs/` antes de usar APIs (ver `AGENTS.md`). `params` é Promise; tipos `PageProps<"/rota">`/`LayoutProps`.
-- Conteúdo: `src/content/site.ts` (dados do escritório), `src/content/landings/<slug>.ts` (uma por tema, tipo em `src/content/types.ts`, **textos curtos**), `src/content/shared.ts` (passos, diferenciais, bio, FAQ geral). Template único em `src/app/[slug]/page.tsx`. Páginas: `/`, `/<tema>` (16), `/sobre`, `/contato`, `/politica-de-privacidade`, `/termos-de-uso`, 404.
+- Conteúdo: `src/content/site.ts` (dados do escritório, ponto do mapa), `src/content/landings/{areas,trabalho,previdencia}.ts` (tipo `Landing` em `src/content/types.ts`: `kind` "area" ou "assunto", `children` = cards de assuntos da área), `src/content/landings/index.ts` (ordem, áreas principais/complementares, textos dos cartões da home), `src/content/shared.ts` (passos, bio, textos institucionais, FAQ institucional). Template único em `src/app/[slug]/page.tsx` (título, apresentação, assuntos atendidos, documentos, explicações, lei conferida, FAQ, um único caminho de contato).
 - Cada página monta o próprio `SiteHeader` (com a mensagem de WhatsApp do tema) e o próprio `SiteFooter` (que abre com a chamada final). O layout só tem fontes, `RevealObserver` e `Analytics`.
 - Imagens: `npm run images` gera WebP em `public/img/` a partir de `identidade-visual/fotos-advogado/` (`jhonny-*`) e `identidade-visual/banco-de-imagens/<slug>.jpg` (`tema-<slug>`, Unsplash, licença livre, créditos em `CREDITOS.md`). O loader `src/lib/image-loader.ts` liga o `next/image` a esses arquivos (componente `Photo`). Tema novo precisa de foto com o nome do slug. Logo vetorial em `src/components/brand/paths.ts`. `npm run brand-assets` gera favicon, ícones e `public/og.jpg`.
 - SEO: metadata por página, Open Graph comum em `src/lib/metadata.ts` (espalhar em toda página que definir `openGraph`), JSON-LD `Person` + `LegalService` + `FAQPage` + `BreadcrumbList`, sitemap e robots.
 - Medição opcional: `NEXT_PUBLIC_GA_ID` / `NEXT_PUBLIC_META_PIXEL_ID`; scripts só carregam após consentimento; preferência revogável no rodapé.
 - Qualidade: `npm run check` (Prettier + ESLint + tsc) deve passar antes de todo commit.
+- Texto ampliado/zoom (público mais velho): `overflow-wrap: anywhere` no `body` (nada quebra no meio da palavra em tamanho normal), hífen automático nos títulos quando o `body` (contêiner) fica com menos de 15em, logo do cabeçalho vira só o símbolo quando falta espaço, cards e blocos com `flex-wrap` (o texto desce para baixo da foto/ícone). O painel do menu do celular fica **fora** do `<header>`: o `backdrop-filter` do cabeçalho prende elementos fixos dentro dele (o painel ficava com altura zero).
 
 ## 3. Identidade visual (fonte da verdade: arquivos neste repositório)
 
 - Todos os originais ficam em `identidade-visual/` (pastas numeradas do designer, `logo-exportada/`, `fotos-advogado/`). `.cdr` não abre aqui; usar PNG/PDF/WebP.
-- Fotos dele: `identidade-visual/fotos-advogado/` (5 retratos, fundo preto-vinho de damasco, terno preto, gravata vermelha, óculos). No site: `jhonny-serio` (hero da home), `jhonny-lapela` (hero das landings), `jhonny-sorrindo` (faixa do advogado).
+- Fotos dele: `identidade-visual/fotos-advogado/` (5 retratos, fundo preto-vinho de damasco, terno preto, gravata vermelha, óculos). No site: `jhonny-serio` (abertura da home), `jhonny-sorrindo` (bloco "Conheça Jhonny Cardoso"), `jhonny-corpo` (em pé, página Sobre).
 - Marca: monograma **J+C** entrelaçado, moldura retangular dupla, coluna jônica e tocha. Texto "JHONNY CARDOSO / ADVOGADO | OAB/MT 33424". Estilo clássico, sóbrio, premium.
 - **Proporção ~70% claro / 30% escuro.** Topo de toda página, cabeçalho e rodapé **escuros**; o resto claro.
 
-**Direção visual atual (v3, escolha do cliente: imk.ca misturado ao que já existia).** Público com muitas pessoas de **50 a 70 anos**: tudo tem que ser óbvio ("até um bebê entenderia").
+**Direção visual atual (v4 = v3 aprovada pelo titular — "gostei da paleta, casou bem" — + ajustes da revisão).** Público com muitas pessoas de **50 a 70 anos**: tudo óbvio.
 
-- **Simples e limpo:** fundo cinza-claro quente com painéis brancos (como o imk.ca), poucos blocos por página, **textos curtos**, letra grande (corpo 18px), botões grandes e arredondados com o ícone do WhatsApp num círculo.
-- **Nunca mini-título/rótulo em cima de título** (o "eyebrow" foi abolido). Título direto, com ponto/interrogação final em dourado (`headline()`).
-- **Nada de site de rolagem presa** (pin/scrub). Animações leves: título entra palavra por palavra, foto do topo abre de baixo para cima, blocos sobem ao aparecer (uma vez), fios se desenham, hover com zoom suave e seta, transição entre páginas (View Transitions do React 19.3/Next 16: a foto do card "voa" até o topo da landing). Respeita `prefers-reduced-motion`; sem JavaScript tudo fica visível (classe `.js`).
-- **Só preto, branco e dourado** (+ um toque do vinho das fotos no brilho do fundo escuro). **Nunca verde.** **Sem itálico/cursiva.**
-- Fotos: retratos do advogado na home/sobre/selo; **banco de imagens por tema** nas landings e nos cards.
+- **Simples e limpo:** fundo cinza-claro quente com painéis brancos (imk.ca), poucos blocos, **textos curtos**, letra grande (corpo 18px), botões grandes com o ícone do WhatsApp num círculo. Botão principal: **"Informações pelo WhatsApp"**.
+- **Nunca mini-título/rótulo em cima de título.** Títulos de seção diretos, com ponto final em dourado (`headline()`); títulos do topo como definidos na revisão (perguntas com "?" dourado).
+- **Abertura da home:** no celular, nome e OAB à esquerda + retrato pequeno (~120×150) à direita, depois o título em largura total (~33px); no computador, duas colunas com retrato à direita e nome/OAB como texto abaixo da foto. **Sem cartão branco flutuante** com miniatura, sem halo/recorte na foto, sem camada escura no rosto.
+- **Animações leves:** nada de animar letras ou de rolagem presa. Entradas curtas (fade), blocos sobem ao aparecer, fios se desenham, zoom suave no hover, transição entre páginas (View Transitions: a foto do card "voa" até o topo). Respeita `prefers-reduced-motion`; sem JS tudo visível (`.js`).
+- **Um único WhatsApp fixo:** no celular e no tablet (até 1023px), barra inferior que aparece depois do topo e some antes do rodapé (sem JS fica sempre visível); a partir de 1024px, só o botão do cabeçalho (sem botão flutuante).
+- **Mensagem do WhatsApp neutra** ("Olá, gostaria de informações sobre atendimento. Vim pelo site."), sem saúde, criminal ou dados do caso na URL. Exceção: apoio a escritórios.
+- **Só preto, branco e dourado** (+ toque do vinho das fotos no brilho escuro). **Nunca verde.** **Sem itálico.**
+- Fotos: retratos reais do advogado (home, "Conheça", Sobre em pé); **banco de imagens** (Unsplash, licença livre) nas áreas e assuntos, com **pessoas de aparência brasileira** (o titular pediu para trocar as de aparência asiática) e **sem pessoas em sofrimento**, crianças ou "sucesso financeiro". Criminal fica sem foto.
 
 Paleta (tokens em `src/app/globals.css`, contraste WCAG conferido com axe):
 
@@ -64,7 +76,7 @@ Tipografia: títulos em **Marcellus** (capitais romanas, mesma família da logo;
 - Instagram: @jhonnycardoso.adv (https://www.instagram.com/jhonnycardoso.adv)
 - Facebook: https://www.facebook.com/profile.php?id=61566370640678
 - Google Maps: https://maps.app.goo.gl/eydM8ZMPcAhectHW9
-- Mensagem do WhatsApp deve ser **específica por landing** (ex.: "Olá, Dr. Jhonny! Vim pelo site e preciso de ajuda com ...").
+- Mensagem do WhatsApp **neutra** (revisão do titular), sem detalhes do caso. Mapa: `site.address.mapsUrl` / `directionsUrl` apontam para o ponto ajustado.
 
 ## 5. Referências de design (já analisadas)
 
@@ -79,21 +91,22 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 
 ## 6. Regras de conteúdo e ética (OAB)
 
-- Respeitar o **Provimento 205/2021 do CFOAB** e o Código de Ética: **sem promessa de resultado, sem captação agressiva, sem mercantilização**, sem comparar com outros advogados, sem divulgar valores/promoções.
-- Linguagem cautelosa: "pode existir direito", "cada caso é analisado individualmente", "a análise inicial não gera compromisso".
-- **Nunca inventar** avaliações do Google, depoimentos, números de clientes atendidos, anos de experiência ou casos ganhos. Usar apenas dados fornecidos pelo usuário; o que faltar fica como campo a preencher e é avisado ao usuário.
-- Citar leis/súmulas só quando verificadas (CLT, súmulas do TST, temas do STF, Lei 8.213/91 etc.).
-- Rodapé com: nome, OAB/MT 33424, endereço, aviso "este site é meramente informativo, conforme o Código de Ética da OAB", links de política de privacidade e termos de uso e preferências de cookies (LGPD).
-- **Nada de criminal.** Não usar a palavra "especialista" (exige título de especialização). Não prometer consulta "gratuita".
-- Leis conferidas no texto oficial do Planalto (CLT, CF/ADCT, Leis 8.213, 8.742, 5.889, 8.036, LC 150). Ao alterar uma citação, conferir de novo.
+- Respeitar o **Provimento 205/2021 do CFOAB** e o Código de Ética: **sem promessa de resultado, sem captação agressiva, sem mercantilização**, sem comparar com outros advogados, sem divulgar valores, gratuidade ou facilidades de pagamento. Nada de "Garanta seus direitos", "Consulta grátis", urgência ou resposta imediata.
+- Linguagem cautelosa: "pode existir direito", "cada caso é analisado individualmente". Não dizer que o contato "já contrata" nem que o atendimento é sempre feito só pelo próprio advogado (há triagem e parceiros).
+- **Sem depoimentos nem avaliações** como prova de sucesso (a seção de avaliações foi removida). **Nunca inventar** números, casos, títulos, prêmios, formação, equipe ou unidades.
+- **Cargos e vínculos anteriores** informados pelo titular **não vão para o site** (art. 44, § 2º, do Código de Ética; vínculos não confirmados). Não escrever "especialista" nem "equipe especializada".
+- Leis citadas só quando conferidas no texto oficial do Planalto (CLT, CF/ADCT, Leis 8.213, 8.742, 5.889, 8.036, LC 150). Ao alterar uma citação, conferir de novo. Correções jurídicas da revisão aplicadas: prazo trabalhista ("em regra, até 2 anos após o fim do contrato, alcançando os 5 anos anteriores ao ajuizamento"), jornada como regra geral, intervalo não universal, insalubridade sem "sol forte", qualidade de segurado variável, BPC sem limite de meio salário automático, rescisão indireta sem "qualquer tarefa fora da função", sem prazo genérico de 10 anos para revisão, vínculo sem efeito previdenciário automático, safra sem afirmação geral sobre a indenização de 1/12.
+- Rodapé: nome, OAB/MT 33.424/O, cidade, "Atendimento presencial e online", "Conteúdo informativo. As medidas jurídicas dependem da análise individual da situação e dos documentos.", links de áreas, Sobre, Atendimento, Contato, Para advogados e escritórios, Privacidade e Termos. Preferências de cookies só quando houver medição ligada.
+- Medição (GA/Meta) **desligada por padrão**; antes de ligar, avaliar (assuntos de saúde, BPC, criminal e família não devem ir para plataformas de anúncio). A política de privacidade descreve só o que existe (`src/lib/analytics.ts`).
 
 ### Pendências (dados que só o cliente tem)
 
-- **Horário de atendimento**: `site.hours` está `null` (oculto). Preencher quando o escritório informar.
-- **Avaliações do Google**: `site.reviews` vazio (seção oculta). Preencher só com avaliações reais.
-- **Atendimento fora de MT**: o site diz "presencial e online"; não afirma "todo o Brasil" até o cliente confirmar.
-- **Temas**: confirmar se ele atende todos os 16 (em especial INSS, aposentadoria e BPC).
-- **IDs de medição** (GA4/Meta Pixel) e **hospedagem/domínio** para publicar.
+- **Horário de atendimento**: `site.hours` é `null` (o site diz "Consulte a disponibilidade de agendamento").
+- **Ponto do mapa**: movido para dentro do prédio do hotel (pedido no áudio); o titular precisa confirmar no celular.
+- **Domínio e hospedagem**, e se o atendimento nacional exige inscrição suplementar em outras seccionais (controle interno).
+- **Subáreas de trânsito** (multas, CNH, DETRAN): só detalhar depois de confirmar.
+- **Revisão jurídica final** dos textos temáticos pelo próprio advogado antes de publicar.
+- **IDs de medição** (só com avaliação específica).
 
 ## 7. Como trabalhar (obrigatório)
 
@@ -116,8 +129,8 @@ Em comum (seguir): objetivo único = WhatsApp; hero com dor real + foto; serifa 
 
 ## 9. Estado atual
 
-Concluído (v3): home, 16 landings com foto por tema, `/sobre`, `/contato`, páginas legais, 404, SEO, favicon/OG, medição opcional com consentimento, auditoria (axe WCAG AA sem violações, sem estouro horizontal em 360px), code-review e security-review aplicados.
+Concluído (v4, revisão do titular aplicada): home institucional (Cível primeiro), 9 páginas de área, 15 páginas de assunto, `/areas-de-atuacao`, `/sobre`, `/atendimento`, `/contato`, privacidade (descreve só o que existe), termos, 404, SEO e JSON-LD sem avaliações, auditoria (axe WCAG AA sem violações; sem estouro em 320/360/390/430/1280; texto a 150% e 200% sem estouro em 320/360/390; tela de 160px (zoom de página) sem estouro; menu do celular testado abrindo, fechando com Esc e navegando; links internos ok).
 
-Histórico de direção: v1 escura → v2 editorial clara (Patricia Gomes) → **v3 imk.ca + público mais velho** (atual). Painel de referências premiadas (CSS Design Awards; Awwwards bloqueado pela rede do ambiente): https://claude.ai/artifact/W6hWq4kJ69jgbdhBMQk4JX
+Histórico de direção: v1 escura → v2 editorial clara → v3 imk.ca + público mais velho → **v4 revisão do titular** (atual). Painel de referências: https://claude.ai/artifact/W6hWq4kJ69jgbdhBMQk4JX
 
 Prévia privada publicada como Artifact: https://claude.ai/artifact/5iPXRvjz2tpYPVd2Jnc3h3 (gerada a partir de `out/` por um script de conversão para caminhos relativos; não faz parte do repositório).

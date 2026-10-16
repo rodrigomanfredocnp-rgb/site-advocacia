@@ -12,13 +12,11 @@ export default function NotFound() {
       <main id="conteudo" className="flex-1">
         <PageHero
           title="Esta página não foi encontrada."
-          lead="O endereço pode ter mudado. Volte para o início para ver todos os assuntos, ou fale direto com o advogado."
+          lead="O endereço pode ter mudado. Volte para o início para ver as áreas de atuação ou peça informações pelo WhatsApp."
           size="sm"
           actions={
             <>
-              <WhatsAppButton source="404" variant="gold">
-                Conversar no WhatsApp
-              </WhatsAppButton>
+              <WhatsAppButton source="404" variant="gold" />
               <Link href="/" className="btn btn-plain btn-outline-light">
                 Ir para o início
               </Link>

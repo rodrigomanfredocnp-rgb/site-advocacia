@@ -1,33 +1,48 @@
-import { WhatsAppIcon } from "@/components/ui/icons";
+"use client";
+
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { whatsappUrl } from "@/lib/whatsapp";
 
 /**
- * WhatsApp sempre à mão. No celular, uma barra fixa embaixo com um botão grande;
- * no computador, um botão redondo flutuante com um anel dourado que pulsa poucas vezes.
+ * Um único botão fixo de WhatsApp, no celular e no tablet (a partir de 1024px o cabeçalho já tem o botão).
+ * Aparece depois que o topo da página sai da tela e some um pouco antes do rodapé, para não cobrir o
+ * fim do conteúdo, o rodapé ou o aviso de cookies. Sem JavaScript, fica sempre visível (ver .js .cta-bar).
  */
 export function MobileCtaBar({ message }: { message?: string }) {
+  const pathname = usePathname();
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const hero = document.querySelector("[data-hero]");
+    const footer = document.querySelector("footer");
+    if (!hero || !footer || !("IntersectionObserver" in window)) return;
+    const visible = new Map<Element, boolean>();
+    const update = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((e) => visible.set(e.target, e.isIntersecting));
+      setShow(!visible.get(hero) && !visible.get(footer));
+    };
+    const heroObserver = new IntersectionObserver(update);
+    // Some ~8rem antes do rodapé: o fim da última seção não fica escondido atrás da barra.
+    const footerObserver = new IntersectionObserver(update, { rootMargin: "0px 0px 128px 0px" });
+    heroObserver.observe(hero);
+    footerObserver.observe(footer);
+    return () => {
+      heroObserver.disconnect();
+      footerObserver.disconnect();
+    };
+  }, [pathname]);
+
   return (
-    <>
-      <aside aria-label="Contato rápido">
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur md:hidden">
-          <WhatsAppButton source="barra-celular" message={message} className="w-full">
-            Conversar no WhatsApp
-          </WhatsAppButton>
-        </div>
-        <a
-          href={whatsappUrl(message)}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-wa="flutuante"
-          aria-label="Conversar no WhatsApp"
-          className="wa-ring fixed right-[max(1.5rem,env(safe-area-inset-right,0px))] bottom-6 z-40 hidden size-16 place-items-center rounded-full bg-ink text-gold shadow-[0_16px_36px_-14px_rgb(14_13_11/0.7)] transition-transform duration-300 hover:scale-105 md:grid"
-        >
-          <WhatsAppIcon className="size-7" />
-        </a>
-      </aside>
-      {/* Espaço para a barra não cobrir o fim do rodapé no celular. */}
-      <div className="h-[calc(5.1rem+env(safe-area-inset-bottom,0px))] bg-ink md:hidden" aria-hidden />
-    </>
+    <aside aria-label="Contato rápido" aria-hidden={!show} inert={!show} className="lg:hidden">
+      <div
+        data-show={show ? "" : undefined}
+        className="cta-bar fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] backdrop-blur"
+      >
+        <WhatsAppButton source="barra-celular" message={message} className="w-full sm:mx-auto sm:flex sm:max-w-md">
+          Informações pelo WhatsApp
+        </WhatsAppButton>
+      </div>
+    </aside>
   );
 }

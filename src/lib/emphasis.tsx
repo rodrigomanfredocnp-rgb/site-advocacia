@@ -1,4 +1,4 @@
-import { Fragment, type CSSProperties, type ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 /**
  * Marcação leve dos textos de conteúdo:
@@ -25,48 +25,6 @@ export function headline(text: string): ReactNode {
       {emphasis(body)}
       {mark && <span className="dot">{mark}</span>}
     </>
-  );
-}
-
-/**
- * Título de abertura animado: cada palavra sobe de dentro de uma máscara, em sequência.
- * O texto inteiro vai no aria-label do título; as palavras animadas ficam ocultas para leitores de tela.
- */
-export function AnimatedHeadline({ text }: { text: string }) {
-  const { body, mark } = splitFinalMark(text);
-  // Palavras com a marcação de cada trecho; `space` diz se havia espaço antes (preserva "*INSS*," sem espaço extra).
-  const words: { word: string; kind: Segment["kind"]; space: boolean }[] = [];
-  let pendingSpace = false;
-  for (const s of segments(body)) {
-    for (const piece of s.text.split(/(\s+)/)) {
-      if (!piece) continue;
-      if (/^\s+$/.test(piece)) {
-        pendingSpace = true;
-        continue;
-      }
-      words.push({ word: piece, kind: s.kind, space: pendingSpace && words.length > 0 });
-      pendingSpace = false;
-    }
-  }
-
-  return (
-    <span aria-hidden="true">
-      {words.map(({ word, kind, space }, i) => {
-        const last = i === words.length - 1;
-        const content = kind === "em" ? <em>{word}</em> : kind === "strong" ? <strong>{word}</strong> : word;
-        return (
-          <Fragment key={i}>
-            {space && " "}
-            <span className="word-mask">
-              <span style={{ "--w": i } as CSSProperties}>
-                {content}
-                {last && mark && <span className="dot">{mark}</span>}
-              </span>
-            </span>
-          </Fragment>
-        );
-      })}
-    </span>
   );
 }
 

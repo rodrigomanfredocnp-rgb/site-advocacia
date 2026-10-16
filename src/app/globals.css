@@ -72,6 +72,21 @@
     line-height: 1.65;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    /* Com o texto ampliado no celular (acessibilidade), palavras longas e o e-mail quebram em vez de
+       alargar a página. Em tamanho normal nada quebra no meio da palavra (conferido no Playwright). */
+    overflow-wrap: anywhere;
+    /* Contêiner para a consulta abaixo (largura medida em em: reage ao texto ampliado e ao zoom). */
+    container-type: inline-size;
+  }
+  /* Texto muito ampliado ou zoom forte no celular: títulos e botões quebram com hífen, onde o navegador
+     souber hifenizar o português (Android, iPhone, Mac); nos demais, a quebra de segurança acima. */
+  @container (max-width: 15em) {
+    h1,
+    h2,
+    h3,
+    .btn {
+      hyphens: auto;
+    }
   }
   h1,
   h2,
@@ -151,18 +166,6 @@
     animation: glow-drift 18s var(--ease-in-out-quart) infinite alternate;
   }
 
-  /* Retrato com fundo escuro (as fotos do advogado) que se dissolve no topo escuro, sem borda dura. */
-  .melt {
-    -webkit-mask-image:
-      linear-gradient(to right, transparent, #000 22%, #000 80%, transparent),
-      linear-gradient(to bottom, transparent, #000 14%, #000 66%, transparent);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(to right, transparent, #000 22%, #000 80%, transparent),
-      linear-gradient(to bottom, transparent, #000 14%, #000 66%, transparent);
-    mask-composite: intersect;
-  }
-
   /* Botões: grandes, arredondados, com cara de botão. */
   .btn {
     display: inline-flex;
@@ -172,9 +175,11 @@
     gap: 0.8rem;
     border-radius: 999px;
     padding: 0.5rem 1.7rem 0.5rem 0.55rem;
+    max-width: 100%;
     font-size: 1.06rem;
     font-weight: 600;
     line-height: 1.2;
+    text-align: center;
     transition:
       background-color 0.35s var(--ease-out-quint),
       color 0.35s var(--ease-out-quint),
@@ -370,42 +375,23 @@
  * o estado escondido só vale com a classe .js (posta no <html> antes da pintura).
  * ------------------------------------------------------------------------- */
 
-/* Entrada do título: cada palavra sobe de dentro de uma máscara. */
-.word-mask {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: top;
-  padding-bottom: 0.1em;
-  margin-bottom: -0.1em;
-}
-.word-mask > span {
-  display: inline-block;
-  animation: word-up 1.1s var(--ease-out-expo) both;
-  animation-delay: calc(120ms + var(--w, 0) * 55ms);
-}
-
-/* Itens que entram em sequência ao carregar a página (topo). */
+/* Entrada do topo: texto e foto aparecem rápido, sem animar letras (não atrasa a leitura). */
 .load-in {
-  animation: fade-up 1s var(--ease-out-quint) both;
-  animation-delay: calc(350ms + var(--d, 0) * 110ms);
+  animation: fade-up 0.6s var(--ease-out-quint) both;
+  animation-delay: calc(60ms + var(--d, 0) * 70ms);
 }
-
-/* Foto do topo: abre de baixo para cima e assenta. */
-.photo-reveal {
-  animation: photo-open 1.4s var(--ease-out-expo) 200ms both;
-}
-.photo-reveal img {
-  animation: photo-settle 2s var(--ease-out-quint) 200ms both;
+.photo-in {
+  animation: fade-in 0.7s var(--ease-out-quint) 80ms both;
 }
 
 /* Ao rolar: sobe e aparece uma única vez (classe .is-in posta pelo RevealObserver). */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(16px);
   transition:
-    opacity 0.9s var(--ease-out-quint),
-    transform 1.1s var(--ease-out-quint);
-  transition-delay: calc(var(--i, 0) * 80ms);
+    opacity 0.6s var(--ease-out-quint),
+    transform 0.7s var(--ease-out-quint);
+  transition-delay: calc(var(--i, 0) * 60ms);
 }
 .js [data-reveal="line"] {
   opacity: 1;
@@ -413,36 +399,26 @@
   transition: transform 1.3s var(--ease-out-expo);
   transition-delay: calc(var(--i, 0) * 80ms);
 }
-.js [data-reveal="photo"] {
-  opacity: 1;
-  transform: none;
-  clip-path: inset(10% 6% 10% 6%);
-  transition: clip-path 1.3s var(--ease-out-expo);
-}
-.js [data-reveal="photo"] img {
-  transform: scale(1.12);
-  transition: transform 1.6s var(--ease-out-quint);
-}
 .js [data-reveal].is-in {
   opacity: 1;
   transform: none;
-  clip-path: inset(0);
 }
-.js [data-reveal="photo"].is-in img {
+
+/* Barra de WhatsApp do celular: aparece depois do topo e some perto do rodapé (um único botão fixo). */
+.js .cta-bar {
+  transform: translateY(110%);
+  transition: transform 0.45s var(--ease-out-quint);
+}
+.js .cta-bar[data-show] {
   transform: none;
 }
 
-/* Botão flutuante: um anel dourado discreto, poucas vezes, para ser notado sem incomodar. */
-.wa-ring {
-  animation: wa-ring 2.6s var(--ease-out-quint) 4s 3;
-}
-
-@keyframes word-up {
+@keyframes fade-in {
   from {
-    transform: translateY(105%);
+    opacity: 0;
   }
   to {
-    transform: none;
+    opacity: 1;
   }
 }
 @keyframes fade-up {
@@ -455,36 +431,12 @@
     transform: none;
   }
 }
-@keyframes photo-open {
-  from {
-    clip-path: inset(100% 0 0 0);
-  }
-  to {
-    clip-path: inset(0);
-  }
-}
-@keyframes photo-settle {
-  from {
-    transform: scale(1.14);
-  }
-  to {
-    transform: none;
-  }
-}
 @keyframes glow-drift {
   from {
     transform: translate3d(-3%, -2%, 0) scale(1);
   }
   to {
     transform: translate3d(4%, 3%, 0) scale(1.08);
-  }
-}
-@keyframes wa-ring {
-  0% {
-    box-shadow: 0 0 0 0 rgb(201 162 75 / 0.55);
-  }
-  100% {
-    box-shadow: 0 0 0 20px rgb(201 162 75 / 0);
   }
 }
 

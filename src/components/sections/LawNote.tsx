@@ -4,7 +4,7 @@ import type { Landing } from "@/content/types";
 import { headline } from "@/lib/emphasis";
 
 /** "O que diz a lei": a regra em poucas linhas, com a fonte conferida e o aviso de análise individual. */
-export function LawNote({ law }: { law: Landing["law"] }) {
+export function LawNote({ law }: { law: NonNullable<Landing["law"]> }) {
   return (
     <Section id="lei" labelledBy="lei-titulo" panel>
       <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">

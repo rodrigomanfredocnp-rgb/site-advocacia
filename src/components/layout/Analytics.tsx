@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useSyncExternalStore } from "react";
+import { ANALYTICS_ENABLED, GA_ID, PIXEL_ID } from "@/lib/analytics";
 
 /**
  * Medição opcional (Google Analytics 4 e/ou Meta Pixel), ligada só quando os
@@ -13,9 +14,7 @@ import { useEffect, useSyncExternalStore } from "react";
  * Cliques nos botões de WhatsApp (atributo data-wa) viram o evento "whatsapp_click" / "Contact".
  * A escolha pode ser revista a qualquer momento pelo link "Preferências de cookies" do rodapé.
  */
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
-const ENABLED = Boolean(GA_ID || PIXEL_ID);
+const ENABLED = ANALYTICS_ENABLED;
 const CONSENT_KEY = "jc-consent";
 
 type Consent = "granted" | "denied" | null;
@@ -125,7 +124,8 @@ export function Analytics() {
       if (!link) return;
       const source = link.getAttribute("data-wa");
       window.gtag?.("event", "whatsapp_click", { source, page: location.pathname });
-      window.fbq?.("track", "Contact", { source, page: location.pathname });
+      // Sem o endereço da página: assuntos sensíveis (saúde, BPC, criminal) não vão para a plataforma de anúncios.
+      window.fbq?.("track", "Contact", { source });
     };
     document.addEventListener("click", onClick);
     return () => document.removeEventListener("click", onClick);

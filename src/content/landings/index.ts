@@ -1,61 +1,109 @@
-import type { Landing, LandingCategory } from "../types";
-import { acidenteDeTrabalho } from "./acidente-de-trabalho";
-import { aposentadoria } from "./aposentadoria";
-import { assedioMoral } from "./assedio-moral";
-import { bpcLoas } from "./bpc-loas";
-import { carteiraAssinada } from "./carteira-assinada";
-import { desvioDeFuncao } from "./desvio-de-funcao";
-import { doencaOcupacional } from "./doenca-ocupacional";
-import { fgts } from "./fgts";
-import { gestante } from "./gestante";
-import { horasExtras } from "./horas-extras";
-import { inss } from "./inss";
-import { insalubridadePericulosidade } from "./insalubridade-periculosidade";
-import { justaCausa } from "./justa-causa";
-import { rescisaoIndireta } from "./rescisao-indireta";
-import { trabalhadorRural } from "./trabalhador-rural";
-import { verbasRescisorias } from "./verbas-rescisorias";
+import type { Landing } from "../types";
+import {
+  apoioAEscritorios,
+  aposentadoriaDeServidores,
+  criminal,
+  direitoCivel,
+  direitoDoTrabalho,
+  direitoPrevidenciario,
+  dividasEAgronegocio,
+  familiaESucessoes,
+  trabalhistaParaEmpresas,
+  transito,
+} from "./areas";
+import { aposentadoria, aposentadoriaPorInvalidez, auxilioDoenca, bpcLoas, inss, pensaoPorMorte } from "./previdencia";
+import {
+  carteiraAssinada,
+  doencaOcupacional,
+  fgts,
+  gestante,
+  horasExtras,
+  insalubridadePericulosidade,
+  rescisaoIndireta,
+  trabalhadorRural,
+  verbasRescisorias,
+} from "./trabalho";
 
 /**
- * Todas as landings, na ordem em que aparecem na home, no rodapé e na faixa de temas.
- * Para criar uma landing nova: crie o arquivo nesta pasta (copie um existente) e adicione aqui.
+ * Todas as páginas de atuação. Para criar uma nova: escreva o objeto no arquivo da área,
+ * adicione aqui e, se for um assunto, inclua o slug em `children` da página da área.
+ * Cada página com foto precisa de identidade-visual/banco-de-imagens/<slug>.jpg (npm run images).
  */
 export const landings: Landing[] = [
+  direitoCivel,
+  direitoDoTrabalho,
+  trabalhistaParaEmpresas,
   verbasRescisorias,
   horasExtras,
-  gestante,
   carteiraAssinada,
-  acidenteDeTrabalho,
-  doencaOcupacional,
-  assedioMoral,
-  justaCausa,
-  rescisaoIndireta,
   fgts,
+  gestante,
+  rescisaoIndireta,
+  doencaOcupacional,
   insalubridadePericulosidade,
-  desvioDeFuncao,
   trabalhadorRural,
-  inss,
-  aposentadoria,
+  direitoPrevidenciario,
   bpcLoas,
+  auxilioDoenca,
+  aposentadoriaPorInvalidez,
+  pensaoPorMorte,
+  aposentadoria,
+  inss,
+  familiaESucessoes,
+  aposentadoriaDeServidores,
+  transito,
+  criminal,
+  dividasEAgronegocio,
+  apoioAEscritorios,
 ];
-
-export const CATEGORY_LABEL: Record<LandingCategory, string> = {
-  trabalhista: "Direito do Trabalho",
-  previdenciario: "INSS e Previdência",
-};
 
 export function getLanding(slug: string) {
   return landings.find((l) => l.slug === slug);
 }
 
-/** Landings agrupadas por área, na ordem de CATEGORY_LABEL, sem grupos vazios. */
-export function landingGroups() {
-  return (Object.keys(CATEGORY_LABEL) as LandingCategory[])
-    .map((category) => ({ category, label: CATEGORY_LABEL[category], items: landings.filter((l) => l.category === category) }))
-    .filter((group) => group.items.length > 0);
+function pick(slugs: string[]) {
+  return slugs.map(getLanding).filter((l): l is Landing => Boolean(l));
 }
 
-/** Relacionados declarados na landing, ignorando slugs inexistentes. */
-export function relatedLandings(landing: Landing) {
-  return landing.related.map(getLanding).filter((l): l is Landing => Boolean(l));
+/** As três áreas principais, na ordem da revisão: Cível primeiro. */
+export const mainAreas = () => pick(["direito-civel", "direito-do-trabalho", "direito-previdenciario"]);
+
+/** Áreas complementares (lista legível depois das principais). */
+export const otherAreas = () =>
+  pick(["familia-e-sucessoes", "aposentadoria-de-servidores", "transito", "criminal", "dividas-e-agronegocio"]);
+
+/** Página profissional (rodapé e bloco discreto no fim da home). */
+export const proPage = () => getLanding("apoio-a-escritorios")!;
+
+/** Texto dos cartões das áreas principais na home (revisão do titular). */
+export const MAIN_AREA_CARD: Record<string, { text: string; link: string }> = {
+  "direito-civel": {
+    text: "Orientação e atuação em contratos, obrigações, responsabilidade civil e questões patrimoniais, incluindo cobranças e cumprimento de decisões.",
+    link: "Conheça a atuação cível",
+  },
+  "direito-do-trabalho": {
+    text: "Atuação para trabalhadores e empresas em questões do contrato de trabalho, verbas trabalhistas, saúde ocupacional e processos judiciais.",
+    link: "Conheça a atuação trabalhista",
+  },
+  "direito-previdenciario": {
+    text: "Pedidos e processos sobre benefícios do INSS, aposentadorias e incapacidade para o trabalho, além do BPC/LOAS.",
+    link: "Conheça a atuação previdenciária",
+  },
+};
+
+/** Página da área a que um assunto pertence. */
+export function parentArea(landing: Landing) {
+  return landings.find((l) => l.kind === "area" && l.area === landing.area);
+}
+
+/** Assuntos de uma área, na ordem de `children`. */
+export const childTopics = (landing: Landing) => pick(landing.children ?? []);
+
+/** Até 3 assuntos vizinhos da mesma área, começando pelo seguinte na ordem da área. */
+export function siblingTopics(landing: Landing) {
+  const children = parentArea(landing)?.children ?? [];
+  const i = children.indexOf(landing.slug);
+  if (i < 0) return [];
+  const ordered = [...children.slice(i + 1), ...children.slice(0, i)];
+  return pick(ordered.slice(0, 3));
 }

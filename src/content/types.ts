@@ -1,63 +1,67 @@
 /**
- * Modelo de dados de uma landing page.
+ * Modelo de dados das páginas de atuação.
  *
- * Os textos são curtos de propósito: o público inclui muitas pessoas mais velhas,
- * então cada bloco diz uma coisa só, com frases simples e sem juridiquês.
+ * Duas espécies de página usam o mesmo template (src/app/[slug]/page.tsx):
+ * - "area": página de uma área de atuação (Cível, Trabalho, Previdenciário, Família...).
+ * - "assunto": página de um assunto específico dentro de uma área (gestante, pensão por morte...),
+ *   pensada também para receber tráfego pago.
  *
- * Ênfase: trechos entre *asteriscos* ficam em dourado (sem itálico) e entre
- * **dois asteriscos** viram <strong>. Ver src/lib/emphasis.tsx.
+ * Os textos são curtos e simples de propósito (público com muitas pessoas mais velhas) e seguem
+ * a revisão do titular: sem promessa de resultado, sem juridiquês, leis só quando conferidas.
+ * Ênfase: *trecho* fica em dourado (sem itálico) e **trecho** vira <strong>. Ver src/lib/emphasis.tsx.
  */
 
-export type LandingCategory = "trabalhista" | "previdenciario";
+export type AreaId =
+  "civel" | "trabalho" | "previdenciario" | "familia" | "servidores" | "transito" | "criminal" | "dividas" | "escritorios";
 
 export type Faq = { q: string; a: string };
 
-export type Situation = {
-  /** Frase curta, na voz de quem procura ajuda ("Fui demitida grávida"). */
-  title: string;
-  /** Mensagem do WhatsApp específica desta situação. */
-  whatsapp: string;
-};
+/** Caminho destacado dentro de uma área (ex.: Trabalhadores | Empresas). */
+export type AudiencePath = { title: string; text: string; href: string; cta: string };
 
 export type Landing = {
   slug: string;
-  category: LandingCategory;
+  area: AreaId;
+  kind: "area" | "assunto";
 
-  /** Nome curto do tema (menus, cards, rodapé). */
-  topic: string;
-  /** Uma frase curta para os cards (até ~80 caracteres). */
+  /** Nome curto (menus, cards, rodapé). */
+  name: string;
+  /** Uma frase curta para os cards. */
   summary: string;
-  /** Descrição da foto do tema (texto alternativo). A foto é public/img/tema-<slug>. */
-  photoAlt: string;
-  /** Ponto de foco da foto no recorte, em CSS object-position (ex.: "50% 40%"). */
-  photoFocus?: string;
+  /** Foto do banco de imagens (public/img/tema-<slug>). Sem foto, o topo fica só com texto. */
+  photo?: { alt: string; focus?: string };
 
   seo: { title: string; description: string };
 
-  /** Mensagem padrão do WhatsApp desta landing. */
-  whatsapp: string;
-
   hero: {
-    /** Pergunta de dor, curta. Vira o H1. */
     title: string;
-    /** Uma ou duas frases simples (até ~170 caracteres). */
+    /** Uma ou duas frases simples. */
     lead: string;
   };
 
-  /** "Qual é o seu caso?": cada item abre o WhatsApp já com o assunto. De 4 a 6 itens. */
-  situations: Situation[];
+  /** Assuntos atendidos: lista simples, sem botão de WhatsApp em cada item (dispensável quando há `children`). */
+  topics?: { title?: string; items: string[] };
 
-  /** "O que diz a lei": explicação curta, com a fonte conferida. */
-  law: {
-    /** No máximo três frases. */
-    text: string;
-    /** Base legal citada (conferida no texto oficial). */
-    source: string;
-  };
+  /** Explicações curtas (ex.: o que é o BPC, como funciona a parceria). */
+  notes?: { title: string; text: string }[];
 
-  /** De 3 a 4 perguntas. */
+  /** Caminhos destacados da área (ex.: Trabalhadores e Empresas). */
+  paths?: AudiencePath[];
+
+  /** Assuntos desta área exibidos como cards com foto, na ordem desejada. */
+  children?: string[];
+
+  /** "O que diz a lei": só em páginas de assunto e só com fonte conferida. */
+  law?: { text: string; source: string };
+
+  /** Documentos inicialmente úteis (o envio é combinado no atendimento). */
+  documents: string[];
+  /** Título da lista de documentos, quando não for "Documentos que ajudam". */
+  documentsTitle?: string;
+
+  /** De 2 a 3 perguntas. */
   faq: Faq[];
 
-  /** Três slugs de temas relacionados. */
-  related: string[];
+  /** Mensagem do WhatsApp. Padrão: neutra (sem detalhes do caso na URL). */
+  whatsapp?: string;
 };

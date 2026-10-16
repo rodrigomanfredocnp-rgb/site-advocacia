@@ -82,11 +82,15 @@ export function LogoFull({ tone = "gold", className, title = `Jhonny Cardoso, Ad
 /** Assinatura horizontal do cabeçalho (fundo escuro): símbolo, nome e OAB em dourado. */
 export function LogoLockup({ className }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 sm:gap-3 ${className ?? ""}`}>
-      <LogoSymbol className="h-10 w-auto shrink-0 sm:h-12" />
+    // Ocupa a largura que o cabeçalho der. Se faltar espaço (celular pequeno ou texto ampliado), o nome desce
+    // para uma segunda linha escondida e fica só o símbolo. No computador, sempre numa linha só.
+    <span
+      className={`flex h-[40px] w-full flex-wrap content-start items-center gap-x-2 overflow-hidden sm:h-[48px] sm:gap-x-3 lg:flex-nowrap ${className ?? ""}`}
+    >
+      <LogoSymbol className="h-[40px] w-auto shrink-0 sm:h-[48px]" />
       <span className="flex flex-col gap-[6px]">
         <LogoName className="h-[13px] w-auto sm:h-[17px]" />
-        <span className="text-[0.54rem] leading-none font-semibold tracking-[0.2em] text-gold sm:text-[0.64rem]">
+        <span className="text-[8.6px] leading-none font-semibold tracking-[0.13em] whitespace-nowrap text-gold sm:text-[10.2px] sm:tracking-[0.2em]">
           ADVOGADO · {site.lawyer.oab}
         </span>
       </span>

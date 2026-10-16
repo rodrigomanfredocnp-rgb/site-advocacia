@@ -15,7 +15,7 @@ export default function TermsPage() {
       <h2>1. Finalidade do site</h2>
       <p>
         Este site apresenta a atuação profissional de {site.lawyer.fullName}, advogado inscrito na {site.lawyer.oab}, e reúne
-        informações gerais sobre direitos trabalhistas e previdenciários. O conteúdo tem caráter exclusivamente informativo, em
+        informações gerais sobre as áreas atendidas pelo escritório. O conteúdo tem caráter exclusivamente informativo, em
         conformidade com o Código de Ética e Disciplina da OAB e o Provimento 205/2021 do Conselho Federal da OAB.
       </p>
 
@@ -28,8 +28,9 @@ export default function TermsPage() {
 
       <h2>3. Contato não cria relação de cliente</h2>
       <p>
-        Enviar uma mensagem pelo WhatsApp, e-mail ou telefone não estabelece, por si só, contrato de prestação de serviços. A
-        contratação depende de acordo entre as partes, formalizado por escrito, com os honorários definidos de forma clara.
+        Enviar uma mensagem pelo WhatsApp, e-mail ou telefone não estabelece, por si só, contrato de prestação de serviços nem
+        confirma a aceitação do caso ou a adoção de medida urgente. A contratação depende de acordo entre as partes, formalizado
+        por escrito, com as condições definidas de forma clara.
       </p>
 
       <h2>4. Propriedade intelectual</h2>

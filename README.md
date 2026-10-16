@@ -1,16 +1,19 @@
 # Site Jhonny Cardoso Advogado
 
-Site do advogado **Jhonny Henrique Guollo Cardoso** (OAB/MT 33424), em Next.js. Tem uma home institucional e 16 landing pages
-sobre temas trabalhistas e previdenciários. O objetivo de todas as páginas é levar o visitante a conversar pelo WhatsApp.
+Site do advogado **Jhonny Henrique Guollo Cardoso** (OAB/MT 33.424/O), em Next.js: home institucional, páginas por área de
+atuação e páginas por assunto (pensadas também para tráfego pago). Conteúdo conforme a revisão do titular de 16/10/2026
+(detalhes em `CLAUDE.md`).
 
 ## Páginas
 
-- `/`: home com os assuntos (cards com foto), o advogado, como funciona e dúvidas.
-- `/sobre` e `/contato`.
-- Direito do Trabalho: `/verbas-rescisorias`, `/horas-extras`, `/gestante`, `/carteira-assinada`, `/acidente-de-trabalho`,
-  `/doenca-ocupacional`, `/assedio-moral`, `/justa-causa`, `/rescisao-indireta`, `/fgts`, `/insalubridade-periculosidade`,
-  `/desvio-de-funcao`, `/trabalhador-rural`.
-- INSS e Previdência: `/inss`, `/aposentadoria`, `/bpc-loas`.
+- `/` home, `/areas-de-atuacao`, `/sobre`, `/atendimento`, `/contato`.
+- Áreas: `/direito-civel`, `/direito-do-trabalho`, `/trabalhista-para-empresas`, `/direito-previdenciario`,
+  `/familia-e-sucessoes`, `/aposentadoria-de-servidores`, `/transito`, `/criminal`, `/dividas-e-agronegocio`,
+  `/apoio-a-escritorios`.
+- Assuntos trabalhistas: `/verbas-rescisorias`, `/horas-extras`, `/carteira-assinada`, `/fgts`, `/gestante`,
+  `/rescisao-indireta`, `/doenca-ocupacional`, `/insalubridade-periculosidade`, `/trabalhador-rural`.
+- Assuntos previdenciários: `/bpc-loas`, `/auxilio-doenca`, `/aposentadoria-por-invalidez`, `/pensao-por-morte`,
+  `/aposentadoria`, `/inss`.
 - Páginas legais (LGPD): `/politica-de-privacidade`, `/termos-de-uso`.
 
 ## Rodar no seu computador
@@ -31,7 +34,9 @@ npm run build      # gera a pasta out/ com o site 100% estático
 Envie o conteúdo de `out/` para qualquer hospedagem de site estático (Vercel, Netlify, Cloudflare Pages, Hostinger etc.).
 Na Vercel basta importar o repositório: ela detecta o Next.js sozinha.
 
-Medição é opcional. Defina as variáveis abaixo antes do build e o aviso de cookies passa a aparecer:
+Medição é opcional e fica **desligada**. Antes de ligar, avalie com o titular (assuntos de saúde, BPC, criminal e família não
+devem ir para plataformas de anúncio). Com as variáveis abaixo, o aviso de cookies aparece e a política de privacidade passa a
+descrever a medição:
 
 ```
 NEXT_PUBLIC_GA_ID=G-XXXXXXX               # Google Analytics 4
@@ -42,28 +47,26 @@ Os cliques no WhatsApp são enviados como evento `whatsapp_click` (GA) e `Contac
 
 ## Editar conteúdo (sem mexer no layout)
 
-| O quê                                                   | Onde                                                               |
-| ------------------------------------------------------- | ------------------------------------------------------------------ |
-| Telefone, e-mail, endereço, redes, horário, avaliações  | `src/content/site.ts`                                              |
-| Texto de uma landing (curto!)                           | `src/content/landings/<tema>.ts`                                   |
-| Foto de uma landing                                     | `identidade-visual/banco-de-imagens/<tema>.jpg` + `npm run images` |
-| Bio do advogado, passos do atendimento, dúvidas da home | `src/content/shared.ts`                                            |
+| O quê                                                | Onde                                                               |
+| ---------------------------------------------------- | ------------------------------------------------------------------ |
+| Telefone, e-mail, endereço, ponto do mapa, horário   | `src/content/site.ts`                                              |
+| Textos das áreas                                     | `src/content/landings/areas.ts`                                    |
+| Textos dos assuntos trabalhistas / previdenciários   | `src/content/landings/trabalho.ts` e `previdencia.ts`              |
+| Ordem das áreas e textos dos cartões da home         | `src/content/landings/index.ts`                                    |
+| Foto de uma página                                   | `identidade-visual/banco-de-imagens/<slug>.jpg` + `npm run images` |
+| Bio, passos do atendimento, perguntas institucionais | `src/content/shared.ts`                                            |
 
-Nos textos, `*palavra*` fica em dourado (sem itálico) e `**palavra**` vira negrito. Escreva para quem tem pouca intimidade com a internet: frases curtas, sem juridiquês.
+Nos textos, `*palavra*` fica em dourado (sem itálico) e `**palavra**` vira negrito. Escreva para quem tem pouca intimidade
+com a internet: frases curtas, sem juridiquês, sem promessa de resultado e só com leis conferidas no texto oficial.
 
-### Criar uma landing nova
+### Criar uma página de assunto
 
-1. Copie um arquivo de `src/content/landings/` (ex.: `fgts.ts`) com o novo nome, que vira o endereço da página.
-2. Troque `slug`, textos, situações, FAQ e `related`.
-3. Coloque uma foto em `identidade-visual/banco-de-imagens/<slug>.jpg` (com licença livre; anote o crédito em `CREDITOS.md`) e rode `npm run images`.
-4. Adicione o export na lista `landings` de `src/content/landings/index.ts`.
+1. Escreva um objeto `Landing` no arquivo da área (`trabalho.ts` ou `previdencia.ts`), com `kind: "assunto"`.
+2. Adicione o export na lista `landings` de `src/content/landings/index.ts` e o slug em `children` da página da área.
+3. Coloque uma foto em `identidade-visual/banco-de-imagens/<slug>.jpg` (licença livre; crédito em `CREDITOS.md`) e rode
+   `npm run images`.
 
-A página, o menu do rodapé, o sumário da home, a faixa de temas e o sitemap são atualizados sozinhos.
-
-### Adicionar avaliações do Google
-
-Em `src/content/site.ts`, preencha `reviews` **somente com avaliações reais**, copiadas do Google. A seção de avaliações
-aparece automaticamente quando houver ao menos uma.
+A página, os cards da área, os "outros assuntos" e o sitemap são atualizados sozinhos.
 
 ## Imagens e marca
 

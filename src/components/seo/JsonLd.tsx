@@ -1,3 +1,4 @@
+import { parentArea } from "@/content/landings";
 import type { Faq, Landing } from "@/content/types";
 import { site } from "@/content/site";
 
@@ -11,26 +12,17 @@ export function JsonLd({ data }: { data: object }) {
 export const attorneyId = `${site.url}/#advogado`;
 export const officeId = `${site.url}/#escritorio`;
 
-/** Pessoa (o advogado) + escritório (LegalService). Usado em todas as páginas. */
+/**
+ * Pessoa (o advogado) + escritório (LegalService). Só dados verdadeiros e confirmados:
+ * sem avaliações, cargos ou títulos (ver a revisão do titular em CLAUDE.md).
+ */
 export function organizationGraph() {
-  const rating =
-    site.reviews.googleRating && site.reviews.googleCount
-      ? {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: site.reviews.googleRating,
-            reviewCount: site.reviews.googleCount,
-            bestRating: 5,
-          },
-        }
-      : {};
-
   return [
     {
       "@type": "Person",
       "@id": attorneyId,
       name: site.lawyer.fullName,
-      alternateName: site.lawyer.displayName,
+      alternateName: site.lawyer.shortName,
       jobTitle: "Advogado",
       url: site.url,
       image: `${site.url}/img/jhonny-serio-828.webp`,
@@ -42,7 +34,7 @@ export function organizationGraph() {
         identifier: site.lawyer.oab,
         recognizedBy: { "@type": "Organization", name: "Ordem dos Advogados do Brasil, Seccional Mato Grosso" },
       },
-      knowsAbout: ["Direito do Trabalho", "Direito Previdenciário"],
+      knowsAbout: ["Direito Civil", "Direito do Trabalho", "Direito Previdenciário", "Direito de Família e Sucessões"],
       worksFor: { "@id": officeId },
       sameAs: [site.social.instagram, site.social.facebook],
     },
@@ -69,7 +61,6 @@ export function organizationGraph() {
       ],
       employee: { "@id": attorneyId },
       sameAs: [site.social.instagram, site.social.facebook],
-      ...rating,
     },
   ];
 }
@@ -85,8 +76,12 @@ export function faqGraph(items: Faq[]) {
   };
 }
 
-export function landingGraph(landing: Landing) {
-  const url = `${site.url}/${landing.slug}/`;
+type Crumb = { name: string; path: string };
+
+/** WebPage com trilha (Início > ... > página) e nós extras (ex.: FAQ). */
+function webPageGraph(page: Crumb & { title?: string; description?: string }, parents: Crumb[], extra: object[]) {
+  const url = `${site.url}${page.path}`;
+  const trail = [{ name: "Início", path: "/" }, ...parents, page];
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -95,19 +90,36 @@ export function landingGraph(landing: Landing) {
         "@type": "WebPage",
         "@id": url,
         url,
-        name: landing.seo.title,
-        description: landing.seo.description,
+        name: page.title ?? page.name,
+        ...(page.description ? { description: page.description } : {}),
         inLanguage: "pt-BR",
         about: { "@id": officeId },
         breadcrumb: {
           "@type": "BreadcrumbList",
-          itemListElement: [
-            { "@type": "ListItem", position: 1, name: "Início", item: `${site.url}/` },
-            { "@type": "ListItem", position: 2, name: landing.topic, item: url },
-          ],
+          itemListElement: trail.map((t, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            name: t.name,
+            item: `${site.url}${t.path}`,
+          })),
         },
       },
-      faqGraph(landing.faq),
+      ...extra,
     ],
   };
+}
+
+/** Página simples (Sobre, Atendimento, Contato...). */
+export function pageGraph(path: string, name: string, extra: object[] = []) {
+  return webPageGraph({ name, path }, [], extra);
+}
+
+/** Página de área ou de assunto (assunto: Início > área > assunto). */
+export function landingGraph(landing: Landing) {
+  const parent = landing.kind === "assunto" ? parentArea(landing) : undefined;
+  return webPageGraph(
+    { name: landing.name, title: landing.seo.title, path: `/${landing.slug}/`, description: landing.seo.description },
+    parent ? [{ name: parent.name, path: `/${parent.slug}/` }] : [],
+    [faqGraph(landing.faq)],
+  );
 }

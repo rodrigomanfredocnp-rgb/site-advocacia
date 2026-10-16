@@ -2,15 +2,11 @@ import type { CSSProperties } from "react";
 import { Section, SectionTitle } from "@/components/ui/Section";
 import { steps } from "@/content/shared";
 
-/** Como funciona: três passos (sequência real, por isso numerada), cada um sob um fio que se desenha. */
-export function Steps() {
+/** Como funciona o atendimento: três passos (sequência real, por isso numerada). */
+export function Steps({ note }: { note?: string }) {
   return (
     <Section id="como-funciona" labelledBy="como-funciona-titulo">
-      <SectionTitle
-        id="como-funciona-titulo"
-        title="Como funciona."
-        text="Simples como mandar uma mensagem. A primeira conversa não gera compromisso."
-      />
+      <SectionTitle id="como-funciona-titulo" title="Como funciona o atendimento." text={note} />
       <ol className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
         {steps.map((step, i) => (
           <li key={step.title}>

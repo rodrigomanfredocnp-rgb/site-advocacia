@@ -75,8 +75,8 @@ const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W - photoW}" h
   <g transform="translate(${(W - photoW - 484 * 1.1) / 2} 120) scale(1.1) translate(-118 -211)" fill="url(#g)" fill-rule="evenodd">
     ${symbolPaths}<path d="${NAME}"/><path d="${SUB}"/><path d="${RULES}"/>
   </g>
-  <text x="${(W - photoW) / 2}" y="${H - 92}" text-anchor="middle" fill="#d8b257" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" letter-spacing="4">DIREITO DO TRABALHO E PREVIDENCIÁRIO</text>
-  <text x="${(W - photoW) / 2}" y="${H - 62}" text-anchor="middle" fill="#b5ac9e" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" letter-spacing="3">CAMPO NOVO DO PARECIS · MT</text>
+  <text x="${(W - photoW) / 2}" y="${H - 92}" text-anchor="middle" fill="#d8b257" font-family="DejaVu Sans, Arial, sans-serif" font-size="17" letter-spacing="4">CÍVEL · TRABALHISTA · PREVIDENCIÁRIO</text>
+  <text x="${(W - photoW) / 2}" y="${H - 62}" text-anchor="middle" fill="#b5ac9e" font-family="DejaVu Sans, Arial, sans-serif" font-size="15" letter-spacing="3">CAMPO NOVO DO PARECIS · MT · PRESENCIAL E ONLINE</text>
 </svg>`;
 
 const left = await sharp(Buffer.from(logoSvg)).png().toBuffer();

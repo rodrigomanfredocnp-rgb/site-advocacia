@@ -1,50 +1,39 @@
 import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
-import type { CSSProperties } from "react";
+import { ArrowRight } from "lucide-react";
 import { Photo } from "@/components/ui/Photo";
-import { Section } from "@/components/ui/Section";
-import { lawyerIntro, values } from "@/content/shared";
-import { site } from "@/content/site";
 import { headline } from "@/lib/emphasis";
+import { Section } from "@/components/ui/Section";
+import { lawyerSummary } from "@/content/shared";
+import { site } from "@/content/site";
 
-/** "Quem vai cuidar do seu caso": retrato, apresentação curta, diferenciais e link para a página Sobre. */
-export function LawyerIntro({ title = "Quem vai cuidar do seu caso." }: { title?: string }) {
+/** "Conheça Jhonny Cardoso": retrato, apresentação resumida e link para a página Sobre. */
+export function LawyerIntro() {
   return (
     <Section id="advogado" labelledBy="advogado-titulo" panel>
-      <div className="grid items-center gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-        <figure data-reveal="photo" className="mx-auto w-full max-w-[24rem] lg:max-w-none">
+      <div className="grid items-center gap-10 md:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+        <figure data-reveal className="mx-auto w-full max-w-[20rem] md:max-w-none">
           <Photo
             name="jhonny-sorrindo"
-            alt="Dr. Jhonny Cardoso sorrindo, de terno escuro e gravata vermelha, com os braços cruzados"
-            focus="50% 20%"
-            sizes="(min-width: 1024px) 28rem, 90vw"
+            alt="Jhonny Henrique Guollo Cardoso, advogado"
+            focus="50% 18%"
+            sizes="(min-width: 768px) 24rem, 80vw"
             className="aspect-[4/5]"
           />
-          <figcaption className="mt-4 flex items-baseline justify-between gap-4 text-[1rem]">
-            <span className="font-display text-[1.2rem]">{site.lawyer.displayName}</span>
+          <figcaption className="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-[1rem]">
+            <span className="font-display text-[1.2rem]">{site.lawyer.shortName}</span>
             <span className="text-text-muted">{site.lawyer.oab}</span>
           </figcaption>
         </figure>
 
         <div>
-          <h2 id="advogado-titulo" data-reveal className="accent max-w-[16ch] text-display-lg">
-            {headline(title)}
+          <h2 id="advogado-titulo" data-reveal className="accent text-display-lg">
+            {headline("Conheça Jhonny Cardoso.")}
           </h2>
-          <p data-reveal className="mt-6 max-w-[46ch] text-lead text-text-muted">
-            {lawyerIntro}
+          <p data-reveal className="mt-6 max-w-[56ch] text-lead text-text-muted">
+            {lawyerSummary}
           </p>
-          <ul className="mt-9 grid gap-x-8 gap-y-4 sm:grid-cols-2">
-            {values.map((v, i) => (
-              <li key={v} data-reveal style={{ "--i": i } as CSSProperties} className="flex items-start gap-3 text-[1.06rem]">
-                <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-champagne text-gold-text">
-                  <Check className="size-4" strokeWidth={2.5} aria-hidden />
-                </span>
-                {v}
-              </li>
-            ))}
-          </ul>
-          <Link href="/sobre" data-reveal className="link-arrow mt-10 text-[1.06rem]">
-            Conheça o Dr. Jhonny
+          <Link href="/sobre" data-reveal className="link-arrow mt-9 text-[1.06rem]">
+            Sobre o advogado
             <ArrowRight className="size-5" aria-hidden />
           </Link>
         </div>
