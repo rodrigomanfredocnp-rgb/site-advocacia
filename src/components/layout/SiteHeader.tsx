@@ -120,47 +120,50 @@ export function SiteHeader({ whatsappMessage }: { whatsappMessage?: string }) {
       <div
         id="menu-celular"
         hidden={!open}
-        className="bg-glow on-ink fixed inset-x-0 top-[4.75rem] bottom-0 z-50 overflow-y-auto text-text-inverse lg:hidden"
+        className="bg-glow on-ink fixed inset-x-0 top-[4.75rem] bottom-0 z-50 text-text-inverse lg:hidden"
       >
-        <nav aria-label="Menu" className="container-site flex flex-col pt-4 pb-10">
-          {NAV.map((item, i) => (
-            <div key={item.href} className="border-b border-white/10">
-              <Link
-                href={item.href}
-                onClick={() => setOpen(false)}
-                style={{ "--d": i } as CSSProperties}
-                className="load-in block py-4 font-display text-[1.75rem] leading-tight text-text-inverse transition-colors hover:text-gold-light"
-              >
-                {item.label}
-              </Link>
-              {item.href === "/areas-de-atuacao" && (
-                <ul className="-mt-1 flex flex-wrap gap-2 pb-5">
-                  {MENU_AREAS.map((a) => (
-                    <li key={a.label}>
-                      <Link
-                        href={a.href}
-                        onClick={() => setOpen(false)}
-                        className="inline-flex min-h-11 items-center rounded-full border border-white/20 px-4 text-[1rem] text-text-inverse transition-colors hover:border-gold hover:text-gold-light"
-                      >
-                        {a.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          ))}
-          <WhatsAppButton source="menu-celular" variant="gold" message={whatsappMessage} className="mt-9 w-full">
-            Informações pelo WhatsApp
-          </WhatsAppButton>
-          <a
-            href={site.contact.phoneHref}
-            className="mt-5 flex items-center justify-center gap-2 text-[1.1rem] font-semibold text-text-inverse tabular-nums"
-          >
-            <Phone className="size-5 text-gold" aria-hidden />
-            Ligar: {site.contact.whatsappDisplay}
-          </a>
-        </nav>
+        {/* A rolagem fica numa camada interna: o brilho do fundo (maior que o painel) não cria rolagem lateral. */}
+        <div className="h-full overflow-y-auto overscroll-contain">
+          <nav aria-label="Menu" className="container-site flex flex-col pt-4 pb-10">
+            {NAV.map((item, i) => (
+              <div key={item.href} className="border-b border-white/10">
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  style={{ "--d": i } as CSSProperties}
+                  className="load-in block py-4 font-display text-[1.75rem] leading-tight text-text-inverse transition-colors hover:text-gold-light"
+                >
+                  {item.label}
+                </Link>
+                {item.href === "/areas-de-atuacao" && (
+                  <ul className="-mt-1 flex flex-wrap gap-2 pb-5">
+                    {MENU_AREAS.map((a) => (
+                      <li key={a.label}>
+                        <Link
+                          href={a.href}
+                          onClick={() => setOpen(false)}
+                          className="inline-flex min-h-11 items-center rounded-full border border-white/20 px-4 text-[1rem] text-text-inverse transition-colors hover:border-gold hover:text-gold-light"
+                        >
+                          {a.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+            <WhatsAppButton source="menu-celular" variant="gold" message={whatsappMessage} className="mt-9 w-full">
+              Informações pelo WhatsApp
+            </WhatsAppButton>
+            <a
+              href={site.contact.phoneHref}
+              className="mt-5 flex items-center justify-center gap-2 text-[1.1rem] font-semibold text-text-inverse tabular-nums"
+            >
+              <Phone className="size-5 text-gold" aria-hidden />
+              Ligar: {site.contact.whatsappDisplay}
+            </a>
+          </nav>
+        </div>
       </div>
     </>
   );
