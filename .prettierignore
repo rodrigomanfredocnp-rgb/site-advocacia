@@ -1,0 +1,7 @@
+out
+.next
+node_modules
+identidade-visual
+public
+package-lock.json
+src/components/brand/paths.ts
