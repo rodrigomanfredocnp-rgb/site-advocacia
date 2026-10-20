@@ -59,24 +59,27 @@ export function TopicCard({
   );
 }
 
-/** Lista legível de páginas (áreas complementares): nome, uma linha de descrição e seta. */
-export function PageList({ items }: { items: Landing[] }) {
+/**
+ * Cartões menores e sem foto para as áreas complementares (pedido do titular): nome, uma linha
+ * sobre os assuntos e "Saiba mais", no mesmo estilo dos cartões das áreas principais.
+ */
+export function AreaCards({ items }: { items: Landing[] }) {
   return (
-    <ul className="border-t border-line">
+    <ul className="grid gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
       {items.map((l, i) => (
-        <li key={l.slug} data-reveal style={{ "--i": i % 3 } as CSSProperties}>
+        <li key={l.slug}>
           <Link
             href={`/${l.slug}`}
-            className="group flex min-h-[4.5rem] items-center gap-5 border-b border-line py-4 transition-colors hover:text-gold-text"
+            data-reveal
+            style={{ "--i": i % 3 } as CSSProperties}
+            className="group flex h-full flex-col bg-white p-6 transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgb(14_13_11/0.35)] sm:p-7"
           >
-            <span className="min-w-0 flex-1">
-              <span className="block text-[1.15rem] font-semibold">{l.name}</span>
-              <span className="mt-0.5 block text-[1rem] text-text-muted">{l.summary}</span>
+            <h3 className="font-display text-[1.35rem] leading-tight text-text">{l.name}</h3>
+            <p className="mt-2 text-[1rem] leading-snug text-text-muted">{l.summary}</p>
+            <span className="mt-auto inline-flex items-center gap-2 pt-5 font-semibold text-gold-text">
+              Saiba mais
+              <ArrowRight className="size-4 transition-transform duration-500 group-hover:translate-x-1" aria-hidden />
             </span>
-            <ArrowRight
-              className="size-5 shrink-0 text-gold-text transition-transform duration-500 group-hover:translate-x-1.5"
-              aria-hidden
-            />
           </Link>
         </li>
       ))}

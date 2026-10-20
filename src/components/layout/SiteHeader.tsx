@@ -31,7 +31,7 @@ function subscribeScroll(onChange: () => void) {
 const isScrolled = () => window.scrollY > 24;
 
 /**
- * Cabeçalho escuro e limpo: logo, poucos links, telefone e WhatsApp.
+ * Cabeçalho escuro e limpo: logo, poucos links e o botão verde do WhatsApp (sem telefone).
  * Nasce transparente sobre o topo escuro e ganha fundo preto ao rolar ou com o menu aberto.
  * Fica em cada página (não no layout) para o WhatsApp levar a mensagem do assunto da página.
  * No celular, um botão "Menu" com texto, mais fácil de reconhecer. O painel do menu fica fora do <header>:
@@ -65,7 +65,7 @@ export function SiteHeader({ whatsappMessage }: { whatsappMessage?: string }) {
           solid ? "bg-ink/95 shadow-[0_14px_34px_-24px_rgb(0_0_0/0.8)] backdrop-blur" : ""
         }`}
       >
-        <div className="container-site flex h-[4.75rem] items-center justify-between gap-3 lg:h-[5.5rem] lg:gap-5">
+        <div className="container-header flex h-[4.75rem] items-center justify-between gap-3 lg:h-[5.5rem] lg:gap-6">
           <Link
             href="/"
             aria-label="Jhonny Cardoso Advogado, página inicial"
@@ -76,7 +76,7 @@ export function SiteHeader({ whatsappMessage }: { whatsappMessage?: string }) {
           </Link>
 
           <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex items-center gap-5 text-[1rem] font-medium whitespace-nowrap xl:gap-6">
+            <ul className="flex items-center gap-6 text-[1rem] font-medium whitespace-nowrap xl:gap-10">
               {NAV.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} className="text-text-inverse/80 transition-colors duration-300 hover:text-gold-light">
@@ -87,23 +87,15 @@ export function SiteHeader({ whatsappMessage }: { whatsappMessage?: string }) {
             </ul>
           </nav>
 
-          <div className="hidden shrink-0 items-center gap-5 lg:flex">
-            <a
-              href={site.contact.phoneHref}
-              className="hidden items-center gap-2 text-[1rem] font-semibold whitespace-nowrap tabular-nums transition-colors hover:text-gold-light xl:flex"
-            >
-              <Phone className="size-4 text-gold" aria-hidden />
-              {site.contact.whatsappDisplay}
-            </a>
-            <WhatsAppButton
-              source="cabecalho"
-              variant="gold"
-              message={whatsappMessage}
-              className="!min-h-[3.1rem] !py-1.5 !text-[0.98rem]"
-            >
-              WhatsApp
-            </WhatsAppButton>
-          </div>
+          {/* Sem telefone no cabeçalho (pedido do titular); de 1024 a 1279px o rótulo encurta para caber. */}
+          <WhatsAppButton
+            source="cabecalho"
+            message={whatsappMessage}
+            className="!hidden !min-h-[3.1rem] shrink-0 !py-1.5 !text-[0.98rem] whitespace-nowrap lg:!inline-flex"
+          >
+            <span className="xl:hidden">WhatsApp</span>
+            <span className="max-xl:hidden">Analisar meu caso</span>
+          </WhatsAppButton>
 
           <button
             type="button"
@@ -152,9 +144,7 @@ export function SiteHeader({ whatsappMessage }: { whatsappMessage?: string }) {
                 )}
               </div>
             ))}
-            <WhatsAppButton source="menu-celular" variant="gold" message={whatsappMessage} className="mt-9 w-full">
-              Informações pelo WhatsApp
-            </WhatsAppButton>
+            <WhatsAppButton source="menu-celular" message={whatsappMessage} className="mt-9 w-full" />
             <a
               href={site.contact.phoneHref}
               className="mt-5 flex items-center justify-center gap-2 text-[1.1rem] font-semibold text-text-inverse tabular-nums"

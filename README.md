@@ -47,14 +47,14 @@ Os cliques no WhatsApp são enviados como evento `whatsapp_click` (GA) e `Contac
 
 ## Editar conteúdo (sem mexer no layout)
 
-| O quê                                                | Onde                                                               |
-| ---------------------------------------------------- | ------------------------------------------------------------------ |
-| Telefone, e-mail, endereço, ponto do mapa, horário   | `src/content/site.ts`                                              |
-| Textos das áreas                                     | `src/content/landings/areas.ts`                                    |
-| Textos dos assuntos trabalhistas / previdenciários   | `src/content/landings/trabalho.ts` e `previdencia.ts`              |
-| Ordem das áreas e textos dos cartões da home         | `src/content/landings/index.ts`                                    |
-| Foto de uma página                                   | `identidade-visual/banco-de-imagens/<slug>.jpg` + `npm run images` |
-| Bio, passos do atendimento, perguntas institucionais | `src/content/shared.ts`                                            |
+| O quê                                                                                    | Onde                                                               |
+| ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Telefone, e-mail (oculto se `null`), endereço, ponto do mapa, horário, crédito do rodapé | `src/content/site.ts`                                              |
+| Textos das áreas                                                                         | `src/content/landings/areas.ts`                                    |
+| Textos dos assuntos trabalhistas / previdenciários                                       | `src/content/landings/trabalho.ts` e `previdencia.ts`              |
+| Ordem das áreas e textos dos cartões da home                                             | `src/content/landings/index.ts`                                    |
+| Foto de uma página                                                                       | `identidade-visual/banco-de-imagens/<slug>.jpg` + `npm run images` |
+| Bio, passos do atendimento, perguntas institucionais                                     | `src/content/shared.ts`                                            |
 
 Nos textos, `*palavra*` fica em dourado (sem itálico) e `**palavra**` vira negrito. Escreva para quem tem pouca intimidade
 com a internet: frases curtas, sem juridiquês, sem promessa de resultado e só com leis conferidas no texto oficial.
@@ -84,7 +84,7 @@ npm run format     # formata o código
 
 ## Regras de conteúdo
 
-Identidade: só preto, branco e dourado (sem verde), títulos em Marcellus, sem itálico, sem rótulos em cima dos títulos. Animações leves, sem rolagem presa.
+Identidade: preto, branco e dourado; verde só nos botões do WhatsApp ("Analisar meu caso" e o botão flutuante), cores das marcas só nos ícones do Instagram e do Facebook. Títulos em Marcellus, sem itálico, sem rótulos em cima dos títulos. Animações leves, sem rolagem presa.
 
 O site segue o Código de Ética da OAB e o Provimento 205/2021: nenhum texto promete resultado, informa valores ou se compara a
 outros advogados, e nenhum dado é inventado. As citações de lei foram conferidas no texto oficial do Planalto. Detalhes em

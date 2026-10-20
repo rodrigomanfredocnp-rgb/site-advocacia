@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { ViewTransition } from "react";
-import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { JsonLd, pageGraph } from "@/components/seo/JsonLd";
 import { ForLawyers, MainAreaCards } from "@/components/sections/HomeSections";
 import { PageHero } from "@/components/sections/PageHero";
-import { PageList } from "@/components/sections/TopicCards";
+import { AreaCards } from "@/components/sections/TopicCards";
 import { Section, SectionTitle } from "@/components/ui/Section";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { ContactButtons, WhatsAppFloat } from "@/components/ui/WhatsAppButton";
 import { otherAreas } from "@/content/landings";
 import { sharedOpenGraph } from "@/lib/metadata";
 
@@ -34,7 +33,7 @@ export default function AreasPage() {
             <PageHero
               title="Áreas de atuação"
               lead="Conheça os assuntos atendidos pelo escritório. As áreas principais são Cível, Trabalhista e Previdenciário, com atuação nacional nas áreas trabalhista e previdenciária."
-              actions={<WhatsAppButton source="topo-areas" variant="gold" />}
+              actions={<ContactButtons source="topo-areas" />}
             />
 
             <Section labelledBy="principais-titulo" className="pt-16 md:pt-24">
@@ -42,10 +41,10 @@ export default function AreasPage() {
               <MainAreaCards />
             </Section>
 
-            <Section labelledBy="outras-titulo" panel>
-              <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-                <SectionTitle id="outras-titulo" title="Outras áreas atendidas." className="!block" />
-                <PageList items={otherAreas()} />
+            <Section labelledBy="outras-titulo">
+              <SectionTitle id="outras-titulo" title="Outras áreas atendidas." />
+              <div className="mt-10">
+                <AreaCards items={otherAreas()} />
               </div>
             </Section>
 
@@ -54,7 +53,7 @@ export default function AreasPage() {
           <SiteFooter />
         </div>
       </ViewTransition>
-      <MobileCtaBar />
+      <WhatsAppFloat />
     </>
   );
 }

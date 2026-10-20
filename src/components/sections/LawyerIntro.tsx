@@ -6,7 +6,7 @@ import { Section } from "@/components/ui/Section";
 import { lawyerSummary } from "@/content/shared";
 import { site } from "@/content/site";
 
-/** "Conheça Jhonny Cardoso": retrato, apresentação resumida e link para a página Sobre. */
+/** "Quem sou eu": retrato, apresentação resumida em primeira pessoa e link para a página Sobre. */
 export function LawyerIntro() {
   return (
     <Section id="advogado" labelledBy="advogado-titulo" panel>
@@ -27,7 +27,7 @@ export function LawyerIntro() {
 
         <div>
           <h2 id="advogado-titulo" data-reveal className="accent text-display-lg">
-            {headline("Conheça Jhonny Cardoso.")}
+            {headline("Quem sou eu.")}
           </h2>
           <p data-reveal className="mt-6 max-w-[56ch] text-lead text-text-muted">
             {lawyerSummary}

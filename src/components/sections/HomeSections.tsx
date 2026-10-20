@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ArrowRight, Handshake, MapPin } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Section, SectionTitle } from "@/components/ui/Section";
-import { MAIN_AREA_CARD, mainAreas, otherAreas, proPage } from "@/content/landings";
+import { MAIN_AREA_CARD, mainAreas, proPage } from "@/content/landings";
 import { nationalService, partnership } from "@/content/shared";
 import { headline } from "@/lib/emphasis";
-import { PageList, TopicCard } from "./TopicCards";
+import { TopicCard } from "./TopicCards";
 
 /** Os três cartões das áreas principais (Cível primeiro). */
 export function MainAreaCards() {
@@ -25,19 +25,15 @@ export function MainAreaCards() {
   );
 }
 
-/** Áreas de atuação: três cartões principais e a lista das outras áreas. */
+/**
+ * Áreas de atuação na home: só os três cartões principais. As áreas complementares ficam na página
+ * /areas-de-atuacao e no rodapé (pedido do titular: o Instagram mostra os outros assuntos).
+ */
 export function AreasSection() {
   return (
     <Section id="areas" labelledBy="areas-titulo" className="pt-16 md:pt-24">
       <SectionTitle id="areas-titulo" title="Áreas de atuação." text="Conheça os assuntos atendidos pelo escritório." />
       <MainAreaCards />
-
-      <div className="mt-16 grid gap-8 lg:grid-cols-[0.8fr_2.2fr] lg:gap-12">
-        <h3 data-reveal className="font-display text-display-sm">
-          Outras áreas atendidas
-        </h3>
-        <PageList items={otherAreas()} />
-      </div>
     </Section>
   );
 }

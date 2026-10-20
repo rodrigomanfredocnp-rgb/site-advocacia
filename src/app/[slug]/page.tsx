@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ViewTransition } from "react";
-import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { JsonLd, landingGraph } from "@/components/seo/JsonLd";
@@ -15,7 +14,7 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Steps } from "@/components/sections/Steps";
 import { TopicGrid } from "@/components/sections/TopicCards";
 import { Section, SectionTitle } from "@/components/ui/Section";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { ContactButtons, WhatsAppFloat } from "@/components/ui/WhatsAppButton";
 import { childTopics, getLanding, landings, parentArea, siblingTopics } from "@/content/landings";
 import { sharedOpenGraph } from "@/lib/metadata";
 
@@ -61,11 +60,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
             <PageHero
               title={landing.hero.title}
               lead={landing.hero.lead}
-              actions={
-                <WhatsAppButton source="topo" variant="gold" message={landing.whatsapp}>
-                  Informações pelo WhatsApp
-                </WhatsAppButton>
-              }
+              actions={<ContactButtons source="topo" message={landing.whatsapp} />}
               note={
                 parent && (
                   <Link href={`/${parent.slug}`} className="underline-offset-4 hover:text-gold-light hover:underline">
@@ -110,7 +105,7 @@ export default async function LandingPage({ params }: PageProps<"/[slug]">) {
           <SiteFooter whatsappMessage={landing.whatsapp} />
         </div>
       </ViewTransition>
-      <MobileCtaBar message={landing.whatsapp} />
+      <WhatsAppFloat message={landing.whatsapp} />
     </>
   );
 }

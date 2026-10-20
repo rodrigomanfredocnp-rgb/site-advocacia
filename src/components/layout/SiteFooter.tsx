@@ -17,8 +17,8 @@ type Props = {
 };
 
 /**
- * Rodapé escuro e limpo, que abre com a chamada final para o WhatsApp.
- * Links agrupados por área (sem o catálogo de subtemas), texto curto da revisão do titular.
+ * Rodapé escuro e compacto (pedido do titular: "diminui um pouco o footer"), que abre com a chamada
+ * final para o WhatsApp. Links agrupados por área e, no fim, só o nome e o crédito de quem criou o site.
  */
 export function SiteFooter({
   title = "Informações sobre atendimento.",
@@ -38,27 +38,25 @@ export function SiteFooter({
 
   return (
     <footer className="bg-glow on-ink text-text-inverse-muted">
-      <div className="container-site pt-20 pb-12 md:pt-24">
-        <div className="grid gap-10 lg:grid-cols-[1.35fr_1fr] lg:items-end">
-          <h2 data-reveal className="max-w-[18ch] text-display-lg text-text-inverse">
+      <div className="container-site pt-14 pb-10 md:pt-16">
+        <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
+          <h2 data-reveal className="max-w-[18ch] text-display-md text-text-inverse">
             {headline(title)}
           </h2>
-          <div data-reveal style={{ "--i": 1 } as CSSProperties} className="flex flex-col items-start gap-6 lg:items-end">
-            <p className="max-w-[42ch] text-[1.1rem] lg:text-right">{text}</p>
-            <WhatsAppButton source="rodape" variant="gold" message={whatsappMessage}>
-              Informações pelo WhatsApp
-            </WhatsAppButton>
+          <div data-reveal style={{ "--i": 1 } as CSSProperties} className="flex flex-col items-start gap-5 lg:items-end">
+            <p className="max-w-[42ch] text-[1.06rem] lg:text-right">{text}</p>
+            <WhatsAppButton source="rodape" message={whatsappMessage} />
           </div>
         </div>
 
-        <span data-reveal="line" className="hairline mt-16 md:mt-20" />
+        <span data-reveal="line" className="hairline mt-10 md:mt-12" />
 
-        <div className="grid gap-12 pt-14 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
-          <div className="flex flex-col items-start gap-6">
+        <div className="grid gap-10 pt-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
+          <div className="flex flex-col items-start gap-5">
             <Link href="/" aria-label="Página inicial">
-              <LogoFull className="h-auto w-52" />
+              <LogoFull className="h-auto w-44" />
             </Link>
-            <ul className="space-y-3.5 text-[1rem]">
+            <ul className="space-y-3 text-[1rem]">
               <li>
                 <a
                   href={site.address.mapsUrl}
@@ -76,15 +74,14 @@ export function SiteFooter({
                   {site.contact.whatsappDisplay}
                 </a>
               </li>
-              <li>
-                <a
-                  href={`mailto:${site.contact.email}`}
-                  className="flex gap-3 [overflow-wrap:anywhere] transition-colors hover:text-gold-light"
-                >
-                  <Mail className="mt-1 size-[18px] shrink-0 text-gold" aria-hidden />
-                  {site.contact.email}
-                </a>
-              </li>
+              {site.contact.email && (
+                <li>
+                  <a href={`mailto:${site.contact.email}`} className="flex gap-3 transition-colors hover:text-gold-light">
+                    <Mail className="mt-1 size-[18px] shrink-0 text-gold" aria-hidden />
+                    {site.contact.email}
+                  </a>
+                </li>
+              )}
             </ul>
             <div className="flex gap-3">
               <SocialLink href={site.social.instagram} label="Instagram">
@@ -104,13 +101,24 @@ export function SiteFooter({
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-site space-y-1.5 py-7 text-[0.92rem] leading-relaxed">
-          <p className="text-text-inverse">
-            {site.lawyer.fullName} · Advogado · {site.lawyer.oab}
-          </p>
-          <p>Campo Novo do Parecis/MT · Atendimento presencial e online</p>
-          <p>Conteúdo informativo. As medidas jurídicas dependem da análise individual da situação e dos documentos.</p>
-        </div>
+        {/* Folga à direita: o botão flutuante do WhatsApp fica no canto inferior direito. */}
+        <p className="container-site flex flex-col gap-x-3 gap-y-1 py-6 pr-24 text-[0.92rem] leading-relaxed sm:flex-row sm:flex-wrap">
+          {/* A OAB fica aqui também: o Código de Ética (art. 44) pede nome e inscrição na publicidade. */}
+          <span className="text-text-inverse">
+            {site.lawyer.shortName} · Advogado · {site.lawyer.oab}
+          </span>
+          <span aria-hidden className="max-sm:hidden">
+            ·
+          </span>
+          <a
+            href={site.credit.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-gold-light"
+          >
+            Criado e desenvolvido por {site.credit.name}
+          </a>
+        </p>
       </div>
     </footer>
   );
@@ -127,8 +135,8 @@ function FooterNav({
 }) {
   return (
     <nav aria-label={title}>
-      <h2 className="font-display text-[1.3rem] text-text-inverse">{title}</h2>
-      <ul className="mt-5 space-y-2.5 text-[1rem]">
+      <h2 className="font-display text-[1.25rem] text-text-inverse">{title}</h2>
+      <ul className="mt-4 space-y-2 text-[1rem]">
         {links.map((l) => (
           <li key={l.href}>
             <Link href={l.href} className="transition-colors hover:text-gold-light">

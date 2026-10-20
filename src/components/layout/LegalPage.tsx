@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ViewTransition } from "react";
 import { PageHero } from "@/components/sections/PageHero";
-import { MobileCtaBar } from "./MobileCtaBar";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppButton";
 import { SiteFooter } from "./SiteFooter";
 import { SiteHeader } from "./SiteHeader";
 
@@ -23,7 +23,7 @@ export function LegalPage({ title, updated, children }: { title: string; updated
           <SiteFooter />
         </div>
       </ViewTransition>
-      <MobileCtaBar />
+      <WhatsAppFloat />
     </>
   );
 }

@@ -9,6 +9,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/politica-de-privacidade/" },
 };
 
+/** Canal para assuntos de dados pessoais: o e-mail, quando houver; senão, WhatsApp e telefone. */
+function DataContact() {
+  return site.contact.email ? (
+    <>
+      pelo e-mail <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+    </>
+  ) : (
+    <>
+      pelo WhatsApp ou telefone <a href={site.contact.phoneHref}>{site.contact.whatsappDisplay}</a>
+    </>
+  );
+}
+
 export default function PrivacyPage() {
   return (
     <LegalPage title="Política de privacidade" updated="outubro de 2026">
@@ -21,14 +34,14 @@ export default function PrivacyPage() {
       <h2>1. Quem é o controlador</h2>
       <p>
         O controlador dos dados é {site.lawyer.fullName}, com escritório em {fullAddress}. Para qualquer assunto sobre os seus
-        dados, escreva para <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+        dados, fale com o escritório <DataContact />.
       </p>
 
       <h2>2. Quais dados são tratados</h2>
       <ul>
         <li>
-          <strong>Dados que você envia</strong> ao iniciar uma conversa pelo WhatsApp, por e-mail ou telefone: nome, contato e as
-          informações sobre o seu caso que decidir compartilhar.
+          <strong>Dados que você envia</strong> ao iniciar uma conversa pelo WhatsApp, por telefone ou por e-mail: nome, contato e
+          as informações sobre o seu caso que decidir compartilhar.
         </li>
         <li>
           <strong>Documentos</strong> que você enviar depois de combinado o canal de envio no atendimento. Documentos de saúde e
@@ -87,7 +100,9 @@ export default function PrivacyPage() {
       <h2>7. Links externos</h2>
       <p>
         Os botões de WhatsApp, mapa e redes sociais levam a serviços de terceiros, que têm as próprias regras de privacidade. A
-        mensagem pronta do WhatsApp não inclui detalhes do seu caso.
+        mensagem pronta do WhatsApp não inclui detalhes do seu caso. As páginas Sobre e Contato mostram um mapa do Google Maps
+        incorporado: ao carregá-lo, o Google pode receber dados de navegação, como o endereço IP, e usar cookies próprios,
+        conforme a política de privacidade do Google.
       </p>
 
       <h2>8. Por quanto tempo os dados são guardados</h2>
@@ -99,9 +114,8 @@ export default function PrivacyPage() {
       <h2>9. Seus direitos</h2>
       <p>
         Você pode pedir a confirmação do tratamento, o acesso, a correção, a anonimização, a portabilidade ou a eliminação dos
-        seus dados, além de informações sobre o compartilhamento e a revogação do consentimento (art. 18 da LGPD), pelo e-mail{" "}
-        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>. Você também pode reclamar à Autoridade Nacional de
-        Proteção de Dados (ANPD).
+        seus dados, além de informações sobre o compartilhamento e a revogação do consentimento (art. 18 da LGPD), <DataContact />
+        . Você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).
       </p>
 
       <h2>10. Alterações</h2>

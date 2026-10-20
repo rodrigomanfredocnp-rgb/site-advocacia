@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, Phone } from "lucide-react";
 import { ViewTransition, type CSSProperties, type ReactNode } from "react";
-import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { JsonLd, pageGraph } from "@/components/seo/JsonLd";
+import { OfficeLocation } from "@/components/sections/OfficeLocation";
 import { PageHero } from "@/components/sections/PageHero";
 import { FacebookIcon, InstagramIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { Section } from "@/components/ui/Section";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { fullAddress, site } from "@/content/site";
+import { ContactButtons, WhatsAppFloat } from "@/components/ui/WhatsAppButton";
+import { site } from "@/content/site";
 import { sharedOpenGraph } from "@/lib/metadata";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 const TITLE = "Contato";
-const DESCRIPTION = `Telefone e WhatsApp ${site.contact.whatsappDisplay}, e-mail e endereço do escritório em Campo Novo do Parecis/MT.`;
+const DESCRIPTION = `Telefone e WhatsApp ${site.contact.whatsappDisplay}, redes sociais e endereço do escritório em Campo Novo do Parecis/MT, com mapa.`;
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -23,18 +23,39 @@ export const metadata: Metadata = {
   openGraph: { ...sharedOpenGraph, title: `${TITLE} | ${site.name}`, description: DESCRIPTION, url: "/contato/" },
 };
 
-type Channel = { icon: ReactNode; label: string; value: ReactNode; href: string; external?: boolean; wa?: boolean };
+/** `brand` = círculo nas cores da marca (pedido do titular); sem ele, o círculo claro do site. */
+type Channel = {
+  icon: ReactNode;
+  label: string;
+  value: ReactNode;
+  href: string;
+  external?: boolean;
+  wa?: boolean;
+  brand?: string;
+};
+
+/** E-mail com ponto de quebra depois do "@" (telas estreitas). */
+function EmailText({ email }: { email: string }) {
+  const [user, domain] = email.split("@");
+  return (
+    <>
+      {user}@<wbr />
+      {domain}
+    </>
+  );
+}
 
 export default function ContatoPage() {
-  const [emailUser, emailDomain] = site.contact.email.split("@");
+  const email = site.contact.email;
   const channels: Channel[] = [
     {
-      icon: <WhatsAppIcon className="size-6" />,
+      icon: <WhatsAppIcon className="size-7" />,
       label: "WhatsApp",
       value: site.contact.whatsappDisplay,
       href: whatsappUrl(),
       external: true,
       wa: true,
+      brand: "bg-whatsapp text-white",
     },
     {
       icon: <Phone className="size-6" aria-hidden />,
@@ -42,37 +63,31 @@ export default function ContatoPage() {
       value: site.contact.whatsappDisplay,
       href: site.contact.phoneHref,
     },
+    ...(email
+      ? [
+          {
+            icon: <Mail className="size-6" aria-hidden />,
+            label: "E-mail",
+            value: <EmailText email={email} />,
+            href: `mailto:${email}`,
+          },
+        ]
+      : []),
     {
-      icon: <Mail className="size-6" aria-hidden />,
-      label: "E-mail",
-      value: (
-        <>
-          {emailUser}@<wbr />
-          {emailDomain}
-        </>
-      ),
-      href: `mailto:${site.contact.email}`,
-    },
-    {
-      icon: <MapPin className="size-6" aria-hidden />,
-      label: "Endereço",
-      value: fullAddress,
-      href: site.address.mapsUrl,
-      external: true,
-    },
-    {
-      icon: <InstagramIcon className="size-6" />,
+      icon: <InstagramIcon className="size-7" />,
       label: "Instagram",
       value: site.social.instagramHandle,
       href: site.social.instagram,
       external: true,
+      brand: "bg-instagram text-white",
     },
     {
-      icon: <FacebookIcon className="size-6" />,
+      icon: <FacebookIcon className="size-7" />,
       label: "Facebook",
       value: "Página no Facebook",
       href: site.social.facebook,
       external: true,
+      brand: "bg-facebook text-white",
     },
   ];
 
@@ -86,20 +101,7 @@ export default function ContatoPage() {
             <PageHero
               title="Contato"
               lead="Informe o assunto e consulte a disponibilidade de atendimento presencial ou online."
-              actions={
-                <>
-                  <WhatsAppButton source="topo-contato" variant="gold" />
-                  <a
-                    href={site.address.directionsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-plain btn-outline-light"
-                  >
-                    <Navigation className="size-5" aria-hidden />
-                    Como chegar
-                  </a>
-                </>
-              }
+              actions={<ContactButtons source="topo-contato" />}
               note={
                 <span className="inline-flex items-center gap-2.5">
                   <Clock className="size-5 text-gold" aria-hidden />
@@ -108,11 +110,11 @@ export default function ContatoPage() {
               }
             />
 
-            <Section labelledBy="canais-titulo" className="pt-16 pb-20 md:pt-24 md:pb-28">
+            <Section labelledBy="canais-titulo" className="pt-16 md:pt-24">
               <h2 id="canais-titulo" className="sr-only">
                 Formas de contato
               </h2>
-              <ul className="grid gap-3 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+              <ul className={`grid gap-3 sm:grid-cols-2 sm:gap-5 ${channels.length <= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
                 {channels.map((c, i) => (
                   <li key={c.label} data-reveal style={{ "--i": i % 3 } as CSSProperties}>
                     <a
@@ -121,7 +123,11 @@ export default function ContatoPage() {
                       {...(c.wa ? { "data-wa": "contato" } : {})}
                       className="group flex h-full flex-wrap items-start gap-x-5 gap-y-4 bg-white p-6 transition-shadow duration-500 hover:shadow-[0_24px_50px_-30px_rgb(14_13_11/0.35)] sm:p-8"
                     >
-                      <span className="grid size-14 shrink-0 place-items-center rounded-full bg-champagne text-gold-text transition-colors duration-500 group-hover:bg-ink group-hover:text-gold">
+                      <span
+                        className={`grid size-14 shrink-0 place-items-center rounded-full transition-colors duration-500 ${
+                          c.brand ?? "bg-champagne text-gold-text group-hover:bg-ink group-hover:text-gold"
+                        }`}
+                      >
                         {c.icon}
                       </span>
                       {/* Com texto ampliado, o texto desce para baixo do ícone em vez de espremer. */}
@@ -140,11 +146,13 @@ export default function ContatoPage() {
                 ))}
               </ul>
             </Section>
+
+            <OfficeLocation id="endereco" title="Endereço do escritório." />
           </main>
           <SiteFooter />
         </div>
       </ViewTransition>
-      <MobileCtaBar />
+      <WhatsAppFloat />
     </>
   );
 }

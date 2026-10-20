@@ -27,7 +27,7 @@ export function organizationGraph() {
       url: site.url,
       image: `${site.url}/img/jhonny-serio-828.webp`,
       telephone: `+${site.contact.whatsappNumber}`,
-      email: site.contact.email,
+      ...(site.contact.email ? { email: site.contact.email } : {}),
       hasCredential: {
         "@type": "EducationalOccupationalCredential",
         credentialCategory: "Inscrição profissional",
@@ -45,7 +45,7 @@ export function organizationGraph() {
       url: site.url,
       image: `${site.url}/og.jpg`,
       telephone: `+${site.contact.whatsappNumber}`,
-      email: site.contact.email,
+      ...(site.contact.email ? { email: site.contact.email } : {}),
       address: {
         "@type": "PostalAddress",
         streetAddress: site.address.street,

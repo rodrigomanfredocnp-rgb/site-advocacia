@@ -144,7 +144,7 @@ export function Analytics() {
     <div
       role="region"
       aria-label="Aviso de cookies"
-      className="fixed inset-x-3 bottom-[calc(5.75rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-xl border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:right-5 sm:bottom-5 md:bottom-3"
+      className="fixed inset-x-3 bottom-[calc(5.75rem+env(safe-area-inset-bottom,0px))] z-50 mx-auto max-w-xl border border-ink-3 bg-ink p-5 text-[0.9rem] text-text-inverse-muted shadow-2xl sm:inset-x-auto sm:bottom-5 sm:left-5"
     >
       <p>
         Usamos cookies de medição para entender como o site é usado e melhorar o atendimento.{" "}

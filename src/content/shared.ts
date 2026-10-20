@@ -23,8 +23,8 @@ export const steps = [
   },
 ];
 
-/** Apresentação resumida (home). */
-export const lawyerSummary = `${site.lawyer.fullName} é advogado inscrito na ${site.lawyer.oab}, com mais de três anos de atuação e escritório em Campo Novo do Parecis. Atua nas áreas cível, trabalhista e previdenciária, além de demandas de família, sucessões, trânsito e criminal. O atendimento envolve a análise dos documentos, a explicação das alternativas jurídicas e o acompanhamento das medidas contratadas.`;
+/** Apresentação resumida em primeira pessoa (bloco "Quem sou eu", na home e nas áreas). */
+export const lawyerSummary = `Sou ${site.lawyer.fullName}, advogado inscrito na ${site.lawyer.oab}, com mais de três anos de atuação e escritório em Campo Novo do Parecis. Atuo nas áreas cível, trabalhista e previdenciária, além de demandas de família, sucessões, trânsito e criminal. O atendimento envolve a análise dos documentos, a explicação das alternativas jurídicas e o acompanhamento das medidas contratadas.`;
 
 /** Texto da página Sobre, em primeira pessoa. */
 export const lawyerBio = [

@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { PageHero } from "@/components/sections/PageHero";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { WhatsAppButton, WhatsAppFloat } from "@/components/ui/WhatsAppButton";
 
 export default function NotFound() {
   return (
@@ -16,7 +15,7 @@ export default function NotFound() {
           size="sm"
           actions={
             <>
-              <WhatsAppButton source="404" variant="gold" />
+              <WhatsAppButton source="404" />
               <Link href="/" className="btn btn-plain btn-outline-light">
                 Ir para o início
               </Link>
@@ -26,7 +25,7 @@ export default function NotFound() {
         <div className="h-16 md:h-24" />
       </main>
       <SiteFooter />
-      <MobileCtaBar />
+      <WhatsAppFloat />
     </>
   );
 }

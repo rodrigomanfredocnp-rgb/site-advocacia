@@ -85,12 +85,12 @@ export function LogoLockup({ className }: { className?: string }) {
     // Ocupa a largura que o cabeçalho der. Se faltar espaço (celular pequeno ou texto ampliado), o nome desce
     // para uma segunda linha escondida e fica só o símbolo. No computador, sempre numa linha só.
     <span
-      className={`flex h-[40px] w-full flex-wrap content-start items-center gap-x-2 overflow-hidden sm:h-[48px] sm:gap-x-3 lg:flex-nowrap ${className ?? ""}`}
+      className={`flex h-[40px] w-full flex-wrap content-start items-center gap-x-2 overflow-hidden sm:h-[42px] sm:gap-x-2.5 lg:flex-nowrap ${className ?? ""}`}
     >
-      <LogoSymbol className="h-[40px] w-auto shrink-0 sm:h-[48px]" />
+      <LogoSymbol className="h-[40px] w-auto shrink-0 sm:h-[42px]" />
       <span className="flex flex-col gap-[6px]">
-        <LogoName className="h-[13px] w-auto sm:h-[17px]" />
-        <span className="text-[8.6px] leading-none font-semibold tracking-[0.13em] whitespace-nowrap text-gold sm:text-[10.2px] sm:tracking-[0.2em]">
+        <LogoName className="h-[13px] w-auto sm:h-[14.5px]" />
+        <span className="text-[8.6px] leading-none font-semibold tracking-[0.13em] whitespace-nowrap text-gold sm:text-[9px] sm:tracking-[0.18em]">
           ADVOGADO · {site.lawyer.oab}
         </span>
       </span>

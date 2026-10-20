@@ -16,6 +16,8 @@ const OUT = "public/img";
 const LAWYER = [
   { file: "identidade-visual/fotos-advogado/busto-serio-bracos-cruzados.jpg", name: "jhonny-serio" },
   { file: "identidade-visual/fotos-advogado/busto-sorrindo-bracos-cruzados.jpg", name: "jhonny-sorrindo" },
+  // Topo da página Sobre (pedido do titular: o lado direito estava vazio).
+  { file: "identidade-visual/fotos-advogado/busto-sorrindo-mao-lapela.jpg", name: "jhonny-lapela" },
   // Em pé (página Sobre), sem as plantas da borda.
   {
     file: "identidade-visual/fotos-advogado/corpo-inteiro-serio-mao-lapela.jpg",

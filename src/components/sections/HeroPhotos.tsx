@@ -20,3 +20,29 @@ export function TopicHeroPhoto({ landing }: { landing: Landing }) {
     </figure>
   );
 }
+
+/** Foto do topo das páginas institucionais (Sobre, Atendimento). `portrait` = retrato do advogado. */
+export function PageHeroPhoto({
+  name,
+  alt,
+  focus,
+  portrait = false,
+}: {
+  name: string;
+  alt: string;
+  focus?: string;
+  portrait?: boolean;
+}) {
+  return (
+    <figure className={`photo-in mx-auto w-full lg:mr-0 ${portrait ? "max-w-[20rem] lg:max-w-[26rem]" : "max-w-[34rem]"}`}>
+      <Photo
+        name={name}
+        alt={alt}
+        focus={focus}
+        sizes={portrait ? "(min-width: 1024px) 26rem, 20rem" : "(min-width: 1024px) 34rem, 92vw"}
+        priority
+        className={portrait ? "aspect-[4/5]" : "aspect-[16/10] lg:aspect-[4/3.4]"}
+      />
+    </figure>
+  );
+}

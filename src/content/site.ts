@@ -25,7 +25,12 @@ export const site = {
     whatsappNumber: "5565996701835",
     whatsappDisplay: "(65) 99670-1835",
     phoneHref: "tel:+5565996701835",
-    email: "juridico@jhonnycardoso.adv.br",
+    /**
+     * E-mail. O juridico@jhonnycardoso.adv.br era antigo (conversa com o titular, 19/10/2026); o novo é um
+     * e-mail pessoal ainda a confirmar por escrito. Enquanto for null, o e-mail some do site e a privacidade
+     * indica o WhatsApp/telefone. PENDENTE: preencher com o endereço exato.
+     */
+    email: null as string | null,
   },
 
   address: {
@@ -49,6 +54,18 @@ export const site = {
     instagramHandle: "@jhonnycardoso.adv",
     facebook: "https://www.facebook.com/profile.php?id=61566370640678",
   },
+
+  /** Crédito no rodapé (pedido do titular): leva ao WhatsApp de quem criou o site. */
+  credit: {
+    name: "Rodrigo Manfredo",
+    whatsappUrl: `https://wa.me/5565999164224?text=${encodeURIComponent("Olá, Rodrigo! Vi o seu trabalho no site do Jhonny Cardoso e gostaria de mais informações.")}`,
+  },
 } as const;
+
+/**
+ * Mapa incorporado (Sobre e Contato) no ponto ajustado, no formato "/maps/embed?pb=" que o próprio Google gera em
+ * Compartilhar > Incorporar um mapa (sem chave de API): busca do ponto, zoom 17, em português.
+ */
+export const mapEmbedUrl = `https://www.google.com/maps/embed?pb=!1m3!2m1!1s${MAP_POINT}!6i17!3m1!1spt-BR!5m1!1spt-BR`;
 
 export const fullAddress = `${site.address.street}, ${site.address.district}, ${site.address.city}/${site.address.state}, CEP ${site.address.zip}`;

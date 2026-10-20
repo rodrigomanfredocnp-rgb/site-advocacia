@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ViewTransition } from "react";
-import { MobileCtaBar } from "@/components/layout/MobileCtaBar";
+import { WhatsAppFloat } from "@/components/ui/WhatsAppButton";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { JsonLd, organizationGraph } from "@/components/seo/JsonLd";
@@ -15,8 +15,8 @@ export const metadata: Metadata = {
 
 /**
  * Home institucional, na ordem da revisão do titular: abertura com identificação e foto,
- * áreas (Cível primeiro, depois a lista complementar), quem é o advogado, atendimento
- * presencial e online, como funciona, parceria, apoio a escritórios e o fechamento no rodapé.
+ * as três áreas principais (Cível primeiro), "Quem sou eu", atendimento presencial e online,
+ * parceria, como funciona, apoio a escritórios e o fechamento no rodapé.
  */
 export default function HomePage() {
   return (
@@ -36,7 +36,7 @@ export default function HomePage() {
           <SiteFooter />
         </div>
       </ViewTransition>
-      <MobileCtaBar />
+      <WhatsAppFloat />
     </>
   );
 }

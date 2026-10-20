@@ -3,12 +3,12 @@
 Fotos usadas nas páginas de área e de assunto. Todas vêm do [Unsplash](https://unsplash.com) com a
 [Licença Unsplash](https://unsplash.com/license): uso comercial e não comercial gratuito, sem necessidade de
 autorização ou crédito (o crédito fica aqui por boa prática). Nenhuma é do acervo pago Unsplash+; a licença de cada uma
-foi conferida na página da foto em 16/10/2026.
+foi conferida na página da foto em 16/10/2026 (`atendimento.jpg`, em 20/10/2026).
 
 Regras da revisão do titular: pessoas com aparência brasileira, nada de pessoas em sofrimento, crianças, imagens de
 sucesso financeiro ou de equipe genérica apresentada como do escritório.
 
-Os arquivos têm o nome do slug da página. `npm run images` gera as versões otimizadas em `public/img/tema-<nome>-<largura>.webp`.
+Os arquivos têm o nome do slug da página (`atendimento.jpg` é a foto do topo da página /atendimento). `npm run images` gera as versões otimizadas em `public/img/tema-<nome>-<largura>.webp`.
 
 | Arquivo | Foto original | Fotógrafo |
 | --- | --- | --- |
@@ -16,6 +16,7 @@ Os arquivos têm o nome do slug da página. `npm run images` gera as versões ot
 | `aposentadoria.jpg` | https://unsplash.com/photos/a-man-and-woman-standing-next-to-each-other-in-a-field-ik34RApLqXc | @bugsandslugs |
 | `aposentadoria-de-servidores.jpg` | https://unsplash.com/photos/a-person-holding-a-book-8WO_JTyzuNg | @ageing_better |
 | `aposentadoria-por-invalidez.jpg` | https://unsplash.com/photos/man-in-blue-button-up-shirt-standing-near-green-tree-during-daytime-OyMorofNOfU | @liacastelli |
+| `atendimento.jpg` | https://unsplash.com/photos/a-woman-sitting-at-a-table-looking-at-her-cell-phone-GSrlf2jnlZE | @ageing_better |
 | `auxilio-doenca.jpg` | https://unsplash.com/photos/man-wearing-a-hat-and-t-shirt-outdoors-aNlGGi-OCqc | @marcelomagalhaes |
 | `bpc-loas.jpg` | https://unsplash.com/photos/elderly-couple-clapping-in-wheelchairs-mfyKb-cutSY | @agecymru |
 | `carteira-assinada.jpg` | https://unsplash.com/photos/woman-holding-clear-drinking-glass-oKwE_Q7xux8 | @fernanddecanne |

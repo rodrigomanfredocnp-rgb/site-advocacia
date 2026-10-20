@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { CSSProperties } from "react";
 import { Photo } from "@/components/ui/Photo";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { ContactButtons } from "@/components/ui/WhatsAppButton";
 import { site } from "@/content/site";
 
 /**
@@ -48,9 +48,7 @@ export function HomeHero() {
             previdenciária, com análise individual de cada demanda.
           </p>
           <div style={{ "--d": 1 } as CSSProperties} className="load-in mt-9 flex flex-wrap items-center gap-x-7 gap-y-5">
-            <WhatsAppButton source="topo-home" variant="gold">
-              Informações pelo WhatsApp
-            </WhatsAppButton>
+            <ContactButtons source="topo-home" />
             <Link href="/#areas" className="link-arrow text-[1.06rem] text-text-inverse transition-colors hover:text-gold-light">
               Conheça as áreas de atuação
               <ArrowRight className="size-5" aria-hidden />

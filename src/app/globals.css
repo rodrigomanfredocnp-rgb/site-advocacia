@@ -34,6 +34,13 @@
   --color-gold-text: #87671f; /* texto dourado sobre branco e mist (AA) */
   --color-gold-mid: #a08030; /* numerais grandes sobre o claro */
 
+  /* Marcas (pedido do titular, 19/10/2026): verde só nos botões do WhatsApp; azul e degradê só nos ícones
+     do Facebook e do Instagram. Texto escuro sobre o verde (9.8:1). */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-hover: #1ebe5a;
+  --color-whatsapp-dark: #128c7e;
+  --color-facebook: #1877f2;
+
   /* Tipografia */
   --font-display: var(--font-marcellus), "Marcellus", "Trajan Pro", Georgia, serif;
   --font-sans: var(--font-figtree), "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -127,6 +134,19 @@
     padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
     padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
   }
+  /* Cabeçalho mais largo que o conteúdo no computador: logo e botão mais perto das bordas. */
+  .container-header {
+    width: 100%;
+    max-width: 96rem;
+    margin-inline: auto;
+    padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+    padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+  }
+  @media (min-width: 64rem) {
+    .container-header {
+      padding-inline: clamp(1.5rem, 3vw, 3rem);
+    }
+  }
   .container-narrow {
     width: 100%;
     max-width: 48rem;
@@ -205,29 +225,36 @@
   .btn:hover .btn-icon {
     transform: rotate(-8deg) scale(1.06);
   }
-  .btn-primary {
-    background: var(--color-ink);
+  /* Botão do WhatsApp: o verde da marca, texto escuro e o ícone num círculo branco. */
+  .btn-whatsapp {
+    background: var(--color-whatsapp);
+    color: var(--color-ink);
+    box-shadow: 0 16px 34px -20px rgb(37 211 102 / 0.75);
+  }
+  .btn-whatsapp .btn-icon {
+    background: var(--color-white);
+    color: var(--color-whatsapp-dark);
+  }
+  .btn-whatsapp:hover {
+    background: var(--color-whatsapp-hover);
+  }
+  /* Ícone redondo do Instagram, com o degradê da marca. */
+  .btn-instagram {
+    display: grid;
+    width: 3.6rem;
+    height: 3.6rem;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 999px;
     color: var(--color-white);
-    box-shadow: 0 14px 30px -18px rgb(14 13 11 / 0.7);
+    box-shadow: 0 14px 30px -18px rgb(214 36 159 / 0.7);
+    transition: transform 0.35s var(--ease-out-quint);
   }
-  .btn-primary .btn-icon {
-    background: var(--color-gold);
-    color: var(--color-ink);
+  .btn-instagram:hover {
+    transform: translateY(-2px);
   }
-  .btn-primary:hover {
-    background: var(--color-ink-3);
-  }
-  .btn-gold {
-    background: var(--color-gold);
-    color: var(--color-ink);
-    box-shadow: 0 16px 34px -18px rgb(201 162 75 / 0.65);
-  }
-  .btn-gold .btn-icon {
-    background: var(--color-ink);
-    color: var(--color-gold);
-  }
-  .btn-gold:hover {
-    background: var(--color-gold-light);
+  .bg-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
   }
   /* Botão sem ícone (secundário). */
   .btn-plain {
@@ -401,15 +428,6 @@
 }
 .js [data-reveal].is-in {
   opacity: 1;
-  transform: none;
-}
-
-/* Barra de WhatsApp do celular: aparece depois do topo e some perto do rodapé (um único botão fixo). */
-.js .cta-bar {
-  transform: translateY(110%);
-  transition: transform 0.45s var(--ease-out-quint);
-}
-.js .cta-bar[data-show] {
   transform: none;
 }
 
