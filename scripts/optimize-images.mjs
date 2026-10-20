@@ -42,13 +42,15 @@ for (const photo of [...LAWYER, ...STOCK]) {
   if (photo.crop) image = image.extract(photo.crop);
   // Tom único para o banco de imagens: cores um pouco mais contidas, para conviver com a paleta da marca.
   if (photo.stock) image = image.modulate({ saturation: 0.88 });
+  // Fotos de banco um pouco mais leves (q72); os retratos do advogado ficam em q76 (rosto pede mais detalhe).
+  const quality = photo.stock ? 72 : 76;
   const buffer = await image.toBuffer();
   const { width: originalWidth } = await sharp(buffer).metadata();
 
   for (const width of IMAGE_WIDTHS) {
     await sharp(buffer)
       .resize({ width: Math.min(width, originalWidth), withoutEnlargement: true })
-      .webp({ quality: 76, effort: 6 })
+      .webp({ quality, effort: 6, smartSubsample: true })
       .toFile(path.join(OUT, `${photo.name}-${width}.webp`));
   }
   console.log(`✓ ${photo.name}`);

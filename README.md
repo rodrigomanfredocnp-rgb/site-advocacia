@@ -31,8 +31,21 @@ npm run dev        # abre em http://localhost:3000
 npm run build      # gera a pasta out/ com o site 100% estático
 ```
 
-Envie o conteúdo de `out/` para qualquer hospedagem de site estático (Vercel, Netlify, Cloudflare Pages, Hostinger etc.).
-Na Vercel basta importar o repositório: ela detecta o Next.js sozinha.
+O conteúdo de `out/` funciona em qualquer hospedagem de site estático.
+
+### Netlify (ZIP)
+
+```bash
+npm run netlify    # build limpo + site-netlify.zip (index.html na raiz do ZIP)
+```
+
+1. Na Netlify: **Add new site → Deploy manually** e arraste o `site-netlify.zip` (ou, num site já criado, aba
+   **Deploys** → arraste o ZIP para publicar uma versão nova).
+2. Em **Domain management**, adicione `jhonnycardoso.adv.br` e aponte o DNS no Registro.br como a Netlify indicar; o HTTPS
+   é ativado sozinho.
+
+O ZIP já leva `_headers` (cache longo para JS/CSS/fontes, 7 dias para fotos e logos, cabeçalhos de segurança) e a página 404. As URLs terminam em `/` (ex.: `/sobre/`); a Netlify redireciona `/sobre` para `/sobre/` sozinha. Se o site for ligado
+ao GitHub, o `netlify.toml` já diz para rodar `npm run build` e publicar `out/`.
 
 Medição é opcional e fica **desligada**. Antes de ligar, avalie com o titular (assuntos de saúde, BPC, criminal e família não
 devem ir para plataformas de anúncio). Com as variáveis abaixo, o aviso de cookies aparece e a política de privacidade passa a

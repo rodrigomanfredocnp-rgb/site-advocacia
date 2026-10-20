@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, Marcellus } from "next/font/google";
-import { BrandDefs } from "@/components/brand/Logo";
 import { Analytics } from "@/components/layout/Analytics";
 import { RevealObserver } from "@/components/layout/RevealObserver";
 import { site } from "@/content/site";
@@ -54,7 +53,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: JS_FLAG }} />
       </head>
       <body className="flex min-h-dvh flex-col">
-        <BrandDefs />
         <a
           href="#conteudo"
           className="sr-only z-[100] rounded-full bg-ink px-5 py-3 text-white focus:not-sr-only focus:fixed focus:top-3 focus:left-3"

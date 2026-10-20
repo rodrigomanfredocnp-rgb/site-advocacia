@@ -53,7 +53,7 @@ export function SiteFooter({
 
         <div className="grid gap-10 pt-10 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr]">
           <div className="flex flex-col items-start gap-5">
-            <Link href="/" aria-label="Página inicial">
+            <Link href="/" prefetch={false} aria-label="Página inicial">
               <LogoFull className="h-auto w-44" />
             </Link>
             <ul className="space-y-3 text-[1rem]">
@@ -139,7 +139,8 @@ function FooterNav({
       <ul className="mt-4 space-y-2 text-[1rem]">
         {links.map((l) => (
           <li key={l.href}>
-            <Link href={l.href} className="transition-colors hover:text-gold-light">
+            {/* Sem pré-carregamento: ao chegar no rodapé, ~15 links baixariam as páginas inteiras à toa (dados do celular). */}
+            <Link href={l.href} prefetch={false} className="transition-colors hover:text-gold-light">
               {l.label}
             </Link>
           </li>

@@ -11,7 +11,8 @@
     "brand-assets": "node scripts/generate-brand-assets.mjs",
     "preview": "npx serve out -l 3000",
     "format": "prettier --write .",
-    "check": "prettier --check . && eslint && tsc --noEmit"
+    "check": "prettier --check . && eslint && tsc --noEmit",
+    "netlify": "rm -rf .next out site-netlify.zip && next build && cd out && zip -qr -9 ../site-netlify.zip ."
   },
   "dependencies": {
     "lucide-react": "^1.54.0",

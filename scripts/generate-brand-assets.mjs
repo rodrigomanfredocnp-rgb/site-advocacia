@@ -6,8 +6,10 @@
 //   src/app/apple-icon.png  180×180
 //   src/app/favicon.ico     32×32
 //   public/og.jpg           1200×630 (prévia no WhatsApp, Facebook, LinkedIn)
+//   public/brand/*.svg      símbolo, nome e logo completa em dourado (usados pelo site como <img>: o navegador
+//                           baixa uma vez e guarda, em vez de repetir ~45 KB de vetor em cada página)
 
-import { readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import sharp from "sharp";
 
 const paths = await readFile("src/components/brand/paths.ts", "utf8");
@@ -96,4 +98,18 @@ await sharp({ create: { width: W, height: H, channels: 3, background: INK } })
   .jpeg({ quality: 86, mozjpeg: true })
   .toFile("public/og.jpg");
 
-console.log("✓ ícones e og.jpg gerados");
+// Logos em SVG para o site, com o degradê dourado da marca.
+const VIEWBOX = { symbol: pick("SYMBOL_VIEWBOX"), name: pick("NAME_VIEWBOX"), full: pick("FULL_LOGO_VIEWBOX") };
+const brandSvg = (viewBox, body) => {
+  const [, , w, h] = viewBox.split(" ");
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" width="${w}" height="${h}"><defs>${gradient.replace(/\n\s*/g, "")}</defs><g fill="url(#g)" fill-rule="evenodd">${body}</g></svg>`;
+};
+await mkdir("public/brand", { recursive: true });
+await writeFile("public/brand/simbolo.svg", brandSvg(VIEWBOX.symbol, symbolPaths));
+await writeFile("public/brand/nome.svg", brandSvg(VIEWBOX.name, `<path d="${NAME}"/>`));
+await writeFile(
+  "public/brand/logo.svg",
+  brandSvg(VIEWBOX.full, `${symbolPaths}<path d="${NAME}"/><path d="${SUB}"/><path d="${RULES}"/>`),
+);
+
+console.log("✓ ícones, og.jpg e logos SVG gerados");
