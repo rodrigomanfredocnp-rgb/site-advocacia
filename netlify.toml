@@ -1,0 +1,8 @@
+# Netlify. No envio por ZIP (arrastar e soltar), só valem os arquivos da pasta: out/_headers vem de public/_headers.
+# Este arquivo vale se o site for ligado ao GitHub: a Netlify roda o build e publica a pasta out/.
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
